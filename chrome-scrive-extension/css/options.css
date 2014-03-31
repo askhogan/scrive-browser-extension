@@ -1,0 +1,74 @@
+body {
+  height: auto;
+}
+
+input { 
+  display: block; 
+  padding: 20px 5px;
+  border-radius: 1px;
+  margin-bottom: 15px; 
+  height: 26px;
+  width: 300px;
+}
+
+input, textarea {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+label {
+  color: #262626;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+form {
+  padding-bottom: 40px;
+}
+
+textarea {
+  resize: none;
+  width: 500px;
+  height: 120px;
+  display: block;
+  margin-top: 10px;
+}
+
+h1 {
+  font-size: 25px; 
+  font-weight: 300; 
+  color: #333;
+  letter-spacing: 0px;
+}
+
+.left, .right {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.right {
+  margin-left: 25px;
+}
+
+.container {
+  width: 345px;
+}
+
+.container.wide {
+  width: 600px;
+}
+
+.two-containers {
+  width: 1018px;
+  margin: 0 auto;
+}
+
+.two-containers .container.pdf995ini {
+  margin-top: 25px;
+}
+
+.pdf995ini1, .pdf995ini2 {
+  font-size: small;
+  font-family: monospace;
+  word-wrap: break-word;
+}

@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title>Alternativ</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/css/less-compilation.css"></link>
+  <link rel="stylesheet" type="text/css" href="/css/page.css"></link>
+  <link rel="stylesheet" type="text/css" href="/css/options.css"></link>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <img alt="Logo" src="/img/phone-family.png">
+      <div class="divider-line"></div>
+      <label class="subtitle">E-signing powered by Scrive</label>
+    </div>
+  </div>
+
+  <div class="two-containers">
+    <div class="left">
+      <div class="container options">
+        <div class="container-inner">
+          <h1>Alternativ</h1>
+
+          <form id="form" action="#">
+            <label>
+              URL att skriva ut till
+              <input type="text" id="url" />
+            </label>
+            <label>
+              Client credentials identifier
+              <input type="text" id="client_id" />
+            </label>
+            <label>
+              Client credentials secret
+              <input type="text" id="client_secret" />
+            </label>
+            <label>
+              Token credentials identifier
+              <input type="text" id="token_id" />
+            </label>
+            <label>
+              Token credentials secret
+              <input type="text" id="token_secret" />
+            </label>
+            <br />
+            <a class="float-right button button-green save">
+              <div class="label">Spara</div>
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="container wide oauth">
+        <div class="container-inner">
+          <h1>OAuth</h1>
+          <p>
+            F&ouml;r att komma ig&aring;ng med Scrive Print to E-sign m&aring;ste du autentisera dig mot Scrive.
+            Klicka p&aring; knappen f&ouml;r att b&ouml;rja.
+          </p>
+
+          <a class="float-right button button-green oauth">
+            <div class="label">OAuth</div>
+          </a>
+          <br />
+          <br />
+        </div>
+      </div>
+
+      <div class="container wide pdf995ini">
+        <div class="container-inner">
+          <h1>Scrive Print to E-sign</h1>
+          <p class="instructions">
+            F&ouml;r att Scrive Print to E-sign ska fungera korrekt m&aring;ste du kopiera in raderna nedan i <br/>
+            <b> C:\Program Files\pdf995\res\pdf995.ini</b> eller <br />
+            <b>C:\Program Files (x86)\pdf995\res\pdf995.ini</b>:
+            <textarea class="pdf995ini" readonly></textarea>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/constants.js"></script>
+  <script type="text/javascript" src="/options.js"></script>
+  <script type="text/javascript" src="/oauth.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scrive Print to E-sign</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/direct-upload.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/less-compilation.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/page.css"></link>
+
+    <script type="text/javascript" src="/constants.js"></script>
+    <script type="text/javascript" src="/content_script.js"></script>
+    <script type="text/javascript" src="/direct_upload.js"></script>
+    <script type="text/javascript" src="/libs/spin.min.js"></script>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="header-inner">
+        <img alt="Logo" src="/img/phone-family.png">
+        <div class="divider-line"></div>
+        <label class="subtitle">E-signing powered by Scrive</label>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="dropbox-overlay">
+        <h1>Sl&auml;pp filen h&auml;r</h1>
+      </div>
+      <div class="container-inner dropbox">
+        <h1>Ladda upp ett PDF-dokument</h1>
+        <a style="width: 181px;" class="green button button-large button-green button-round">
+          <div class="label">V&auml;lj en PDF-fil</div>
+          <input type="file" accept="application/pdf" placeholder="PDF document" id="file" />
+        </a>
+
+        <div class="dnd-instructions">
+         eller dra och sl&auml;pp en PDF-fil h&auml;r
+        </div>
+      </div>
+    </div>
+
+    <div class="container error">
+      <div class="container-inner">
+        <h1></h1>
+      </div>
+    </div>
+  </body>
+</html>

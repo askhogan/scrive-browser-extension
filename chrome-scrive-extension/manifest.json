@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Scrive",
+  "description": "Starta e-signering genom Scriv",
+  "version": "0.4",
+  "icons": { 
+    "16": "img/icon-16x16.png",
+    "48": "img/icon-48x48.png",
+    "128": "img/icon-128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/**", "http://*/**"],
+      "js": ["constants.js", "content_script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "web_accessible_resources": [
+    "html/options.html"
+  ],
+  "browser_action": {
+    "default_icon": "img/icon-38x38.png",
+    "default_title": "Starta e-signering genom Scrive",
+    "default_popup": "html/popup.html"
+  },
+  "permissions": [
+    "tabs", "*://*/*", "file://*", "storage"
+  ],
+  "options_page": "html/options.html"
+}
