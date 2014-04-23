@@ -109,13 +109,18 @@ function sendPDF(pdf, errorCallback) {
 
 })();
 
-function uploadPDFData(data, errorCallback) {
+function uploadPDFData(data, errorCallback, sameWindow) {
   var xmlHttpRequestPUT = new XMLHttpRequest();
   xmlHttpRequestPUT.onload = function () {
     if( xmlHttpRequestPUT.status == 200 ) {
       var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
       if( openBrowser ) {
-        window.open(openBrowser,'_blank');
+        if( sameWindow ) {
+          window.location = openBrowser;
+        }
+        else {
+          window.open(openBrowser,targetFrame);
+        }
       }
       else {
         // Is this still needed?

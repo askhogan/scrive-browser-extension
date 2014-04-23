@@ -10,7 +10,7 @@ function handleFiles() {
 
         uploadPDFData(file, function(e) {
             showError(e);
-        });
+        },true);
     }
 }
 
@@ -115,4 +115,3 @@ var showUploading = function() {
     }).spin();
     container.appendChild(spinner.el);
 };
-
