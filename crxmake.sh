@@ -10,7 +10,7 @@ fi
 name=$1
 dir=$2
 key=$3
-crx="$name.crx"
+crx="$name"
 pub="$name.pub"
 sig="$name.sig"
 zip="$name.zip"
