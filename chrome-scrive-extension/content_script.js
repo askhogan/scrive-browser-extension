@@ -97,15 +97,43 @@ function sendPDF(pdf, errorCallback) {
       'statusText': getpdfXHR.statusText
     });
   };
-  getpdfXHR.open("GET", src);
+  if( savedDataForRequests.url == src ) {
+    getpdfXHR.open("POST", src);
+    getpdfXHR.responseType = "blob";
+    getpdfXHR.send(savedDataForRequests.requestBody.formData);
+  }
+  else {
+    getpdfXHR.open("GET", src);
+    getpdfXHR.responseType = "blob";
+    getpdfXHR.send();
+  }
   /*
    * I'm not sure what is the real difference between 'blob' and
    * 'arraybuffer', they look similar enough to me. 'Blob' has
    * mime type associated with it, ArrayBuffer does not.
    */
-  getpdfXHR.responseType = "blob";
-  getpdfXHR.send();
 }
+
+var webRequestFilter = { urls: ["http://*/*","https://*/*"],
+                         //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
+                         types: ["main_frame"]
+                       };
+
+var savedDataForRequests = {};
+
+chrome.webRequest.onBeforeRequest.addListener(function(info) {
+    if( info.method=="POST" ) {
+        savedDataForRequests = { requestBody: info.requestBody,
+                                 timeStamp: info.timeStamp,
+                                 frameId: info.frameId,
+                                 requestId: info.requestId,
+                                 type: info.type,
+                                 tabId: info.tabId,
+                                 url: info.url
+                               };
+    }
+}, webRequestFilter, ["requestBody"]);
+
 
 })();
 
@@ -119,7 +147,7 @@ function uploadPDFData(data, errorCallback, sameWindow) {
           window.location = openBrowser;
         }
         else {
-          window.open(openBrowser,targetFrame);
+          window.open(openBrowser,'_blank');
         }
       }
       else {
