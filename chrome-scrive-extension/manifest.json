@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Scrive",
   "description": "Starta e-signering genom Scriv",
-  "version": "0.4",
+  "version": "0.5",
   "icons": { 
     "16": "img/icon-16x16.png",
     "48": "img/icon-48x48.png",
@@ -27,7 +27,7 @@
     "default_popup": "html/popup.html"
   },
   "permissions": [
-    "tabs", "*://*/*", "file://*", "storage"
+    "tabs", "*://*/*", "storage"
   ],
   "options_page": "html/options.html"
 }
