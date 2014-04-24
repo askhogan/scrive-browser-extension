@@ -65,7 +65,9 @@ var askPrintToEsign = function() {
   directUploadButton.style.display = "none";
   var onAccept = function() {
     mixpanel.track("Print to e-sign accept");
-    sendMessage({'type': 'printtoesign'}, function(data) {
+    sendMessage({'type': 'printtoesign',
+                 'savedDataForRequests': bg.savedDataForRequests
+                }, function(data) {
       // this is an error callback.
       error(data);
     });
@@ -127,6 +129,7 @@ var error = function(errorData) {
   modalContent.style.display = "block";
   modalContent.innerHTML = "<p>Genom att maila felmeddelandet nedan till <a target='_blank' href='mailto:info@scrive.com?subject=Scrive Chrome-till%C3%A4gg - buggrapport'>info@scrive.com</a> kan du hj&auml;lpa till att g&ouml;ra tj&auml;nsten b&auml;ttre.<br />";
   modalContent.innerHTML += "<p>Felmeddelande:<br/>" +
+                                errorData.response + "<br/>" +
                                 errorData.headers.join("<br/>") + "<br/>" +
                                 "Status: " + errorData.status + " " + errorData.statusText + "<br/>" +
                             "</p>";

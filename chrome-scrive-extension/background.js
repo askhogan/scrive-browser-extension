@@ -59,3 +59,21 @@ chrome.windows.getCurrent({},function(w) {
         });
     }
 });
+
+var webRequestFilter = { urls: ["http://*/*","https://*/*"],
+                         //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
+                         types: ["main_frame"]
+                       };
+
+var savedDataForRequests = {};
+
+chrome.webRequest.onBeforeRequest.addListener(function(info) {
+    console.log("onBeforeRequest: " + info.method + " " + info.url);
+    if( info.method=="POST" || info.method=="GET" ) {
+        console.log("Saving " + info.url + " " + info.requestBody);
+        savedDataForRequests[info.url] = { requestBody: info.requestBody,
+                                           timeStamp: info.timeStamp,
+                                           type: info.type
+                                         };
+    }
+}, webRequestFilter, ["requestBody"]);

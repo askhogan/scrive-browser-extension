@@ -34,9 +34,14 @@ function setupListeners() {
         window.print();
       }
 
+      if (request.type == 'savedataforrequest') {
+          window.scriveSavedDataForRequest = request.data;
+          console.log("savedataforrequest:" + request.data.url);
+      }
+
       if (request.type == 'printtoesign') {
         // TODO make this more clever
-        sendPDF(pdf, sendResponse);
+        sendPDF(pdf, request, sendResponse);
       }
     }
   );
@@ -81,28 +86,49 @@ function findEmbeddedPdfInDocument(document)
 /*
  * First get the PDF with a xhr call, then put it to the middleware
  */
-function sendPDF(pdf, errorCallback) {
+function sendPDF(pdf, request, errorCallback) {
+
   var src = pdf.getAttribute('src');
+  var savedData = request.savedDataForRequests[src];
+
   var getpdfXHR = new XMLHttpRequest();
   getpdfXHR.onload = function() {
     if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
       uploadPDFData(getpdfXHR.response, errorCallback);
     }
-  }
+  };
   getpdfXHR.onerror = function() {
     errorCallback({
       'type': 'error',
       'headers': getpdfXHR.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
       'status':  getpdfXHR.status,
+      'response': getpdfXHR.response,
       'statusText': getpdfXHR.statusText
     });
   };
-  if( savedDataForRequests.url == src ) {
+    console.log("embed.src: " + src);
+    console.log("savedData: " + savedData);
+    if( savedData ) {
+        console.log("savedData.method: " + savedData.method);
+        console.log("savedData.requestBody: " + savedData.requestBody);
+        if( savedData.requestBody ) {
+            console.log("savedData.requestBody.formData: " + savedData.requestBody.formData);
+            console.log("savedData.requestBody.raw: " + savedData.requestBody.raw);
+        }
+    }
+  if( savedData && savedData.requestBody && savedData.requestBody.formData ) {
+    console.log("Fetching PDF by POST with:");
+    var formData = new FormData();
+    for(var k in savedData.requestBody.formData) {
+        console.log("    " + k + ": " + savedData.requestBody.formData[k]);
+        formData.append(k, savedData.requestBody.formData[k][0]);
+    }
     getpdfXHR.open("POST", src);
     getpdfXHR.responseType = "blob";
-    getpdfXHR.send(savedDataForRequests.requestBody.formData);
+    getpdfXHR.send(formData);
   }
   else {
+    console.log("Fetching PDF by GET (no params)");
     getpdfXHR.open("GET", src);
     getpdfXHR.responseType = "blob";
     getpdfXHR.send();
@@ -113,26 +139,6 @@ function sendPDF(pdf, errorCallback) {
    * mime type associated with it, ArrayBuffer does not.
    */
 }
-
-var webRequestFilter = { urls: ["http://*/*","https://*/*"],
-                         //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
-                         types: ["main_frame"]
-                       };
-
-var savedDataForRequests = {};
-
-chrome.webRequest.onBeforeRequest.addListener(function(info) {
-    if( info.method=="POST" ) {
-        savedDataForRequests = { requestBody: info.requestBody,
-                                 timeStamp: info.timeStamp,
-                                 frameId: info.frameId,
-                                 requestId: info.requestId,
-                                 type: info.type,
-                                 tabId: info.tabId,
-                                 url: info.url
-                               };
-    }
-}, webRequestFilter, ["requestBody"]);
 
 
 })();
