@@ -36,7 +36,6 @@ function setupListeners() {
 
       if (request.type == 'savedataforrequest') {
           window.scriveSavedDataForRequest = request.data;
-          console.log("savedataforrequest:" + request.data.url);
       }
 
       if (request.type == 'printtoesign') {
@@ -64,7 +63,10 @@ function findEmbeddedPdfInDocument(document)
 
         if( tagName=="embed" ) {
             var xtype = elem.getAttribute("type") || "";
-            if( xtype.toLowerCase() == "application/pdf" && elem.getAttribute("src")!=null ) {
+            var xsrc = elem.getAttribute("src")
+            if( xsrc!=null &&
+                (xtype.toLowerCase() == "application/pdf" ||
+                 xsrc.substr(-4).toLowerCase() == ".pdf")) {
                 return elem;
             }
         }
@@ -106,21 +108,9 @@ function sendPDF(pdf, request, errorCallback) {
       'statusText': getpdfXHR.statusText
     });
   };
-    console.log("embed.src: " + src);
-    console.log("savedData: " + savedData);
-    if( savedData ) {
-        console.log("savedData.method: " + savedData.method);
-        console.log("savedData.requestBody: " + savedData.requestBody);
-        if( savedData.requestBody ) {
-            console.log("savedData.requestBody.formData: " + savedData.requestBody.formData);
-            console.log("savedData.requestBody.raw: " + savedData.requestBody.raw);
-        }
-    }
   if( savedData && savedData.requestBody && savedData.requestBody.formData ) {
-    console.log("Fetching PDF by POST with:");
     var formData = new FormData();
     for(var k in savedData.requestBody.formData) {
-        console.log("    " + k + ": " + savedData.requestBody.formData[k]);
         formData.append(k, savedData.requestBody.formData[k][0]);
     }
     getpdfXHR.open("POST", src);
@@ -128,7 +118,6 @@ function sendPDF(pdf, request, errorCallback) {
     getpdfXHR.send(formData);
   }
   else {
-    console.log("Fetching PDF by GET (no params)");
     getpdfXHR.open("GET", src);
     getpdfXHR.responseType = "blob";
     getpdfXHR.send();
