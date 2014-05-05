@@ -36,13 +36,17 @@ document.addEventListener("DOMContentLoaded", function() {
               alreadyReloaded = true;
               chrome.tabs.executeScript(null, {"code": "window.location.reload()"}, function() {
                   console.log("Reloaded Extension content script");
-                  sendMessage({'type': 'pdfexistsonpage'}, f);
+                  sendMessage({'type': 'pdfexistsonpage',
+                               'savedDataForRequests': bg.savedDataForRequests
+                              }, f);
               });
           }
       }
   }
 
-  sendMessage({'type': 'pdfexistsonpage'}, f);
+  sendMessage({'type': 'pdfexistsonpage',
+               'savedDataForRequests': bg.savedDataForRequests
+              }, f);
 
   // Set up the templateable parts of the modal
   modalTitle = document.querySelector('.modal-title');

@@ -62,7 +62,7 @@ chrome.windows.getCurrent({},function(w) {
 
 var webRequestFilter = { urls: ["http://*/*","https://*/*"],
                          //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
-                         types: ["main_frame"]
+                         types: ["main_frame", "object"]
                        };
 
 var savedDataForRequests = {};
@@ -77,3 +77,14 @@ chrome.webRequest.onBeforeRequest.addListener(function(info) {
                                          };
     }
 }, webRequestFilter, ["requestBody"]);
+
+chrome.webRequest.onHeadersReceived.addListener(function(info) {
+    console.log("onHeadersReceived: " + info.method + " " + info.url);
+    if( info.method=="POST" || info.method=="GET" ) {
+        console.log("Saving headers for " + info.url + " " + info.responseHeaders);
+        var obj = savedDataForRequests[info.url];
+        if( obj ) {
+            obj.responseHeaders = info.responseHeaders;
+        }
+    }
+}, webRequestFilter, ["responseHeaders"]);

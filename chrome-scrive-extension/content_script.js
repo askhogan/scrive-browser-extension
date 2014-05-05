@@ -22,7 +22,7 @@ function setupListeners() {
   chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
       if (request.type == 'pdfexistsonpage') {
-        pdf = findEmbeddedPdfInDocument(document);
+        pdf = findEmbeddedPdfInDocument(document, request.savedDataForRequests);
         if (pdf) {
           sendResponse(true);
         } else {
@@ -46,13 +46,29 @@ function setupListeners() {
   );
 };
 
+
+function qualifyURL( document, url )
+{
+    // it actually tries to contact the server when using IMG tag... not good!
+/*
+    var img = document.createElement('img');
+    img.src = url; // set string url
+    url = img.src; // get qualified url
+    img.src = null; // no server request
+*/
+    var a = document.createElement('a');
+    a.href = url; // set string url
+    url = a.href; // get qualified url
+    return url;
+}
+
 /**
  * Look through the DOM and search for PDF's
  * 
  * @return Array The pdfs that were found.
  */
 // TODO handle more than one pdf on the page
-function findEmbeddedPdfInDocument(document)
+function findEmbeddedPdfInDocument(document,savedDataForRequests)
 {
   // REFACTOR TO USE querySelector
     var elems = document.getElementsByTagName("*");
@@ -62,17 +78,22 @@ function findEmbeddedPdfInDocument(document)
         var tagName = elem.tagName.toLowerCase();
 
         if( tagName=="embed" ) {
-            var xtype = elem.getAttribute("type") || "";
-            var xsrc = elem.getAttribute("src")
-            if( xsrc!=null &&
-                (xtype.toLowerCase() == "application/pdf" ||
-                 xsrc.substr(-4).toLowerCase() == ".pdf")) {
-                return elem;
+            var xsrc1 = elem.getAttribute("src")
+            var xsrc = qualifyURL(document, xsrc1);
+            var data = savedDataForRequests[xsrc];
+            if( data ) {
+                for( var k in data.responseHeaders ) {
+                    var headerLine = data.responseHeaders[k];
+                    if( headerLine.name.toLowerCase()=="content-type" &&
+                        headerLine.value.search("application/pdf")>=0 ) {
+                        return xsrc;
+                    }
+                }
             }
         }
         else if( tagName=="iframe" || tagName=="frame") {
           try {
-            var elem = findEmbeddedPdfInDocument(elem.contentDocument);
+            var elem = findEmbeddedPdfInDocument(elem.contentDocument,savedDataForRequests);
             if( elem ) {
                 return elem;
             }
