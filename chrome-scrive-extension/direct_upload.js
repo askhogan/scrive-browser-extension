@@ -49,7 +49,6 @@ function preventDrop(e) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-<<<<<<< HEAD
   // Set up the templateable parts of the modal
   inputFile = document.querySelector('input[type="file"]');
 
