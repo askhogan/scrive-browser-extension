@@ -8,14 +8,11 @@ var tokenIdInput = document.querySelector('#token_id');
 var tokenSecretInput = document.querySelector('#token_secret');
 var saveButton = document.querySelector('.button.save');
 var oauthButton = document.querySelector('.button.oauth');
-var pdf995ini = document.querySelector('textarea.pdf995ini');
-var pdf995instructions = document.querySelector('.pdf995ini .container-inner .instructions');
 
 form.addEventListener('submit', function() { return false; });
 saveButton.addEventListener('click', save_options);
 oauthButton.addEventListener('click', oauth_authorize);
 document.addEventListener('DOMContentLoaded', restore_options);
-//pdf995ini.addEventListener('focus', function() { pdf995ini.select(); }); // TODO this is a bit broken in chrome, sigh
 
 function save_options() {
   var obj = {};
@@ -45,19 +42,6 @@ function restore_options() {
     clientSecretInput.value = items[KEYS.OAUTH_CLIENT_SECRET] || "";
     tokenIdInput.value = items[KEYS.OAUTH_TOKEN_ID] || "";
     tokenSecretInput.value = items[KEYS.OAUTH_TOKEN_SECRET] || "";
-
-    pdf995ini.value = "";
-    pdf995ini.value += "ScriveURL=" + items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
-    pdf995ini.value += "\nAuthorization=OAuth " +
-       "oauth_signature_method=\"PLAINTEXT\"" +
-        ",oauth_consumer_key=\"" + items[KEYS.OAUTH_CLIENT_ID] +
-        "\",oauth_token=\"" + items[KEYS.OAUTH_TOKEN_ID] +
-        "\",oauth_signature=\"" + items[KEYS.OAUTH_CLIENT_SECRET] + "&" + items[KEYS.OAUTH_TOKEN_SECRET] + "\"";
-
-    // TODO make a better "have we already oauthed" check
-    if (!items[KEYS.OAUTH_CLIENT_SECRET]) {
-      pdf995instructions.innerHTML = "F&ouml;r att Scrive Print to E-sign ska fungera korrekt m&aring;ste du autentisera dig via OAuth.";
-    }
   });
   return false;
 }
