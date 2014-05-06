@@ -76,6 +76,9 @@
       if( tagName=="embed" ) {
         var xsrc1 = elem.getAttribute("src")
         var xsrc = qualifyURL(document, xsrc1);
+        /*
+          -- This seems to cause problems, always something does not match as it should
+
         var data = savedDataForRequests[xsrc];
         if( data ) {
           for( var k in data.responseHeaders ) {
@@ -86,6 +89,8 @@
             }
           }
         }
+        */
+        return elem;
       }
       else if( tagName=="iframe" || tagName=="frame") {
         try {
