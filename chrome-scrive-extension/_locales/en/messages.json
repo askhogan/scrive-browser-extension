@@ -101,5 +101,12 @@
   "orDragAndDrop": {
     "message": "or drag and drop a PDF file here",
     "description": "Start with a non-capital letter. Shown underneath the button that instructs the user to upload a file."
+  },
+  "browserAction": {
+    "message": "Start e-signing through Scrive",
+    "description": "This text shows up when the icon is hovered in the web interface."
+  },
+  "status": {
+    "message": "Status"
   }
 }

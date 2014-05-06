@@ -39,6 +39,7 @@ function translate_ui() {
   document.querySelector('.button.save .label').innerText = chrome.i18n.getMessage("save");
   document.querySelector('#url-label').innerText = chrome.i18n.getMessage("printerUrlOptionLabel");
   document.querySelector('#oauth-instructions').innerText = chrome.i18n.getMessage("oauthInstructions");
+  document.querySelector('title').innerText = chrome.i18n.getMessage("options");
 }
 
 function restore_options() {

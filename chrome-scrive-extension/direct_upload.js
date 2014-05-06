@@ -92,7 +92,7 @@ var showError = function(errorData) {
   error.innerHTML += "<p>" + chrome.i18n.getMessage("mailSupportWithErrorMessage") + "</p>";
   error.innerHTML += "<p>" + chrome.i18n.getMessage("errorMessage") + ": <br />";
   error.innerHTML += errorData.headers.join("<br/>") + "<br/>" +
-                     "Status: " + errorData.status + " " + errorData.statusText + "<br/>" +
+                     chrome.i18n.getMessage("status") + ": " + errorData.status + " " + errorData.statusText + "<br/>" +
                      "</p>";
 
   chrome.storage.sync.get(KEYS.PRINTER_URL, function(items) {

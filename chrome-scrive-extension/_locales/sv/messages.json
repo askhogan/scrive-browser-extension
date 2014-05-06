@@ -79,7 +79,7 @@
     "description": "Label for an option where a URL is inputted."
   },
   "oauthInstructions": {
-    "message": "För att komma igång med $EXTENSIONNAME$ Scrive Print to E-sign måste du autentisera dig mot Scrive. Klicka på knappen för att börja.",
+    "message": "För att komma igång med $EXTENSIONNAME$ måste du autentisera dig mot Scrive. Klicka på knappen för att börja.",
     "placeholders": {
       "extensionname": {
         "content": "Scrive Print to E-sign"
@@ -101,5 +101,12 @@
   "orDragAndDrop": {
     "message": "eller dra och släpp en PDF-fil här",
     "description": "Start with a non-capital letter. Shown underneath the button that instructs the user to upload a file."
+  },
+  "browserAction": {
+    "message": "Starta e-signering genom Scrive",
+    "description": "This text shows up when the icon is hovered in the web interface."
+  },
+  "status": {
+    "message": "Status"
   }
 }
