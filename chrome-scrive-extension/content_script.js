@@ -34,10 +34,6 @@
           window.print();
         }
 
-        if (request.type == 'savedataforrequest') {
-          window.scriveSavedDataForRequest = request.data;
-        }
-
         if (request.type == 'printtoesign') {
           // TODO make this more clever
           sendPDF(pdf, request, sendResponse);
