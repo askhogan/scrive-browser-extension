@@ -13,6 +13,7 @@ form.addEventListener('submit', function() { return false; });
 saveButton.addEventListener('click', save_options);
 oauthButton.addEventListener('click', oauth_authorize);
 document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', translate_ui);
 
 function save_options() {
   var obj = {};
@@ -24,13 +25,20 @@ function save_options() {
   chrome.storage.sync.set(obj,
   function() {
     var oldButtonText = saveButton.innerText;
-    saveButton.innerText = "Sparat";
+    saveButton.innerText = chrome.i18n.getMessage("saved");
     setTimeout(function() {
       saveButton.innerText = oldButtonText;
     }, 2500);
   });
 
   return false;
+}
+
+function translate_ui() {
+  document.querySelector('#options-header').innerText = chrome.i18n.getMessage("options");
+  document.querySelector('.button.save .label').innerText = chrome.i18n.getMessage("save");
+  document.querySelector('#url-label').innerText = chrome.i18n.getMessage("printerUrlOptionLabel");
+  document.querySelector('#oauth-instructions').innerText = chrome.i18n.getMessage("oauthInstructions");
 }
 
 function restore_options() {

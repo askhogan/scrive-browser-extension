@@ -20,32 +20,31 @@
     <div class="left">
       <div class="container options">
         <div class="container-inner">
-          <h1>Alternativ</h1>
+          <h1 id="options-header"></h1>
 
           <form id="form" action="#">
-            <label>
-              URL att skriva ut till
-              <input type="text" id="url" />
+            <label for="url" id="url-label">
             </label>
-            <label>
+            <input type="text" id="url" />
+            <label id="client_id-label">
               Client credentials identifier
               <input type="text" id="client_id" />
             </label>
-            <label>
+            <label id="client_secret-label">
               Client credentials secret
               <input type="text" id="client_secret" />
             </label>
-            <label>
+            <label id="token_id-label">
               Token credentials identifier
               <input type="text" id="token_id" />
             </label>
-            <label>
+            <label id="token_secret-label">
               Token credentials secret
               <input type="text" id="token_secret" />
             </label>
             <br />
             <a class="float-right button button-green save">
-              <div class="label">Spara</div>
+              <div class="label"></div>
             </a>
           </form>
         </div>
@@ -56,10 +55,7 @@
       <div class="container wide oauth">
         <div class="container-inner">
           <h1>OAuth</h1>
-          <p>
-            F&ouml;r att komma ig&aring;ng med Scrive Print to E-sign m&aring;ste du autentisera dig mot Scrive.
-            Klicka p&aring; knappen f&ouml;r att b&ouml;rja.
-          </p>
+          <p id="oauth-instructions"></p>
 
           <a class="float-right button button-green oauth">
             <div class="label">OAuth</div>
@@ -68,7 +64,6 @@
           <br />
         </div>
       </div>
-
     </div>
   </div>
 

@@ -49,6 +49,7 @@ function preventDrop(e) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+<<<<<<< HEAD
   // Set up the templateable parts of the modal
   inputFile = document.querySelector('input[type="file"]');
 
@@ -73,24 +74,34 @@ document.addEventListener("DOMContentLoaded", function() {
   // Both the button and the overlay text are centered, but not exactly.
   // So we adjust the centering (that we do using line-height) with a few px.
   overlayText.style.lineHeight = (container.offsetHeight - 4) + "px";
+
+  translateUi();
 });
+
+var translateUi = function() {
+  document.querySelector("#upload-pdf-document").innerText = chrome.i18n.getMessage("uploadPDFDocument");
+  document.querySelector("#choose-pdf-document").innerText = chrome.i18n.getMessage("choosePDFDocument");
+  document.querySelector("#drop-file-here").innerText = chrome.i18n.getMessage("dropFileHere");
+  document.querySelector(".dnd-instructions").innerText = chrome.i18n.getMessage("orDragAndDrop");
+};
 
 var showError = function(errorData) {
   overlay.classList.remove('visible');
 
   error.style.display = "block";
-  error.innerHTML = "<h1>N&aring;got gick fel!</h1><p>Genom att maila felmeddelandet nedan till <a target='_blank' href='mailto:info@scrive.com?subject=Scrive Chrome-till%C3%A4gg - buggrapport'>info@scrive.com</a> kan du hj&auml;lpa till att g&ouml;ra tj&auml;nsten b&auml;ttre.<br /><br />";
-  error.innerHTML += "<p>Felmeddelande:<br/>" +
-    errorData.headers.join("<br/>") + "<br/>" +
-    "Status: " + errorData.status + " " + errorData.statusText + "<br/>" +
-    "</p>";
+  error.innerHTML = "<h1>" + chrome.i18n.getMessage("somethingWentWrong") + "</h1>";
+  error.innerHTML += "<p>" + chrome.i18n.getMessage("mailSupportWithErrorMessage") + "</p>";
+  error.innerHTML += "<p>" + chrome.i18n.getMessage("errorMessage") + ": <br />";
+  error.innerHTML += errorData.headers.join("<br/>") + "<br/>" +
+                     "Status: " + errorData.status + " " + errorData.statusText + "<br/>" +
+                     "</p>";
 
   chrome.storage.sync.get(KEYS.PRINTER_URL, function(items) {
     var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
     var innerError = error.querySelector(".container-inner");
-    innerError.innerHTML += "<p>System-information:<br/>";
+    innerError.innerHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
     innerError.innerHTML += "Chrome Extension Version: " + chrome.app.getDetails().version + "<br />";
-    innerError.innerHTML += "Tid: " + new Date() + "<br />";
+    innerError.innerHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
     innerError.innerHTML += "URL: " + printer_url;
     innerError.innerHTML += "</p>";
   });

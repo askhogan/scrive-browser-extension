@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var askPrintToEsign = function() {
-  modalTitle.innerText = "Starta e-signering genom Scrive?";
+  modalTitle.innerText = chrome.i18n.getMessage("startEsigningQuestion");
   modalContent.style.display = "none";
-  acceptButton.innerText = "Ja";
-  cancelButton.innerText = "Nej";
+  acceptButton.innerText = chrome.i18n.getMessage("yes");
+  cancelButton.innerText = chrome.i18n.getMessage("no");
   directUploadButton.style.display = "none";
   var onAccept = function() {
     mixpanel.track("Print to e-sign accept");
@@ -84,11 +84,11 @@ var askPrintToEsign = function() {
 };
 
 var askPrintToPaper = function() {
-  modalTitle.innerText = "Skriv ut med skrivare?";
-  modalContent.innerHTML = "Det gick inte att hitta en PDF p&aring; den h&auml;r sidan.";
-  acceptButton.innerText = "Skriv ut";
-  directUploadButton.innerText = "Ladda upp";
-  cancelButton.innerText = "Avbryt";
+  modalTitle.innerText = chrome.i18n.getMessage("printToPaperQuestion");
+  modalContent.innerHTML = chrome.i18n.getMessage("noPDFFound");
+  acceptButton.innerText = chrome.i18n.getMessage("print");
+  directUploadButton.innerText = chrome.i18n.getMessage("upload");
+  cancelButton.innerText = chrome.i18n.getMessage("cancel");
   var onAccept = function() {
     mixpanel.track("Print to paper accept");
     sendMessage({'type': 'printtopaper'});
@@ -101,7 +101,7 @@ var askPrintToPaper = function() {
 
 var dots = 3;
 var updateWaitingButtonText = function() {
-  var html = "V&auml;nta<span id='dot-0'>.</span><span id='dot-1'>.</span><span id='dot-2'>.</span>";
+  var html = chrome.i18n.getMessage("wait") + "<span id='dot-0'>.</span><span id='dot-1'>.</span><span id='dot-2'>.</span>";
   acceptButton.innerHTML = html;
 
   dotElements = acceptButton.querySelectorAll('[id^=dot-]');
@@ -129,20 +129,20 @@ var uploadingPDF = function() {
 };
 
 var error = function(errorData) {
-  modalTitle.innerHTML = "N&aring;got gick fel";
+  modalTitle.innerHTML = chrome.i18n.getMessage("somethingWentWrong");
   modalContent.style.display = "block";
-  modalContent.innerHTML = "<p>Genom att maila felmeddelandet nedan till <a target='_blank' href='mailto:info@scrive.com?subject=Scrive Chrome-till%C3%A4gg - buggrapport'>info@scrive.com</a> kan du hj&auml;lpa till att g&ouml;ra tj&auml;nsten b&auml;ttre.<br />";
-  modalContent.innerHTML += "<p>Felmeddelande:<br/>" +
-                                errorData.response + "<br/>" +
-                                errorData.headers.join("<br/>") + "<br/>" +
-                                "Status: " + errorData.status + " " + errorData.statusText + "<br/>" +
+  modalContent.innerHTML = "<p>" + chrome.i18n.getMessage("mailSupportWithErrorMessage") + "</p>";
+  modalContent.innerHTML += "<p>" + chrome.i18n.getMessage("errorMessage") + "<br />";
+  modalContent.innerHTML += errorData.response + "<br/>" +
+                            errorData.headers.join("<br/>") + "<br/>" +
+                            "Status: " + errorData.status + " " + errorData.statusText + "<br/>" +
                             "</p>";
 
   chrome.storage.sync.get(KEYS.PRINTER_URL, function(items) {
     var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
-    modalContent.innerHTML += "<p>System-information:<br/>";
+    modalContent.innerHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
     modalContent.innerHTML += "Chrome Extension Version: " + chrome.app.getDetails().version + "<br />";
-    modalContent.innerHTML += "Tid: " + new Date() + "<br />";
+    modalContent.innerHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
     modalContent.innerHTML += "URL: " + printer_url;
     modalContent.innerHTML += "</p>";
   });
@@ -151,7 +151,7 @@ var error = function(errorData) {
   cancelButton.style.display = "none";
   directUploadButton.style.display = "none";
   acceptButton.className = "button button-green float-right";
-  acceptButton.innerText = "OK";
+  acceptButton.innerText = chrome.i18n.getMessage("ok");
   var onAccept = function() {
     acceptButton.removeEventListener('click', onAccept);
     window.close();

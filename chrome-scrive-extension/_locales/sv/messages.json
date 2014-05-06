@@ -1,0 +1,105 @@
+{
+  "somethingWentWrong": {
+     "message": "Något gick fel!",
+     "description": "Header of error message"
+  },
+  "mailSupportWithErrorMessage": {
+    "message": "Genom att maila felmeddelandet nedan till $EMAILLINK$ kan du hjälpa till att göra tjänsten bättre.",
+    "placeholders": {
+      "emaillink": {
+        "content": "<a target='_blank' href='mailto:info@scrive.com?subject=Scrive Chrome-extension - bug'>info@scrive.com</a>"
+      }
+    }
+  },
+  "errorMessage": {
+    "message": "Felmeddelande",
+    "description": "Mini header before list of error data."
+  },
+  "time": {
+    "message": "Tid",
+    "description": "Used in the context \"<time>: 2013-04-15 12:04\""
+  },
+  "systemInformation": {
+    "message": "System-information",
+    "description": "Header above system information such as url/time/version/operating system"
+  },
+  "uploadingInProgress": {
+    "message": "Laddar upp"
+  },
+  "extensionDescription": {
+    "message": "Starta e-signering genom Scrive"
+  },
+  "saved": {
+    "message": "Sparat",
+    "description": "Text displayed when saving was successful."
+  },
+  "save": {
+    "message": "Spara"
+  },
+  "yes": {
+    "message": "Ja"
+  },
+  "no": {
+    "message": "Nej"
+  },
+  "startEsigningQuestion": {
+    "message": "Starta e-signering genom Scrive?",
+    "description": "The header of the popup, after the user has selected to print to e-sign"
+  },
+  "cancel": {
+    "message": "Avbryt"
+  },
+  "upload": {
+    "message": "Ladda upp"
+  },
+  "printToPaperQuestion": {
+    "message": "Skriv ut med skrivare?",
+    "description": "Header of popup when there is no PDF detected on the page"
+  },
+  "print": {
+    "message": "Skriv ut"
+  },
+  "noPDFFound": {
+    "message": "Det gick inte att hitta en PDF på den här sidan.",
+    "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
+  },
+  "wait": {
+    "message": "Vänta",
+    "description": "Displayed when we are waiting for something. Dots are appended after it, moving so that it feels like something is happening."
+  },
+  "ok": {
+    "message": "OK"
+  },
+  "options": {
+    "message": "Alternativ",
+    "description": "Header in the options page."
+  },
+  "printerUrlOptionLabel": {
+    "message": "URL att skriva ut till",
+    "description": "Label for an option where a URL is inputted."
+  },
+  "oauthInstructions": {
+    "message": "För att komma igång med $EXTENSIONNAME$ Scrive Print to E-sign måste du autentisera dig mot Scrive. Klicka på knappen för att börja.",
+    "placeholders": {
+      "extensionname": {
+        "content": "Scrive Print to E-sign"
+      }
+    }
+  },
+  "dropFileHere": {
+    "message": "Släpp filen här",
+    "description": "Instruction showing while draggin a file."
+  },
+  "uploadPDFDocument": {
+    "message": "Ladda upp ett PDF-dokument",
+    "description": "Header above an upload button"
+  },
+  "choosePDFDocument": {
+    "message": "Välj en PDF-fil",
+    "description": "A button label for a file upload button"
+  },
+  "orDragAndDrop": {
+    "message": "eller dra och släpp en PDF-fil här",
+    "description": "Start with a non-capital letter. Shown underneath the button that instructs the user to upload a file."
+  }
+}
