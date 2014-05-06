@@ -86,7 +86,7 @@ function findEmbeddedPdfInDocument(document,savedDataForRequests)
                     var headerLine = data.responseHeaders[k];
                     if( headerLine.name.toLowerCase()=="content-type" &&
                         headerLine.value.search("application/pdf")>=0 ) {
-                        return xsrc;
+                        return elem;
                     }
                 }
             }
