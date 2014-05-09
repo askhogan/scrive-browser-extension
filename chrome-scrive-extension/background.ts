@@ -68,7 +68,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(info : chrome.webRequest.
     }
 }, webRequestFilter, ["requestBody"]);
 
-chrome.webRequest.onHeadersReceived.addListener(function(info) {
+chrome.webRequest.onHeadersReceived.addListener(function(info : chrome.webRequest.OnHeadersReceivedDetails) {
     console.log("onHeadersReceived: " + info.method + " " + info.url);
     if( info.method=="POST" || info.method=="GET" ) {
         console.log("Saving headers for " + info.url + " " + info.responseHeaders);
@@ -84,7 +84,7 @@ var webRequestFilter2 = { urls: ["http://*/*","https://*/*"],
                           types: ["xmlhttprequest"]
                         };
 
-chrome.webRequest.onErrorOccurred.addListener(function(info) {
+chrome.webRequest.onErrorOccurred.addListener(function(info:chrome.webRequest.OnErrorOccurredDetails) {
   if( info.tabId && info.tabId>=0 ) {
     var message = { type: "xmlhttprequesterror",
                     error: info.error,
