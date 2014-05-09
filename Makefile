@@ -16,7 +16,6 @@ node_modules/typescript/bin/tsc :
 	npm install typescript
 
 chrome-scrive-extension-$(CHROME_EXTENSION_VERSION).crx : $(shell find chrome-scrive-extension -type f) ${JS_FILES}
-	rm *.crx
 	./crxmake.sh $@ chrome-scrive-extension chrome-scrive-extension.pem
 
 %.js : %.ts node_modules/typescript/bin/tsc
