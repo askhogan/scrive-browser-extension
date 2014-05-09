@@ -39,6 +39,11 @@
         if (request.type == 'printtoesign') {
           // TODO make this more clever
           sendPDF(request, sendResponse);
+          /*
+           * Keep the return response channel open by returning
+           * 'true'.
+           */
+          return true;
         }
       }
     );
