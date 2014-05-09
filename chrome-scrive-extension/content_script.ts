@@ -23,7 +23,7 @@
   setupListeners();
 
   function setupListeners() {
-    chrome.extension.onRequest.addListener(
+    chrome.runtime.onMessage.addListener(
       function(request, sender, sendResponse) {
         if (request.type == 'pdfexistsonpage') {
           pdf = findEmbeddedPdfInDocument(document, request.savedDataForRequests);
@@ -122,7 +122,7 @@
     var getpdfXHR = new XMLHttpRequest();
     getpdfXHR.onload = function() {
       if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
-        uploadPDFData(getpdfXHR.response, errorCallback);
+        uploadPDFData(getpdfXHR.response, errorCallback, false);
       }
     };
     getpdfXHR.onerror = function() {
@@ -167,7 +167,7 @@ function uploadPDFData(data, errorCallback, sameWindow) {
       var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
       if( openBrowser ) {
         if( sameWindow ) {
-          window.location = openBrowser;
+          window.location.href = openBrowser;
         }
         else {
           window.open(openBrowser,'_blank');

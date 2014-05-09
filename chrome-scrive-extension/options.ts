@@ -6,13 +6,13 @@
 // Used only in options.html to initialize current options and save when pressing the save button.
 
 var form = document.querySelector('#form');
-var urlInput = document.querySelector('#url');
-var clientIdInput = document.querySelector('#client_id');
-var clientSecretInput = document.querySelector('#client_secret');
-var tokenIdInput = document.querySelector('#token_id');
-var tokenSecretInput = document.querySelector('#token_secret');
-var saveButton = document.querySelector('.button.save');
-var oauthButton = document.querySelector('.button.oauth');
+var urlInput = <HTMLInputElement>document.querySelector('#url');
+var clientIdInput = <HTMLInputElement>document.querySelector('#client_id');
+var clientSecretInput = <HTMLInputElement>document.querySelector('#client_secret');
+var tokenIdInput = <HTMLInputElement>document.querySelector('#token_id');
+var tokenSecretInput = <HTMLInputElement>document.querySelector('#token_secret');
+var saveButton = <HTMLElement>document.querySelector('.button.save');
+var oauthButton = <HTMLElement>document.querySelector('.button.oauth');
 
 form.addEventListener('submit', function() { return false; });
 saveButton.addEventListener('click', save_options);
@@ -40,11 +40,11 @@ function save_options() {
 }
 
 function translate_ui() {
-  document.querySelector('#options-header').innerText = chrome.i18n.getMessage("options");
-  document.querySelector('.button.save .label').innerText = chrome.i18n.getMessage("save");
-  document.querySelector('#url-label').innerText = chrome.i18n.getMessage("printerUrlOptionLabel");
-  document.querySelector('#oauth-instructions').innerText = chrome.i18n.getMessage("oauthInstructions");
-  document.querySelector('title').innerText = chrome.i18n.getMessage("options");
+  (<HTMLElement>document.querySelector('#options-header')).innerText = chrome.i18n.getMessage("options");
+  (<HTMLElement>document.querySelector('.button.save .label')).innerText = chrome.i18n.getMessage("save");
+  (<HTMLElement>document.querySelector('#url-label')).innerText = chrome.i18n.getMessage("printerUrlOptionLabel");
+  (<HTMLElement>document.querySelector('#oauth-instructions')).innerText = chrome.i18n.getMessage("oauthInstructions");
+  (<HTMLElement>document.querySelector('title')).innerText = chrome.i18n.getMessage("options");
 }
 
 function restore_options() {
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 /*
                  * Drop 'oauth_token' and 'oauth_verifier'.
                  */
-                window.location = (window.location + "").split("?")[0];
+                window.location.href = (window.location + "").split("?")[0];
             });
         }
     });

@@ -5,6 +5,12 @@
 
 var inputFile;
 var dropbox;
+var overlay;
+var container;
+var overlayText;
+var error;
+
+declare var Spinner;
 
 function handleFiles() {
   var fileList = this.files;
@@ -83,10 +89,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var translateUi = function() {
-  document.querySelector("#upload-pdf-document").innerText = chrome.i18n.getMessage("uploadPDFDocument");
-  document.querySelector("#choose-pdf-document").innerText = chrome.i18n.getMessage("choosePDFDocument");
-  document.querySelector("#drop-file-here").innerText = chrome.i18n.getMessage("dropFileHere");
-  document.querySelector(".dnd-instructions").innerText = chrome.i18n.getMessage("orDragAndDrop");
+  (<HTMLElement>document.querySelector("#upload-pdf-document")).innerText = chrome.i18n.getMessage("uploadPDFDocument");
+  (<HTMLElement>document.querySelector("#choose-pdf-document")).innerText = chrome.i18n.getMessage("choosePDFDocument");
+  (<HTMLElement>document.querySelector("#drop-file-here")).innerText = chrome.i18n.getMessage("dropFileHere");
+  (<HTMLElement>document.querySelector(".dnd-instructions")).innerText = chrome.i18n.getMessage("orDragAndDrop");
 };
 
 var showError = function(errorData) {
@@ -104,7 +110,7 @@ var showError = function(errorData) {
     var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
     var innerError = error.querySelector(".container-inner");
     innerError.innerHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
-    innerError.innerHTML += "Chrome Extension Version: " + chrome.app.getDetails().version + "<br />";
+    innerError.innerHTML += "Chrome Extension Version: " + chrome.runtime.getManifest()["version"] + "<br />";
     innerError.innerHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
     innerError.innerHTML += "URL: " + printer_url;
     innerError.innerHTML += "</p>";

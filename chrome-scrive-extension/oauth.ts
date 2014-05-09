@@ -211,10 +211,10 @@ var OAuth = ((function() {
                 if( tempcred.oauth_token ) {
                     setCookie("oauth_temporary_token_secret",tempcred.oauth_token_secret);
                     if( /\?/.test(params.authorize_endpoint)) {
-                        window.location = params.authorize_endpoint + "&oauth_token=" + encodeURIComponent(tempcred.oauth_token);
+                        window.location.href = params.authorize_endpoint + "&oauth_token=" + encodeURIComponent(tempcred.oauth_token);
                     }
                     else {
-                        window.location = params.authorize_endpoint + "?oauth_token=" + encodeURIComponent(tempcred.oauth_token);
+                        window.location.href = params.authorize_endpoint + "?oauth_token=" + encodeURIComponent(tempcred.oauth_token);
                     }
                 }
             }
@@ -230,7 +230,9 @@ var OAuth = ((function() {
     var handleCallback = function(params)
     {
         /* Drop '?' from the front of search string */
-        var query = decodeQueryString(window.location.search.substring(1));
+        var query: { oauth_token?: string; oauth_verifier?: string; } =
+             decodeQueryString(window.location.search.substring(1));
+
         /* If coming back from redirection query should contain
          * 'oauth_token' and 'oauth_verifier'.
          */

@@ -2,17 +2,22 @@
 /// <reference path="chrome-app.d.ts" />
 /// <reference path="constants.ts" />
 
+declare var mixpanel;
+
 var bg = chrome.extension.getBackgroundPage();
 var modalTitle;
 var modalContent;
 var acceptButton;
 var cancelButton;
 var directUploadLink;
+var directUploadButton;
+var dotElements;
+
 
 var sendMessage = function(message, responseCallback) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var tab = tabs[0];
-    chrome.tabs.sendRequest(tab.id, message, responseCallback);
+    chrome.tabs.sendMessage(tab.id, message, responseCallback);
   });
 };
 
@@ -41,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
               chrome.tabs.executeScript(null, {"code": "window.location.reload()"}, function() {
                   console.log("Reloaded Extension content script");
                   sendMessage({'type': 'pdfexistsonpage',
-                               'savedDataForRequests': bg.savedDataForRequests
+                               'savedDataForRequests': bg["savedDataForRequests"]
                               }, f);
               });
           }
@@ -49,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   sendMessage({'type': 'pdfexistsonpage',
-               'savedDataForRequests': bg.savedDataForRequests
+               'savedDataForRequests': bg["savedDataForRequests"]
               }, f);
 
   // Set up the templateable parts of the modal
@@ -74,7 +79,7 @@ var askPrintToEsign = function() {
   var onAccept = function() {
     mixpanel.track("Print to e-sign accept");
     sendMessage({'type': 'printtoesign',
-                 'savedDataForRequests': bg.savedDataForRequests
+                 'savedDataForRequests': bg["savedDataForRequests"]
                 }, function(data) {
       // this is an error callback.
       error(data);
@@ -95,7 +100,7 @@ var askPrintToPaper = function() {
   cancelButton.innerText = chrome.i18n.getMessage("cancel");
   var onAccept = function() {
     mixpanel.track("Print to paper accept");
-    sendMessage({'type': 'printtopaper'});
+    sendMessage({'type': 'printtopaper'}, function(e) { return; });
     acceptButton.removeListener('click', onAccept);
   };
   var onCancel = function() { mixpanel.track("Print to paper cancel", {}, function() { window.close() }); };
@@ -145,7 +150,7 @@ var error = function(errorData) {
   chrome.storage.sync.get(KEYS.PRINTER_URL, function(items) {
     var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
     modalContent.innerHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
-    modalContent.innerHTML += "Chrome Extension Version: " + chrome.app.getDetails().version + "<br />";
+    modalContent.innerHTML += "Chrome Extension Version: " + chrome.runtime.getManifest()["version"] + "<br />";
     modalContent.innerHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
     modalContent.innerHTML += "URL: " + printer_url;
     modalContent.innerHTML += "</p>";
