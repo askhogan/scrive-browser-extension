@@ -1,3 +1,8 @@
+/// <reference path="chrome.d.ts" />
+/// <reference path="chrome-app.d.ts" />
+/// <reference path="constants.ts" />
+/// <reference path="content_script.ts" />
+
 var inputFile;
 var dropbox;
 

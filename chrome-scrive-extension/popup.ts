@@ -1,3 +1,7 @@
+/// <reference path="chrome.d.ts" />
+/// <reference path="chrome-app.d.ts" />
+/// <reference path="constants.ts" />
+
 var bg = chrome.extension.getBackgroundPage();
 var modalTitle;
 var modalContent;
