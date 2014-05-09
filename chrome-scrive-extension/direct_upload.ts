@@ -19,9 +19,7 @@ function handleFiles() {
 
     showUploading();
 
-    uploadPDFData(file, function(e) {
-      showError(e);
-    },true);
+    uploadPDFData(file, errorCallback, true);
   }
 }
 
@@ -69,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
   overlay = document.querySelector('.dropbox-overlay');
   overlayText = overlay.querySelector('h1');
   container = document.querySelector('.container-inner');
-  error = document.querySelector('.error');
+  error = document.querySelector('.error .container-inner');
 
   document.body.addEventListener("dragenter", dragenter, false);
   document.body.addEventListener("drop", preventDrop, false);
@@ -95,28 +93,11 @@ var translateUi = function() {
   (<HTMLElement>document.querySelector(".dnd-instructions")).innerText = chrome.i18n.getMessage("orDragAndDrop");
 };
 
-var showError = function(errorData) {
+var errorCallback = function(errorData) {
   overlay.classList.remove('visible');
+  error.parentElement.style.display = "block";
 
-  error.style.display = "block";
-  error.innerHTML = "<h1>" + chrome.i18n.getMessage("somethingWentWrong") + "</h1>";
-  error.innerHTML += "<p>" + chrome.i18n.getMessage("mailSupportWithErrorMessage") + "</p>";
-  error.innerHTML += "<p>" + chrome.i18n.getMessage("errorMessage") + ": <br />";
-  error.innerHTML += errorData.headers.join("<br/>") + "<br/>" +
-                     chrome.i18n.getMessage("status") + ": " + errorData.status + " " + errorData.statusText + "<br/>" +
-                     "</p>";
-
-  chrome.storage.sync.get(KEYS.PRINTER_URL, function(items) {
-    var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
-    var innerError = error.querySelector(".container-inner");
-    innerError.innerHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
-    innerError.innerHTML += "Chrome Extension Version: " + chrome.runtime.getManifest()["version"] + "<br />";
-    innerError.innerHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
-    innerError.innerHTML += "URL: " + printer_url;
-    innerError.innerHTML += "</p>";
-  });
-
-  error.innerHTML = '<div class="container-inner">' + error.innerHTML  + '</div>';
+  showError(error, errorData);
 };
 
 var showUploading = function() {
