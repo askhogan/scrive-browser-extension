@@ -18,20 +18,18 @@
  */
 
 (function() {
-  var pdf = undefined;
-
   setupListeners();
 
   function setupListeners() {
     chrome.runtime.onMessage.addListener(
-      function(request, sender, sendResponse) {
+      function(request : {type: string;
+                          url: string;
+                          method: string;
+                          formData?: FormData},
+               sender, sendResponse) {
         if (request.type == 'pdfexistsonpage') {
-          pdf = findEmbeddedPdfInDocument(document, request.savedDataForRequests);
-          if (pdf) {
-            sendResponse(true);
-          } else {
-            sendResponse(false);
-          }
+          var pdfs = findEmbedTagURLs(document);
+          sendResponse(pdfs);
         };
 
         if (request.type == 'printtopaper') {
@@ -40,7 +38,7 @@
 
         if (request.type == 'printtoesign') {
           // TODO make this more clever
-          sendPDF(pdf, request, sendResponse);
+          sendPDF(request, sendResponse);
         }
       }
     );
@@ -62,43 +60,26 @@
   /**
    * Look through the DOM and search for PDF's
    * 
-   * @return Array The pdfs that were found.
+   * @return Array the urls of pdfs that were found.
    */
-  // TODO handle more than one pdf on the page
-  function findEmbeddedPdfInDocument(document,savedDataForRequests)
+  function findEmbedTagURLs(document : HTMLDocument) : string[]
   {
-    // REFACTOR TO USE querySelector
-    var elems = document.getElementsByTagName("*");
+    var results = [];
+    var elems = document.querySelectorAll("embed, frame, iframe");
     var count = elems.length;
-    for( var i = 0; i<count; i++ ) {
-      var elem = elems[i];
+    for( var i=0; i<count; i++ ) {
+      var elem = <HTMLElement>elems[i]
       var tagName = elem.tagName.toLowerCase();
 
       if( tagName=="embed" ) {
-        var xsrc1 = elem.getAttribute("src")
-        var xsrc = getAbsoluteURL(xsrc1,document);
-        /*
-          -- This seems to cause problems, always something does not match as it should
-
-        var data = savedDataForRequests[xsrc];
-        if( data ) {
-          for( var k in data.responseHeaders ) {
-            var headerLine = data.responseHeaders[k];
-            if( headerLine.name.toLowerCase()=="content-type" &&
-                headerLine.value.search("application/pdf")>=0 ) {
-              return elem;
-            }
-          }
-        }
-        */
-        return elem;
+        var src_relative = elem.getAttribute("src")
+        var src = getAbsoluteURL(src_relative,document);
+        results.push(src);
       }
       else if( tagName=="iframe" || tagName=="frame") {
         try {
-          var elem = findEmbeddedPdfInDocument(elem.contentDocument,savedDataForRequests);
-          if( elem ) {
-            return elem;
-          }
+          var elems2 = findEmbedTagURLs((<HTMLFrameElement>elem).contentDocument);
+          results = results.concat(elems2);
         } catch (e) {
           // this happens when unallowed frame traversals are done
           // but we are ok with that as it usually is cross-domain
@@ -107,17 +88,16 @@
         }
       }
     }
-    return;
+    return results;
   }
 
   /*
    * First get the PDF with a xhr call, then put it to the middleware
    */
-  function sendPDF(pdf, request, errorCallback) {
-
-    var src = pdf.getAttribute('src');
-    var savedData = request.savedDataForRequests[src];
-
+  function sendPDF(request : {url: string;
+                              method: string;
+                              formData?: FormData},
+                              errorCallback) {
     var getpdfXHR = new XMLHttpRequest();
     getpdfXHR.onload = function() {
       if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
@@ -133,20 +113,9 @@
         'statusText': getpdfXHR.statusText
       });
     };
-    if( savedData && savedData.requestBody && savedData.requestBody.formData ) {
-      var formData = new FormData();
-      for(var k in savedData.requestBody.formData) {
-        formData.append(k, savedData.requestBody.formData[k][0]);
-      }
-      getpdfXHR.open("POST", src);
-      getpdfXHR.responseType = "blob";
-      getpdfXHR.send(formData);
-    }
-    else {
-      getpdfXHR.open("GET", src);
-      getpdfXHR.responseType = "blob";
-      getpdfXHR.send();
-    }
+    getpdfXHR.open(request.method, request.url );
+    getpdfXHR.responseType = "blob";
+    getpdfXHR.send(request.formData);
     /*
      * I'm not sure what is the real difference between 'blob' and
      * 'arraybuffer', they look similar enough to me. 'Blob' has mime
@@ -188,6 +157,7 @@ function uploadPDFData(data, errorCallback, sameWindow) {
   }
 
   xmlHttpRequestPUT.onerror = function() {
+    console.log("xmlHttpRequestPUT.onerror");
     errorCallback({
       'type': 'error',
       'headers': xmlHttpRequestPUT.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),

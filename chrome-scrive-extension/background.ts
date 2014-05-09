@@ -2,6 +2,81 @@
 /// <reference path="chrome-app.d.ts" />
 /// <reference path="constants.ts" />
 
+interface HttpHeader {
+  name: string;
+  value?: string;
+  binaryValue?: any;
+};
+
+interface SavedRequest {
+  method: string;
+  type: string;
+  formData?: FormData;
+  responseHeaders?: HttpHeader[];
+  timeStamp: number;
+};
+
+interface ScriveBackgroundPage extends Window
+{
+    savedDataForRequests : { [x:string]: SavedRequest };
+};
+
+/*
+ * Here we try to keep all requests that are coming so that we can
+ * redo them again with XMLHttpRequest using proper method, POST
+ * parameters, headers and whatnot to get the same results.
+ *
+ * This data should be deleted whenever a frame with this data is
+ * closed or the frame gets another content.
+ */
+var savedDataForRequests : { [x:string]: SavedRequest } = {};
+
+var webRequestFilter = { urls: ["http://*/*","https://*/*"],
+                         //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
+                         types: ["main_frame", "object", "sub_frame"]
+                       };
+
+
+function uploadDataToFormData( uploadData : Object ) : FormData
+{
+  // uploadData has the form:
+  //
+  // For each key contains the list of all values for that key. If the
+  // data is of another media type, or if it is malformed, the
+  // dictionary is not present. An example value of this dictionary is
+  // {'key': ['value1', 'value2']}.
+  //
+  var formData = new FormData();
+  for(var k in uploadData) {
+    formData.append(k, uploadData[k][0]);
+  }
+  return formData;
+}
+
+chrome.webRequest.onBeforeRequest.addListener(function(info : chrome.webRequest.OnBeforeRequestDetails) {
+    console.log("onBeforeRequest: " + info.method + " " + info.url);
+    if( info.method=="POST" || info.method=="GET" ) {
+        console.log("Saving " + info.url + " " + info.requestBody);
+        savedDataForRequests[info.url] = { formData: (info.requestBody && info.requestBody.formData)
+                                              ? uploadDataToFormData(info.requestBody.formData) : undefined,
+                                           timeStamp: info.timeStamp,
+                                           method: info.method,
+                                           type: info.type
+                                         };
+    }
+}, webRequestFilter, ["requestBody"]);
+
+chrome.webRequest.onHeadersReceived.addListener(function(info) {
+    console.log("onHeadersReceived: " + info.method + " " + info.url);
+    if( info.method=="POST" || info.method=="GET" ) {
+        console.log("Saving headers for " + info.url + " " + info.responseHeaders);
+        var obj = savedDataForRequests[info.url];
+        if( obj ) {
+            obj.responseHeaders = <HttpHeader[]>info.responseHeaders;
+        }
+    }
+}, webRequestFilter, ["responseHeaders"]);
+
 chrome.windows.getCurrent({},function(w) {
     if( w ) {
         var mainwindow = w.id;
@@ -62,32 +137,3 @@ chrome.windows.getCurrent({},function(w) {
         });
     }
 });
-
-var webRequestFilter = { urls: ["http://*/*","https://*/*"],
-                         //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
-                         types: ["main_frame", "object"]
-                       };
-
-var savedDataForRequests = {};
-
-chrome.webRequest.onBeforeRequest.addListener(function(info) {
-    console.log("onBeforeRequest: " + info.method + " " + info.url);
-    if( info.method=="POST" || info.method=="GET" ) {
-        console.log("Saving " + info.url + " " + info.requestBody);
-        savedDataForRequests[info.url] = { requestBody: info.requestBody,
-                                           timeStamp: info.timeStamp,
-                                           type: info.type
-                                         };
-    }
-}, webRequestFilter, ["requestBody"]);
-
-chrome.webRequest.onHeadersReceived.addListener(function(info) {
-    console.log("onHeadersReceived: " + info.method + " " + info.url);
-    if( info.method=="POST" || info.method=="GET" ) {
-        console.log("Saving headers for " + info.url + " " + info.responseHeaders);
-        var obj = savedDataForRequests[info.url];
-        if( obj ) {
-            obj.responseHeaders = info.responseHeaders;
-        }
-    }
-}, webRequestFilter, ["responseHeaders"]);

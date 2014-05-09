@@ -1,10 +1,11 @@
 /// <reference path="chrome.d.ts" />
 /// <reference path="chrome-app.d.ts" />
 /// <reference path="constants.ts" />
+/// <reference path="background.ts" />
 
 declare var mixpanel;
 
-var bg = chrome.extension.getBackgroundPage();
+var bg = <ScriveBackgroundPage>chrome.extension.getBackgroundPage();
 var modalTitle;
 var modalContent;
 var acceptButton;
@@ -12,6 +13,7 @@ var cancelButton;
 var directUploadLink;
 var directUploadButton;
 var dotElements;
+var pdfs : string[] = [];
 
 
 var sendMessage = function(message, responseCallback) {
@@ -30,32 +32,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
   var alreadyReloaded = false;
   var f = function(response) {
-      if (response == true) {
-          askPrintToEsign();
-      } else if (response == false) {
-          askPrintToPaper();
+    if(response==undefined ) {
+      // we happen to be here because new chrome extension did not
+      // get loaded in the context of a page
+      if( !alreadyReloaded ) {
+        /*
+         * Do reload once as we might get into infinite look here
+         */
+        alreadyReloaded = true;
+        chrome.tabs.executeScript(null, {"code": "window.location.reload()"}, function() {
+          // let the new page actually load
+          setTimeout(function(){
+            console.log("Reloaded Extension content script");
+            sendMessage({'type': 'pdfexistsonpage'}, f);
+          }, 1000);
+        });
       }
-      else {
-          // we happen to be here because new chrome extension did not
-          // get loaded in the context of a page
-          if( !alreadyReloaded ) {
-              /*
-               * Do reload once as we might get into infinite look here
-               */
-              alreadyReloaded = true;
-              chrome.tabs.executeScript(null, {"code": "window.location.reload()"}, function() {
-                  console.log("Reloaded Extension content script");
-                  sendMessage({'type': 'pdfexistsonpage',
-                               'savedDataForRequests': bg["savedDataForRequests"]
-                              }, f);
-              });
-          }
-      }
+    }
+    else if (response.length !=0) {
+      pdfs = response;
+      askPrintToEsign();
+    }
+    else {
+      /*
+       * This is slightly creepy as it will print main frame. Usually
+       * data is presented as an IFRAME or FRAME in a FRAMESET, but
+       * from this point we cannot really know which of the subframes
+       * contains useful data.
+       *
+       * Just hope that people will do this once and then learn not to
+       * touch this again.
+       */
+      askPrintToPaper();
+    }
   }
 
-  sendMessage({'type': 'pdfexistsonpage',
-               'savedDataForRequests': bg["savedDataForRequests"]
-              }, f);
+  sendMessage({'type': 'pdfexistsonpage'}, f);
 
   // Set up the templateable parts of the modal
   modalTitle = document.querySelector('.modal-title');
@@ -78,10 +90,28 @@ var askPrintToEsign = function() {
   directUploadButton.style.display = "none";
   var onAccept = function() {
     mixpanel.track("Print to e-sign accept");
-    sendMessage({'type': 'printtoesign',
-                 'savedDataForRequests': bg["savedDataForRequests"]
+
+    /*
+     * Here we would actually like to inspect what was saved in the
+     * request to weed out anything looking like an EMBED element but
+     * not refering to an actual PDF. Candidates are:
+     *
+     * - type attribute on embed element (but it is sometimes missing)
+     * - .pdf as extension of url (but sometimes it is not there)
+     * - Content-type: application.pdf (but sometimes it is not)
+     *
+     * Those should be probably tried only when there is more than one
+     * EMBED tag, otherwise just go with what happens to be there.
+     */
+    var pdfurl = pdfs[0];
+    var savedData : SavedRequest = bg.savedDataForRequests[pdfurl];
+    sendMessage({type: 'printtoesign',
+                 method: savedData.method,
+                 formData: savedData.formData,
+                 url: pdfurl
                 }, function(data) {
       // this is an error callback.
+                  console.log("Error!!");
       error(data);
     });
     acceptButton.removeEventListener('click', onAccept);
