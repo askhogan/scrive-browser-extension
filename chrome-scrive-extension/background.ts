@@ -14,6 +14,7 @@ interface SavedRequest {
   formData?: FormData;
   responseHeaders?: HttpHeader[];
   timeStamp: number;
+  tabId: number;
 };
 
 interface ScriveBackgroundPage extends Window
@@ -30,6 +31,29 @@ interface ScriveBackgroundPage extends Window
  * closed or the frame gets another content.
  */
 var savedDataForRequests : { [x:string]: SavedRequest } = {};
+
+function cleanupOldSavedDataForRequests()
+{
+  /*
+   * So that the cache does not grow beyong imagination we keep at
+   * most 50 last requests.
+   */
+  while( Object.keys(savedDataForRequests).length >50 ) {
+    // need to find oldest object
+    var timeStamp;
+    var url;
+    for(var p in savedDataForRequests) {
+      if(savedDataForRequests.hasOwnProperty(p)) {
+        var v = savedDataForRequests[p];
+        if( !timeStamp || timeStamp>v.timeStamp ) {
+          timeStamp = v.timeStamp;
+          url = p;
+        }
+      }
+    }
+    delete savedDataForRequests[url];
+  }
+}
 
 var webRequestFilter = { urls: ["http://*/*","https://*/*"],
                          //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
@@ -56,27 +80,25 @@ function uploadDataToFormData( uploadData : Object ) : FormData
 }
 
 chrome.webRequest.onBeforeRequest.addListener(function(info : chrome.webRequest.OnBeforeRequestDetails) {
-    console.log("onBeforeRequest: " + info.method + " " + info.url);
-    if( info.method=="POST" || info.method=="GET" ) {
-        console.log("Saving " + info.url + " " + info.requestBody);
+    if( (info.method=="POST" || info.method=="GET") && info.tabId >=0 ) {
         savedDataForRequests[info.url] = { formData: (info.requestBody && info.requestBody.formData)
                                               ? uploadDataToFormData(info.requestBody.formData) : undefined,
                                            timeStamp: info.timeStamp,
                                            method: info.method,
-                                           type: info.type
+                                           type: info.type,
+                                           tabId: info.tabId
                                          };
     }
 }, webRequestFilter, ["requestBody"]);
 
 chrome.webRequest.onHeadersReceived.addListener(function(info : chrome.webRequest.OnHeadersReceivedDetails) {
-    console.log("onHeadersReceived: " + info.method + " " + info.url);
-    if( info.method=="POST" || info.method=="GET" ) {
-        console.log("Saving headers for " + info.url + " " + info.responseHeaders);
+    if( (info.method=="POST" || info.method=="GET") && info.tabId >=0 ) {
         var obj = savedDataForRequests[info.url];
         if( obj ) {
             obj.responseHeaders = <HttpHeader[]>info.responseHeaders;
         }
     }
+  cleanupOldSavedDataForRequests();
 }, webRequestFilter, ["responseHeaders"]);
 
 
