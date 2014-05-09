@@ -47,18 +47,15 @@
   };
 
 
-  function qualifyURL( document, url )
+  function getAbsoluteURL( url : string, document : HTMLDocument )
   {
-    // it actually tries to contact the server when using IMG tag... not good!
-    /*
-      var img = document.createElement('img');
-      img.src = url; // set string url
-      url = img.src; // get qualified url
-      img.src = null; // no server request
-    */
+    /* Some say that it is better to use IMG here, but experiments
+     * show that Chrome tries to load the IMG, which is not a good
+     * thing. A tag works ok.
+     */
     var a = document.createElement('a');
     a.href = url; // set string url
-    url = a.href; // get qualified url
+    url = a.href; // get qualified url, browser magic has happened
     return url;
   }
 
@@ -79,7 +76,7 @@
 
       if( tagName=="embed" ) {
         var xsrc1 = elem.getAttribute("src")
-        var xsrc = qualifyURL(document, xsrc1);
+        var xsrc = getAbsoluteURL(xsrc1,document);
         /*
           -- This seems to cause problems, always something does not match as it should
 
@@ -104,6 +101,8 @@
           }
         } catch (e) {
           // this happens when unallowed frame traversals are done
+          // but we are ok with that as it usually is cross-domain
+          // security protection
           console.log("error while traversing frames", e);
         }
       }
