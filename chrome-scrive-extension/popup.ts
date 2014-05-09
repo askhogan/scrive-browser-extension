@@ -49,6 +49,13 @@ document.addEventListener("DOMContentLoaded", function() {
           }, 1000);
         });
       }
+      else {
+        /*
+         * Seems we do not have rights to load content_script.js on
+         * the page, the best we can do is to print.
+         */
+        askPrintToPaper();
+      }
     }
     else if (response.length !=0) {
       pdfs = response;
