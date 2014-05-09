@@ -1,9 +1,21 @@
 
-function showError(element : HTMLElement, errorData)
+interface ErrorData {
+  url?: string;
+  response?: string;
+  headers?: string[];
+  status?: number;
+  statusText?: string;
+};
+
+function showError(element : HTMLElement, errorData : ErrorData)
 {
   var buildHTML = chrome.i18n.getMessage("somethingWentWrong");
   element.style.display = "block";
   buildHTML = "<p>" + chrome.i18n.getMessage("mailSupportWithErrorMessage") + "</p>";
+  buildHTML += "<p>";
+  if( errorData.url ) {
+    buildHTML += errorData.url + "<br/>";
+  }
   if( errorData.response ) {
     buildHTML += chrome.i18n.getMessage("errorMessage") + "<br />" +
                  errorData.response + "<br/>";
@@ -16,18 +28,16 @@ function showError(element : HTMLElement, errorData)
   }
 
   buildHTML += "</p>";
-  element.innerHTML = buildHTML;
 
   chrome.storage.sync.get(KEYS.PRINTER_URL, function(items) {
     var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
-    buildHTML = "";
     buildHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
     buildHTML += "Chrome Extension Version: " + chrome.runtime.getManifest()["version"] + "<br />";
     buildHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
     buildHTML += "Scrive URL: " + printer_url;
     buildHTML += "</p>";
-    element.innerHTML += buildHTML;
+    element.innerHTML = buildHTML;
 
-    mixpanel.track("Error detected", {content: element.innerHTML});
+    mixpanel.track("Error detected", {content: buildHTML});
   });
 }

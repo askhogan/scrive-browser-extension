@@ -140,7 +140,7 @@ var keepErrorInfo : { [x :string]: string } = {};
 
 })();
 
-function errorCallbackFromXMLHttpRequest(url, errorCallback,xmlHttpRequest)
+function errorCallbackFromXMLHttpRequest(url: string, errorCallback: (x:ErrorData) => void, xmlHttpRequest : XMLHttpRequest)
 {
   /*
    * This information is actually good only for HTTP level errors,
@@ -161,11 +161,12 @@ function errorCallbackFromXMLHttpRequest(url, errorCallback,xmlHttpRequest)
    */
   setTimeout(function() {
     errorCallback({
-      'type': 'error',
-      'headers': xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
-      'response': xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
-      'status':  xmlHttpRequest.status,
-      'statusText': xmlHttpRequest.statusText
+      type: 'error',
+      url: url,
+      headers: xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
+      response: xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
+      status:  xmlHttpRequest.status,
+      statusText: xmlHttpRequest.statusText
     })},200);
 }
 
