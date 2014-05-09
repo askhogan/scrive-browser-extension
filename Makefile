@@ -11,11 +11,16 @@ all : ${JS_FILES}
 
 crx : chrome-scrive-extension-$(CHROME_EXTENSION_VERSION).crx
 
+node_modules/typescript/bin/tsc :
+	mkdir -p node_modules
+	npm install typescript
+
 chrome-scrive-extension-$(CHROME_EXTENSION_VERSION).crx : $(shell find chrome-scrive-extension -type f) ${JS_FILES}
+	rm *.crx
 	./crxmake.sh $@ chrome-scrive-extension chrome-scrive-extension.pem
 
-%.js : %.ts
-	../node_modules/typescript/bin/tsc $< || rm $@
+%.js : %.ts node_modules/typescript/bin/tsc
+	node_modules/typescript/bin/tsc $< || rm $@
 
-watch :
-	../node_modules/typescript/bin/tsc -w ${TS_FILES}
+watch : node_modules/typescript/bin/tsc
+	node_modules/typescript/bin/tsc -w ${TS_FILES}
