@@ -77,6 +77,22 @@ chrome.webRequest.onHeadersReceived.addListener(function(info) {
     }
 }, webRequestFilter, ["responseHeaders"]);
 
+
+var webRequestFilter2 = { urls: ["http://*/*","https://*/*"],
+                          types: ["xmlhttprequest"]
+                        };
+
+chrome.webRequest.onErrorOccurred.addListener(function(info) {
+  if( info.tabId && info.tabId>=0 ) {
+    var message = { type: "xmlhttprequesterror",
+                    error: info.error,
+                    method: info.method,
+                    url: info.url,
+                    ip: info.ip };
+    chrome.tabs.sendMessage(info.tabId, message, function() {});
+  }
+}, webRequestFilter2);
+
 chrome.windows.getCurrent({},function(w) {
     if( w ) {
         var mainwindow = w.id;

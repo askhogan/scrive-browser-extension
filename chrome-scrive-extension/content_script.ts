@@ -17,20 +17,25 @@
  * - add a spinner for the time of upload
  */
 
+var keepErrorInfo : { [x :string]: string } = {};
+
 (function() {
   setupListeners();
+
 
   function setupListeners() {
     chrome.runtime.onMessage.addListener(
       function(request : {type: string;
                           url: string;
                           method: string;
-                          formData?: FormData},
-               sender, sendResponse) {
+                          formData?: FormData;
+                          error?: string},
+               sender, sendResponse) : boolean {
+
         if (request.type == 'pdfexistsonpage') {
           var pdfs = findEmbedTagURLs(document);
           sendResponse(pdfs);
-        };
+        }
 
         if (request.type == 'printtopaper') {
           window.print();
@@ -44,6 +49,10 @@
            * 'true'.
            */
           return true;
+        }
+        if (request.type == 'xmlhttprequesterror') {
+          keepErrorInfo[request.url] = request.error;
+          return false;
         }
       }
     );
@@ -109,11 +118,11 @@
         uploadPDFData(getpdfXHR.response, errorCallback, false);
       }
       else {
-        errorCallbackFromXMLHttpRequest(errorCallback,this);
+        errorCallbackFromXMLHttpRequest(request.url,errorCallback,this);
       }
     };
     getpdfXHR.onerror = function() {
-      errorCallbackFromXMLHttpRequest(errorCallback,this);
+      errorCallbackFromXMLHttpRequest(request.url,errorCallback,this);
     };
     getpdfXHR.open(request.method, request.url );
     getpdfXHR.responseType = "blob";
@@ -131,19 +140,38 @@
 
 })();
 
-function errorCallbackFromXMLHttpRequest(errorCallback,xmlHttpRequest)
+function errorCallbackFromXMLHttpRequest(url, errorCallback,xmlHttpRequest)
 {
-  errorCallback({
-    'type': 'error',
-    'headers': xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
-    'response': xmlHttpRequest.responseText,
-    'status':  xmlHttpRequest.status,
-    'statusText': xmlHttpRequest.statusText
-  });
+  /*
+   * This information is actually good only for HTTP level errors,
+   * when there is HTTP status code and statusText and maybe even
+   * responseText.
+   *
+   * For any kind of error that is a bit lower level, like
+   * net::ERR_CONNECTION_REFUSED we do not have good information at
+   * this point.
+   *
+   * To get that information background page subscribes to
+   * chrome.webRequest.onErrorOccurred and there in the callback there
+   * is a string field called 'error'. We get notified on this tab
+   * with a message of 'xmlhttprequesterror'. That information is
+   * stored in global keepErrorInfo variable.
+   *
+   * And also timing issues: lets wait till all messages come in.
+   */
+  setTimeout(function() {
+    errorCallback({
+      'type': 'error',
+      'headers': xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
+      'response': xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
+      'status':  xmlHttpRequest.status,
+      'statusText': xmlHttpRequest.statusText
+    })},200);
 }
 
 function uploadPDFData(data, errorCallback, sameWindow) {
   var xmlHttpRequestPUT = new XMLHttpRequest();
+  var printer_url;
   xmlHttpRequestPUT.onload = function () {
     if( xmlHttpRequestPUT.status >= 200 && xmlHttpRequestPUT.status <=299 ) {
       var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
@@ -161,19 +189,19 @@ function uploadPDFData(data, errorCallback, sameWindow) {
       }
     }
     else {
-      errorCallbackFromXMLHttpRequest(errorCallback,this);
+      errorCallbackFromXMLHttpRequest(printer_url,errorCallback,this);
     }
   }
 
   xmlHttpRequestPUT.onerror = function() {
-      errorCallbackFromXMLHttpRequest(errorCallback,this);
+      errorCallbackFromXMLHttpRequest(printer_url,errorCallback,this);
   };
 
   chrome.storage.sync.get([KEYS.PRINTER_URL,
                            KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
                            KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET],
                           function(items) {
-                            var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
+                            printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
                             var clientId = items[KEYS.OAUTH_CLIENT_ID] || "";
                             var clientSecret = items[KEYS.OAUTH_CLIENT_SECRET] || "";
                             var tokenId = items[KEYS.OAUTH_TOKEN_ID] || "";
