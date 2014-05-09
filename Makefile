@@ -16,3 +16,6 @@ chrome-scrive-extension-$(CHROME_EXTENSION_VERSION).crx : $(shell find chrome-sc
 
 %.js : %.ts
 	../node_modules/typescript/bin/tsc $< || rm $@
+
+watch :
+	../node_modules/typescript/bin/tsc -w ${TS_FILES}
