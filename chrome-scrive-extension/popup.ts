@@ -109,11 +109,9 @@ var askPrintToEsign = function() {
                  method: savedData.method,
                  formData: savedData.formData,
                  url: pdfurl
-                }, function(data) {
-      // this is an error callback.
-                  console.log("Error!!");
-      error(data);
-    });
+                },
+                errorCallback
+               );
     acceptButton.removeEventListener('click', onAccept);
     uploadingPDF();
   };
@@ -167,7 +165,7 @@ var uploadingPDF = function() {
   uploadingPDFInterval = setInterval(updateWaitingButtonText, 1000);
 };
 
-var error = function(errorData) {
+var errorCallback = function(errorData) {
   modalTitle.innerHTML = chrome.i18n.getMessage("somethingWentWrong");
   modalContent.style.display = "block";
   modalContent.innerHTML = "<p>" + chrome.i18n.getMessage("mailSupportWithErrorMessage") + "</p>";

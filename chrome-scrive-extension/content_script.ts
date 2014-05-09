@@ -108,19 +108,17 @@
       if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
         uploadPDFData(getpdfXHR.response, errorCallback, false);
       }
+      else {
+        errorCallbackFromXMLHttpRequest(errorCallback,this);
+      }
     };
     getpdfXHR.onerror = function() {
-      errorCallback({
-        'type': 'error',
-        'headers': getpdfXHR.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
-        'status':  getpdfXHR.status,
-        'response': getpdfXHR.response,
-        'statusText': getpdfXHR.statusText
-      });
+      errorCallbackFromXMLHttpRequest(errorCallback,this);
     };
     getpdfXHR.open(request.method, request.url );
     getpdfXHR.responseType = "blob";
     getpdfXHR.send(request.formData);
+
     /*
      * I'm not sure what is the real difference between 'blob' and
      * 'arraybuffer', they look similar enough to me. 'Blob' has mime
@@ -132,6 +130,17 @@
 
 
 })();
+
+function errorCallbackFromXMLHttpRequest(errorCallback,xmlHttpRequest)
+{
+  errorCallback({
+    'type': 'error',
+    'headers': xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
+    'response': xmlHttpRequest.responseText,
+    'status':  xmlHttpRequest.status,
+    'statusText': xmlHttpRequest.statusText
+  });
+}
 
 function uploadPDFData(data, errorCallback, sameWindow) {
   var xmlHttpRequestPUT = new XMLHttpRequest();
@@ -152,23 +161,12 @@ function uploadPDFData(data, errorCallback, sameWindow) {
       }
     }
     else {
-      errorCallback({
-        'type': 'error',
-        'headers': xmlHttpRequestPUT.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
-        'status':  xmlHttpRequestPUT.status,
-        'statusText': xmlHttpRequestPUT.statusText
-      });
+      errorCallbackFromXMLHttpRequest(errorCallback,this);
     }
   }
 
   xmlHttpRequestPUT.onerror = function() {
-    console.log("xmlHttpRequestPUT.onerror");
-    errorCallback({
-      'type': 'error',
-      'headers': xmlHttpRequestPUT.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
-      'status':  xmlHttpRequestPUT.status,
-      'statusText': xmlHttpRequestPUT.statusText
-    });
+      errorCallbackFromXMLHttpRequest(errorCallback,this);
   };
 
   chrome.storage.sync.get([KEYS.PRINTER_URL,
