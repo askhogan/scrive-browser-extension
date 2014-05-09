@@ -48,7 +48,9 @@ function uploadDataToFormData( uploadData : Object ) : FormData
   //
   var formData = new FormData();
   for(var k in uploadData) {
-    formData.append(k, uploadData[k][0]);
+    for(var i in uploadData[k]) {
+      formData.append(k, uploadData[k][i]);
+    }
   }
   return formData;
 }
