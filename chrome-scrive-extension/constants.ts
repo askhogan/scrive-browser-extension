@@ -7,6 +7,4 @@ var KEYS = {
 };
 
 var DEFAULTS = {
-  //PRINTER_URL: "http://localhost:3456/printer",
-  PRINTER_URL: "http://vm-dev.scrive.com:12345/printer"
 }
