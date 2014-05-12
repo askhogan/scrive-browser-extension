@@ -7,4 +7,5 @@ var KEYS = {
 };
 
 var DEFAULTS = {
+  PRINTER_URL: ""
 }
