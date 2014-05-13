@@ -46,10 +46,22 @@
  *   console.log.
  *
  */
+declare module OAuth {
+    interface Params {
+      endpoint?: string;
+      privileges?: string;
+      onerror?: any; //??
+      onload?: any;
+      client_id?: string;
+      client_secret?: string;
+      token_endpoint?: string;
+      initiate_endpoint?: string;
+    }
+}
 
 var OAuth = ((function() {
 
-    var getCookie = function(name)
+    function getCookie(name : string) : string
     {
         var cookies = document.cookie.split(';');
         for(var i in cookies) {
@@ -62,22 +74,23 @@ var OAuth = ((function() {
         // return undefined
     };
 
-    var setCookie = function(name,value)
+    function setCookie(name : string,value : string):void
     {
         document.cookie = name + '=' + value;
     };
 
-    var deleteCookie = function(name)
+    function deleteCookie(name:string):void
     {
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     };
 
 
-    var parameterEncode = function(value)
+    function parameterEncode(value:string):string
     {
         var hex = "0123456789ABCDEF";
         var result = "";
-        for( var i in value ) {
+        var count = value.length;
+        for( var i=0; i<count; i++ ) {
             var c = value.charAt(i);
             /*
              * Unreserved characters MUST NOT be encoded. Everything else
@@ -102,7 +115,7 @@ var OAuth = ((function() {
         return result;
     };
 
-    var authorizationHeader = function(fields)
+    function authorizationHeader(fields : Object) : string
     {
         var result = [];
         /*
@@ -132,10 +145,10 @@ var OAuth = ((function() {
         return "OAuth " + result.join(",");
     };
 
-    var decodeQueryString = function(query)
+    function decodeQueryString(query : string) : { [x:string]:string }
     {
         var pairs = query.split('&');
-        var result = {};
+        var result : { [x:string]:string } = {};
         var len = pairs.length;
         var tmp, key, value;
 
@@ -153,7 +166,7 @@ var OAuth = ((function() {
         return result;
     };
 
-    var oauthOnError = function(rq)
+    function oauthOnError(rq : XMLHttpRequest) : void
     {
         if( console!=undefined && console.log!=undefined ) {
             console.log("OAuth communication error: " + rq.status + " " + rq.statusText);
@@ -164,7 +177,7 @@ var OAuth = ((function() {
         }
     };
 
-    var requestToken = function(params)
+    function requestToken(params : OAuth.Params) : void
     {
         var rq = new XMLHttpRequest();
 
@@ -196,7 +209,7 @@ var OAuth = ((function() {
      * acceptance of privileges. This functionreturns but in the
      * background eventually it should redirect to authorize_endpoint.
      */
-    var authorize = function(params)
+    function authorize(params)
     {
         requestToken({
             "oauth_consumer_key": params.client_id,
@@ -227,7 +240,7 @@ var OAuth = ((function() {
      * incoming handshake confirmation.  Then it puts data in local
      * storage and navigates back.
      */
-    var handleCallback = function(params)
+    function handleCallback(params : OAuth.Params)
     {
         /* Drop '?' from the front of search string */
         var query: { oauth_token?: string; oauth_verifier?: string; } =
