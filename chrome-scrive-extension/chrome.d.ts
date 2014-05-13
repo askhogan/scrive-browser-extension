@@ -2268,7 +2268,7 @@ declare module chrome.webRequest {
     interface RequestBody {
         raw?: UploadData;
         error?: string;
-        formData?: Object;
+        formData?: { [x:string]: string[] }[];
     }
 
     interface OnBeforeRequestDetails {

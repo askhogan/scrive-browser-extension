@@ -32,7 +32,7 @@ interface ScriveBackgroundPage extends Window
  */
 var savedDataForRequests : { [x:string]: SavedRequest } = {};
 
-function cleanupOldSavedDataForRequests()
+function cleanupOldSavedDataForRequests():void
 {
   /*
    * So that the cache does not grow beyong imagination we keep at
@@ -55,21 +55,23 @@ function cleanupOldSavedDataForRequests()
   }
 }
 
-var webRequestFilter = { urls: ["http://*/*","https://*/*"],
+var webRequestFilter : chrome.webRequest.RequestFilter = { urls: ["http://*/*","https://*/*"],
                          //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
                          types: ["main_frame", "object", "sub_frame"]
                        };
 
 
-function uploadDataToFormData( uploadData : Object ) : FormData
+// uploadData has the form:
+//
+// For each key contains the list of all values for that key. If the
+// data is of another media type, or if it is malformed, the
+// dictionary is not present. An example value of this dictionary is
+// {'key': ['value1', 'value2']}.
+//
+// Note that this is something else than thing called UploadData
+
+function uploadDataToFormData( uploadData : { [x:string]: string[] }[] ) : FormData
 {
-  // uploadData has the form:
-  //
-  // For each key contains the list of all values for that key. If the
-  // data is of another media type, or if it is malformed, the
-  // dictionary is not present. An example value of this dictionary is
-  // {'key': ['value1', 'value2']}.
-  //
   var formData = new FormData();
   for(var k in uploadData) {
     for(var i in uploadData[k]) {
@@ -102,7 +104,7 @@ chrome.webRequest.onHeadersReceived.addListener(function(info : chrome.webReques
 }, webRequestFilter, ["responseHeaders"]);
 
 
-var webRequestFilter2 = { urls: ["http://*/*","https://*/*"],
+var webRequestFilter2 : chrome.webRequest.RequestFilter = { urls: ["http://*/*","https://*/*"],
                           types: ["xmlhttprequest"]
                         };
 
