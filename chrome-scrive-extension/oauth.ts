@@ -166,6 +166,9 @@ var OAuth = ((function() {
         return result;
     };
 
+    /*
+     * This is a fallback method when onerror was not given.
+     */
     function oauthOnError(rq : XMLHttpRequest) : void
     {
         if( console!=undefined && console.log!=undefined ) {
@@ -204,7 +207,7 @@ var OAuth = ((function() {
     };
 
     /*
-     * This functionexecutes first half of OAuth handshake. First asks
+     * This function executes first half of OAuth handshake. First asks
      * for temporary credentials, then redirects to confirm user
      * acceptance of privileges. This functionreturns but in the
      * background eventually it should redirect to authorize_endpoint.
