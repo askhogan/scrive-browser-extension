@@ -76,7 +76,7 @@ var keepErrorInfo : { [x :string]: string } = {};
 
   /**
    * Look through the DOM and search for PDF's
-   * 
+   *
    * @return Array the urls of pdfs that were found.
    */
   function findEmbedTagURLs(document : HTMLDocument) : string[]
@@ -143,7 +143,7 @@ var keepErrorInfo : { [x :string]: string } = {};
 
 })();
 
-function errorCallbackFromXMLHttpRequest(url: string, errorCallback: (x:ErrorData) => void, xmlHttpRequest : XMLHttpRequest)
+function errorCallbackFromXMLHttpRequest(url: string, errorCallback: (x:ErrorData) => void, xmlHttpRequest : XMLHttpRequest) : void
 {
   /*
    * This information is actually good only for HTTP level errors,
@@ -173,9 +173,28 @@ function errorCallbackFromXMLHttpRequest(url: string, errorCallback: (x:ErrorDat
     })},200);
 }
 
-function uploadPDFData(data, errorCallback, sameWindow) {
+function uploadPDFData(data, errorCallback: (x:ErrorData) => void, sameWindow:boolean):void
+{
+  chrome.storage.sync.get([KEYS.PRINTER_URL,
+                           KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
+                           KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET],
+                          function(items) {
+                            uploadPDFDataWithCredentials(data,errorCallback, sameWindow, items);
+                          });
+}
+
+function uploadPDFDataWithCredentials(data,
+                                      errorCallback: (x:ErrorData) => void,
+                                      sameWindow:boolean,
+                                      items):void
+{
   var xmlHttpRequestPUT = new XMLHttpRequest();
-  var printer_url;
+  var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
+  var clientId = items[KEYS.OAUTH_CLIENT_ID] || "";
+  var clientSecret = items[KEYS.OAUTH_CLIENT_SECRET] || "";
+  var tokenId = items[KEYS.OAUTH_TOKEN_ID] || "";
+  var tokenSecret = items[KEYS.OAUTH_TOKEN_SECRET] || "";
+
   xmlHttpRequestPUT.onload = function () {
     if( xmlHttpRequestPUT.status >= 200 && xmlHttpRequestPUT.status <=299 ) {
       var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
@@ -198,35 +217,25 @@ function uploadPDFData(data, errorCallback, sameWindow) {
   }
 
   xmlHttpRequestPUT.onerror = function() {
-      errorCallbackFromXMLHttpRequest(printer_url,errorCallback,this);
+    errorCallbackFromXMLHttpRequest(printer_url,errorCallback,this);
   };
 
-  chrome.storage.sync.get([KEYS.PRINTER_URL,
-                           KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
-                           KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET],
-                          function(items) {
-                            printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
-                            var clientId = items[KEYS.OAUTH_CLIENT_ID] || "";
-                            var clientSecret = items[KEYS.OAUTH_CLIENT_SECRET] || "";
-                            var tokenId = items[KEYS.OAUTH_TOKEN_ID] || "";
-                            var tokenSecret = items[KEYS.OAUTH_TOKEN_SECRET] || "";
+  console.log("Sending PDF data to: " + printer_url);
+  xmlHttpRequestPUT.open("PUT", printer_url);
 
-                            var oauth_header = "OAuth oauth_signature_method=\"PLAINTEXT\"" +
-                                ",oauth_consumer_key=\"" + clientId +
-                                "\",oauth_token=\"" + tokenId +
-                                "\",oauth_signature=\"" + clientSecret + "&" + tokenSecret + "\"";
+  if( clientId + "" != "" &&
+      clientSecret + "" != "" &&
+      tokenId + "" != "" &&
+      tokenSecret + "" != "" ) {
 
-                            console.log("Sending PDF data to: " + printer_url);
-                            xmlHttpRequestPUT.open("PUT", printer_url);
+    var oauthComponents = [ "oauth_signature_method=\"PLAINTEXT\"",
+                            "oauth_consumer_key=\"" + clientId + "\"",
+                            "oauth_token=\"" + tokenId + "\"",
+                            "oauth_signature=\"" + clientSecret + "&" + tokenSecret + "\""];
 
-                            if( clientId + "" != "" &&
-                                clientSecret + "" != "" &&
-                                tokenId + "" != "" &&
-                                tokenSecret + "" != "" ) {
+    var oauthHeader = "OAuth " + oauthComponents.join(",");
 
-                              xmlHttpRequestPUT.setRequestHeader("Authorization", oauth_header);
-                              console.log("Using Authorization: " + oauth_header);
-                            }
-                            xmlHttpRequestPUT.send(data);
-                          });
+    xmlHttpRequestPUT.setRequestHeader("Authorization", oauthHeader);
+  }
+  xmlHttpRequestPUT.send(data);
 }
