@@ -38,10 +38,12 @@ function cleanupOldSavedDataForRequests():void
    * So that the cache does not grow beyong imagination we keep at
    * most 50 last requests.
    */
+  var timeStamp;
+  var url;
   while( Object.keys(savedDataForRequests).length >50 ) {
     // need to find oldest object
-    var timeStamp;
-    var url;
+    timeStamp = undefined;
+    url = undefined;
     for(var p in savedDataForRequests) {
       if(savedDataForRequests.hasOwnProperty(p)) {
         var v = savedDataForRequests[p];
@@ -51,7 +53,12 @@ function cleanupOldSavedDataForRequests():void
         }
       }
     }
-    delete savedDataForRequests[url];
+    if( url ) {
+      delete savedDataForRequests[url];
+    }
+    else {
+      console.log("cleanupOldSavedDataForRequests: infinite loop");
+    }
   }
 }
 
