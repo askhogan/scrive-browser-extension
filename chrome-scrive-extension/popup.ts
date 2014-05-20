@@ -38,7 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
       // get loaded in the context of a page
       if( !alreadyReloaded ) {
         /*
-         * Do reload once as we might get into infinite look here
+         * Do reload once as we might get into infinite look
+         * here. Some pages will not load content_script.js due to
+         * security reasons. For example local file:// pages are
+         * excluded by our manifest.json as there are chrome bugs in
+         * security domain implemention for local pages anyway.
          */
         alreadyReloaded = true;
         chrome.tabs.executeScript(null, {"code": "window.location.reload()"}, function() {
