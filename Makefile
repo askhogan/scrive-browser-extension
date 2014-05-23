@@ -17,6 +17,7 @@ node_modules : package.json
 	touch node_modules
 
 node_modules/typescript/bin/tsc : node_modules
+node_modules/react-tools/bin/jsx : node_modules
 
 bower_components : bower.json node_modules
 	node_modules/bower/bin/bower install
@@ -28,6 +29,9 @@ chrome-scrive-extension-$(CHROME_EXTENSION_VERSION).crx : $(shell find chrome-sc
 %.js : %.ts node_modules/typescript/bin/tsc
 	node_modules/typescript/bin/tsc $< || rm $@
 
-watch : node_modules/typescript/bin/tsc
-	node_modules/typescript/bin/tsc -w ${TS_FILES} &
-	node_modules/react-tools/bin/jsx -x jsx -w chrome-scrive-extension chrome-scrive-extension &
+watch : node_modules/typescript/bin/tsc node_modules/react-tools/bin/jsx
+	- \
+    node_modules/typescript/bin/tsc -w ${TS_FILES} & trap "kill $$!" EXIT ; \
+	node_modules/react-tools/bin/jsx -x jsx -w chrome-scrive-extension chrome-scrive-extension & trap "kill $$!" EXIT ; \
+	echo "Press Ctrl-C to stop watching" ; \
+	wait
