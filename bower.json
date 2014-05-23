@@ -1,0 +1,25 @@
+{
+  "name": "scrive-browser-extension",
+  "version": "0.0.0",
+  "authors": [
+    "Gracjan Polak <gracjan@scrive.com>"
+  ],
+  "description": "Buu",
+  "main": "buu",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "spin.js": "~1.2.8",
+    "react": "~0.10.0"
+  }
+}
