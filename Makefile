@@ -31,7 +31,8 @@ chrome-scrive-extension-$(CHROME_EXTENSION_VERSION).crx : $(shell find chrome-sc
 
 watch : node_modules/typescript/bin/tsc node_modules/react-tools/bin/jsx
 	- \
-    node_modules/typescript/bin/tsc -w ${TS_FILES} & trap "kill $$!" EXIT ; \
-	node_modules/react-tools/bin/jsx -x jsx -w chrome-scrive-extension chrome-scrive-extension & trap "kill $$!" EXIT ; \
+    node_modules/typescript/bin/tsc -w ${TS_FILES} & TSCPID=$$! ; \
+	node_modules/react-tools/bin/jsx -x jsx -w chrome-scrive-extension chrome-scrive-extension & JSXPID=$$! ; \
+	trap "kill $$TSCPID ; kill $$JSXPID" EXIT; \
 	echo "Press Ctrl-C to stop watching" ; \
 	wait
