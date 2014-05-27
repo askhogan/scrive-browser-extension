@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
           // let the new page actually load
           setTimeout(function(){
             console.log("Reloaded Extension content script");
-            sendMessage({'type': 'pdfexistsonpage'}, f);
+            sendMessage({'type': MESSAGES.PDFEXISTSONPAGE}, f);
           }, 1000);
         });
       }
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  sendMessage({'type': 'pdfexistsonpage'}, f);
+  sendMessage({'type': MESSAGES.PDFEXISTSONPAGE}, f);
 
   // Set up the templateable parts of the modal
   modalTitle = document.querySelector('.modal-title');
@@ -140,7 +140,7 @@ var askPrintToPaper = function() {
   cancelButton.innerText = chrome.i18n.getMessage("cancel");
   var onAccept = function() {
     mixpanel.track("Print to paper accept");
-    sendMessage({'type': 'printtopaper'}, function(e) { return; });
+    sendMessage({'type': MESSAGES.PRINTTOPAPER}, function(e) { return; });
     acceptButton.removeListener('click', onAccept);
   };
   var onCancel = function() { mixpanel.track("Print to paper cancel", {}, function() { window.close() }); };

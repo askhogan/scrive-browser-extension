@@ -35,16 +35,16 @@ var keepErrorInfo : { [x :string]: string } = {};
                           error?: string},
                sender, sendResponse) : boolean {
 
-        if (request.type == 'pdfexistsonpage') {
+        if (request.type == MESSAGES.PDFEXISTSONPAGE) {
           var pdfs = findEmbedTagURLs(document);
           sendResponse(pdfs);
         }
 
-        if (request.type == 'printtopaper') {
+        if (request.type == MESSAGES.PRINTTOPAPER) {
           window.print();
         }
 
-        if (request.type == 'printtoesign') {
+        if (request.type == MESSAGES.PRINTTOESIGN) {
           // TODO make this more clever
           sendPDF(request, sendResponse);
           /*
@@ -53,7 +53,7 @@ var keepErrorInfo : { [x :string]: string } = {};
            */
           return true;
         }
-        if (request.type == 'xmlhttprequesterror') {
+        if (request.type == MESSAGES.XMLHTTPREQUESTERROR) {
           keepErrorInfo[request.url] = request.error;
           return false;
         }
@@ -164,11 +164,11 @@ function errorCallbackFromXMLHttpRequest(url: string, errorCallback: (x:ErrorDat
    */
   setTimeout(function() {
     errorCallback({
-      type: 'error',
-      url: url,
-      headers: xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
-      response: xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
-      status:  xmlHttpRequest.status,
+      type:       'error',
+      url:        url,
+      headers:    xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function(x) { return x!=""; }),
+      response:   xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
+      status:     xmlHttpRequest.status,
       statusText: xmlHttpRequest.statusText
     })},200);
 }

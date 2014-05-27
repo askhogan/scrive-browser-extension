@@ -8,4 +8,11 @@ var KEYS = {
 
 var DEFAULTS = {
   PRINTER_URL: ""
-}
+};
+
+var MESSAGES = {
+  PDFEXISTSONPAGE: 'pdfexistsonpage',
+  PRINTTOPAPER: 'printtopaper',
+  PRINTTOESIGN: 'printtoesign',
+  XMLHTTPREQUESTERROR: 'xmlhttprequesterror'
+};
