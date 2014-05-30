@@ -86,6 +86,9 @@
       }
     }
   },
+  "gotoListOfJobs": {
+    "message": "Gå till jobb listan"
+  },
   "dropFileHere": {
     "message": "Släpp filen här",
     "description": "Instruction showing while draggin a file."

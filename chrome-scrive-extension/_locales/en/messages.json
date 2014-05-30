@@ -86,6 +86,9 @@
       }
     }
   },
+  "gotoListOfJobs": {
+    "message": "Go to list of jobs"
+  },
   "dropFileHere": {
     "message": "Drop the file here",
     "description": "Instruction showing while draggin a file."

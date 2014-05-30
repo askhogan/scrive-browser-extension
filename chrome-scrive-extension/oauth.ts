@@ -270,5 +270,6 @@ var OAuth = ((function() {
     };
 
     return { "authorize": authorize,
-             "handleCallback": handleCallback };
+             "handleCallback": handleCallback,
+             "authorizationHeader": authorizationHeader };
 })());

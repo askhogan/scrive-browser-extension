@@ -13,12 +13,37 @@ var tokenIdInput = <HTMLInputElement>document.querySelector('#token_id');
 var tokenSecretInput = <HTMLInputElement>document.querySelector('#token_secret');
 var saveButton = <HTMLElement>document.querySelector('.button.save');
 var oauthButton = <HTMLElement>document.querySelector('.button.oauth');
+var gotoListOfJobs = <HTMLElement>document.querySelector('.goto-list-of-jobs');
 
 form.addEventListener('submit', function() { return false; });
 saveButton.addEventListener('click', save_options);
 oauthButton.addEventListener('click', oauth_authorize);
 document.addEventListener('DOMContentLoaded', restore_options);
 document.addEventListener('DOMContentLoaded', translate_ui);
+gotoListOfJobs.addEventListener('click', goto_list_of_jobs);
+
+function goto_list_of_jobs()
+{
+  var url = urlInput.value;
+
+  var clientId = clientIdInput.value;
+  var clientSecret = clientSecretInput.value;
+  var tokenId = tokenIdInput.value;
+  var tokenSecret = tokenSecretInput.value;
+
+  var oauthComponents = [ "oauth_signature_method=\"PLAINTEXT\"",
+                          "oauth_consumer_key=\"" + clientId + "\"",
+                          "oauth_token=\"" + tokenId + "\"",
+                          "oauth_signature=\"" + clientSecret + "&" + tokenSecret + "\""];
+
+  var oauthHeader = "OAuth " + oauthComponents.join(",");
+
+  url = url.replace("/printer","/authlogin");
+  url = url + "?authorization=" + encodeURIComponent(oauthHeader);
+  window.open(url,'_blank');
+
+  return false;
+}
 
 function save_options() {
   var obj = {};
@@ -45,6 +70,7 @@ function translate_ui() {
   (<HTMLElement>document.querySelector('#url-label')).innerText = chrome.i18n.getMessage("printerUrlOptionLabel");
   (<HTMLElement>document.querySelector('#oauth-instructions')).innerText = chrome.i18n.getMessage("oauthInstructions");
   (<HTMLElement>document.querySelector('title')).innerText = chrome.i18n.getMessage("options");
+  (<HTMLElement>document.querySelector('.goto-list-of-jobs')).innerText = chrome.i18n.getMessage("gotoListOfJobs");
 }
 
 function restore_options() {
