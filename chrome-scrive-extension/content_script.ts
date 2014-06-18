@@ -31,7 +31,7 @@ var keepErrorInfo : { [x :string]: string } = {};
       function(request : {type: string;
                           url: string;
                           method: string;
-                          formData?: FormData;
+                          formData?: { [x:string]: string[] }[];
                           error?: string},
                sender, sendResponse) : boolean {
 
@@ -74,6 +74,27 @@ var keepErrorInfo : { [x :string]: string } = {};
     return url;
   }
 
+
+  // uploadData has the form:
+  //
+  // For each key contains the list of all values for that key. If the
+  // data is of another media type, or if it is malformed, the
+  // dictionary is not present. An example value of this dictionary is
+  // {'key': ['value1', 'value2']}.
+  //
+  // Note that this is something else than thing called UploadData
+
+  function uploadDataToFormData( uploadData : { [x:string]: string[] }[] ) : FormData
+  {
+    var formData = new FormData();
+    for(var k in uploadData) {
+      for(var i in uploadData[k]) {
+        formData.append(k, uploadData[k][i]);
+      }
+    }
+    return formData;
+  }
+
   /**
    * Look through the DOM and search for PDF's
    *
@@ -113,7 +134,7 @@ var keepErrorInfo : { [x :string]: string } = {};
    */
   function sendPDF(request : {url: string;
                               method: string;
-                              formData?: FormData},
+                              formData?:{ [x:string]: string[] }[]},
                               errorCallback) {
     var getpdfXHR = new XMLHttpRequest();
     getpdfXHR.onload = function() {
@@ -129,7 +150,12 @@ var keepErrorInfo : { [x :string]: string } = {};
     };
     getpdfXHR.open(request.method, request.url );
     getpdfXHR.responseType = "blob";
-    getpdfXHR.send(request.formData);
+    if( request.formData ) {
+        getpdfXHR.send(uploadDataToFormData(request.formData));
+    }
+    else {
+         getpdfXHR.send();
+    }
 
     /*
      * I'm not sure what is the real difference between 'blob' and

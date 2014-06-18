@@ -11,7 +11,7 @@ interface HttpHeader {
 interface SavedRequest {
   method: string;
   type: string;
-  formData?: FormData;
+  formData?:  { [x:string]: string[] }[];
   responseHeaders?: HttpHeader[];
   timeStamp: number;
   tabId: number;
@@ -68,30 +68,10 @@ var webRequestFilter : chrome.webRequest.RequestFilter = { urls: ["http://*/*","
                        };
 
 
-// uploadData has the form:
-//
-// For each key contains the list of all values for that key. If the
-// data is of another media type, or if it is malformed, the
-// dictionary is not present. An example value of this dictionary is
-// {'key': ['value1', 'value2']}.
-//
-// Note that this is something else than thing called UploadData
-
-function uploadDataToFormData( uploadData : { [x:string]: string[] }[] ) : FormData
-{
-  var formData = new FormData();
-  for(var k in uploadData) {
-    for(var i in uploadData[k]) {
-      formData.append(k, uploadData[k][i]);
-    }
-  }
-  return formData;
-}
-
 chrome.webRequest.onBeforeRequest.addListener(function(info : chrome.webRequest.OnBeforeRequestDetails) {
     if( (info.method=="POST" || info.method=="GET") && info.tabId >=0 ) {
         savedDataForRequests[info.url] = { formData: (info.requestBody && info.requestBody.formData)
-                                              ? uploadDataToFormData(info.requestBody.formData) : undefined,
+                                              ? info.requestBody.formData : undefined,
                                            timeStamp: info.timeStamp,
                                            method: info.method,
                                            type: info.type,
