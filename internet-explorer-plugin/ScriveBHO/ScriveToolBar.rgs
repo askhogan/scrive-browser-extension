@@ -1,0 +1,51 @@
+HKCR
+{
+	ScriveBHO.ScriveHook.1 = s 'Scrive Toolbar'
+	{
+		CLSID = s '{A778B24B-CCEB-486B-AB80-99587C7F704A}'
+	}
+	ScriveBHO.ScriveHook = s 'Scrive Toolbar'
+	{
+		CLSID = s '{A778B24B-CCEB-486B-AB80-99587C7F704A}'
+		CurVer = s 'ScriveBHO.ScriveHook.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A778B24B-CCEB-486B-AB80-99587C7F704A} = s 'Scrive Toolbar'
+		{
+			ProgID = s 'ScriveBHO.ScriveHook.1'
+			VersionIndependentProgID = s 'ScriveBHO.ScriveHook'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{51FF70B3-2741-4F3B-A9F8-E3352E938CDD}'
+		}
+	}
+}
+
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove 'Internet Explorer'
+			{
+				NoRemove Extensions
+				{
+					ForceRemove '{A778B24B-CCEB-486B-AB80-99587C7F704A}'
+					{
+						val ButtonText = s 'Scrive'
+						val Icon = s '"%MODULE%",213'
+						val HotIcon = s '"%MODULE%",213'
+						val CLSID = s '{1FBA04EE-3024-11d2-8F1F-0000F87ABD16}'
+						val ClsidExtension = s '{A778B24B-CCEB-486B-AB80-99587C7F704A}'
+						val 'Default Visible' = s 'yes'
+					}
+				}
+			}
+		}
+	}
+}

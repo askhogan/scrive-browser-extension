@@ -1,0 +1,9 @@
+; ScriveBHO.def : Declares the module parameters.
+
+LIBRARY      "ScriveBHO.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

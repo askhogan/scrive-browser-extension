@@ -1,0 +1,36 @@
+// ScriveBHO.idl : IDL source for ScriveBHO
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ScriveBHO.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(3DB23A42-304B-4FF8-9DDD-EA0ABD915061),
+	dual,
+	nonextensible,
+	helpstring("IScriveToolBar Interface"),
+	pointer_default(unique)
+]
+interface IScriveToolBar : IDispatch{
+};
+[
+	uuid(51FF70B3-2741-4F3B-A9F8-E3352E938CDD),
+	version(1.0),
+	helpstring("ScriveBHO 1.0 Type Library")
+]
+library ScriveBHOLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(A778B24B-CCEB-486B-AB80-99587C7F704A),
+		helpstring("ScriveToolBar Class")
+	]
+	coclass ScriveToolBar
+	{
+		[default] interface IScriveToolBar;
+	};
+};
