@@ -1,0 +1,115 @@
+{
+   "browserAction": {
+      "description": "This text shows up when the icon is hovered in the web interface.",
+      "message": "Start e-signing through Scrive"
+   },
+   "cancel": {
+      "message": "Cancel"
+   },
+   "choosePDFDocument": {
+      "description": "A button label for a file upload button",
+      "message": "Choose a PDF file"
+   },
+   "dropFileHere": {
+      "description": "Instruction showing while draggin a file.",
+      "message": "Drop the file here"
+   },
+   "errorMessage": {
+      "description": "Mini header before list of error data.",
+      "message": "Error message"
+   },
+   "extensionDescription": {
+      "message": "Start e-signing through Scrive"
+   },
+   "gotoListOfJobs": {
+      "message": "Go to list of jobs"
+   },
+   "mailSupportWithErrorMessage": {
+      "message": "By emailing the error message below to $EMAILLINK$, you help us make the service even better.",
+      "placeholders": {
+         "emaillink": {
+            "content": "\u003Ca target='_blank' href='mailto:info@scrive.com?subject=Scrive Chrome-extension - bug'>info@scrive.com\u003C/a>"
+         }
+      }
+   },
+   "no": {
+      "message": "No"
+   },
+   "noPDFFound": {
+      "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document.",
+      "message": "We could not find a PDF on this page."
+   },
+   "oauthInstructions": {
+      "message": "To get started with $EXTENSIONNAME$, you must authenticate to Scrive. Press the button to start.",
+      "placeholders": {
+         "extensionname": {
+            "content": "Scrive Print to E-sign"
+         }
+      }
+   },
+   "ok": {
+      "message": "OK"
+   },
+   "options": {
+      "description": "Header in the options page.",
+      "message": "Options"
+   },
+   "orDragAndDrop": {
+      "description": "Start with a non-capital letter. Shown underneath the button that instructs the user to upload a file.",
+      "message": "or drag and drop a PDF file here"
+   },
+   "print": {
+      "message": "Print"
+   },
+   "printToPaperQuestion": {
+      "description": "Header of popup when there is no PDF detected on the page",
+      "message": "Print to paper?"
+   },
+   "printerUrlOptionLabel": {
+      "description": "Label for an option where a URL is inputted.",
+      "message": "URL to print to"
+   },
+   "save": {
+      "message": "Save"
+   },
+   "saved": {
+      "description": "Text displayed when saving was successful.",
+      "message": "Saved"
+   },
+   "somethingWentWrong": {
+      "description": "Header of error message",
+      "message": "Something went wrong!"
+   },
+   "startEsigningQuestion": {
+      "description": "The header of the popup, after the user has selected to print to e-sign",
+      "message": "Start e-signing through Scrive?"
+   },
+   "status": {
+      "message": "Status"
+   },
+   "systemInformation": {
+      "description": "Header above system information such as url/time/version/operating system",
+      "message": "System information"
+   },
+   "time": {
+      "description": "Used in the context \"\u003Ctime>: 2013-04-15 12:04\"",
+      "message": "Time"
+   },
+   "upload": {
+      "message": "Upload"
+   },
+   "uploadPDFDocument": {
+      "description": "Header above an upload button",
+      "message": "Upload a PDF document"
+   },
+   "uploadingInProgress": {
+      "message": "Uploading"
+   },
+   "wait": {
+      "description": "Displayed when we are waiting for something. Dots are appended after it, moving so that it feels like something is happening.",
+      "message": "Wait"
+   },
+   "yes": {
+      "message": "Yes"
+   }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--Change your doctype to html5 standards <!DOCTYPE html>-->
+<!--http://stackoverflow.com/questions/14580872/document-queryselectorallclassname-not-working-in-ie9-->
+<!--EKI-->
+<html>
+<head>
+  <title></title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/css/less-compilation.css"></link>
+  <link rel="stylesheet" type="text/css" href="/css/page.css"></link>
+  <link rel="stylesheet" type="text/css" href="/css/options.css"></link>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <label class="subtitle">E-signing powered by Scrive</label>
+    </div>
+  </div>
+
+  <div class="two-containers">
+    <div class="left">
+      <div class="container options">
+        <div class="container-inner">
+          <h1 id="options-header"></h1>
+
+          <form id="form" action="#">
+            <label for="url" id="url-label">
+            </label>
+            <input type="text" id="url" />
+            <label id="client_id-label">
+              Client credentials identifier
+              <input type="text" id="client_id" />
+            </label>
+            <label id="client_secret-label">
+              Client credentials secret
+              <input type="text" id="client_secret" />
+            </label>
+            <label id="token_id-label">
+              Token credentials identifier
+              <input type="text" id="token_id" />
+            </label>
+            <label id="token_secret-label">
+              Token credentials secret
+              <input type="text" id="token_secret" />
+            </label>
+            <br />
+            <a class="float-right button button-green save">
+              <div class="label"></div>
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="container wide oauth">
+        <div class="container-inner">
+          <h1>OAuth</h1>
+          <p id="oauth-instructions"></p>
+
+          <a class="float-right button button-green oauth">
+            <div class="label">OAuth</div>
+          </a>
+          <br />
+          <br />
+        </div>
+      </div>
+    <div>
+      <a href="#" class="goto-list-of-jobs"></a>
+    </div>
+    </div>
+  </div>
+
+  <!--<script type="text/javascript" src="/common/ScriveLogUtils.js"></script>-->
+  <!--<script type="text/javascript" src="/common/ScrivePlatform.js"></script>-->
+  <!--<script type="text/javascript" src="/common/ScriveMain.js"></script>-->
+  <!--<script type="text/javascript" src="/common/ScrivePlatform.js"></script>-->
+
+  <!--<script type="text/javascript" src="/ie/ScriveIELogger.js"></script>-->
+  <!--<script type="text/javascript" src="/ie/ScriveIELocalStore.js"></script>-->
+  <!--<script type="text/javascript" src="/ie/ScriveIEInit.js"></script>-->
+  <script type="text/javascript" src="/ie/ScriveIELoaderOptions.js"></script>
+
+  <!--<script type="text/javascript" src="/constants.js"></script>-->
+  <!--<script type="text/javascript" src="/options.js"></script>-->
+  <script type="text/javascript" src="/oauth.js"></script>
+</body>
+</html>
