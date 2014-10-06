@@ -54,11 +54,12 @@ Scrive.Options = new function() {
 //            obj[KEYS.OAUTH_TOKEN_SECRET] = cred.oauth_token_secret;
 //            obj[KEYS.OAUTH_CLIENT_ID] = client_id;
 //            obj[KEYS.OAUTH_CLIENT_SECRET] = client_secret;
-                    Scrive.Platform.LocalStore.put(KEYS.PRINTER_URL, urlInput.value);
-                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_CLIENT_ID, clientIdInput.value);
-                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_CLIENT_SECRET, clientSecretInput.value);
-                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_TOKEN_ID, tokenIdInput.value);
-                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_TOKEN_SECRET, tokenSecretInput.value);
+                    //EKI this was a copy/paste issue;) - now everything works as expected
+//                    Scrive.Platform.LocalStore.put(KEYS.PRINTER_URL, );
+                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_CLIENT_ID, client_id);
+                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_CLIENT_SECRET,client_secret );
+                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_TOKEN_ID, cred.oauth_token);
+                    Scrive.Platform.LocalStore.put(KEYS.OAUTH_TOKEN_SECRET, cred.oauth_token_secret);
 
 
                     //EKI fix this
