@@ -11,6 +11,7 @@ var modalTitle;
 var modalContent;
 var acceptButton;
 var cancelButton;
+var closeWindowButton;
 var directUploadLink;
 var directUploadButton;
 var dotElements;
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
   modalContent = document.querySelector('.modal-content .body');
   acceptButton = document.querySelector('.modal-footer .accept');
   cancelButton = document.querySelector('.modal-footer .cancel');
+  closeWindowButton = document.querySelector('.modal-header .modal-close');
   directUploadButton = document.querySelector('.modal-footer .direct-upload');
 
   directUploadButton.addEventListener('click', function () {
@@ -130,6 +132,7 @@ var askPrintToEsign = function() {
   var onCancel = function() { mixpanel.track("Print to e-sign cancel", {}, function() { window.close(); }); };
   acceptButton.addEventListener('click', onAccept);
   cancelButton.addEventListener('click', onCancel);
+  closeWindowButton.addEventListener('click', onCancel);
 };
 
 var askPrintToPaper = function() {
@@ -146,6 +149,7 @@ var askPrintToPaper = function() {
   var onCancel = function() { mixpanel.track("Print to paper cancel", {}, function() { window.close() }); };
   acceptButton.addEventListener('click', onAccept);
   cancelButton.addEventListener('click', onCancel);
+  closeWindowButton.addEventListener('click', onCancel);
 };
 
 var dots = 3;
