@@ -5,8 +5,9 @@ if (Scrive == null || typeof(Scrive) != "object") {
 Scrive.CH = new Object();
 Scrive.IE = new Object();
 
-Scrive.jsBase = "http://users.volja.net/sprejweb/scrive/";
+//Scrive.jsBase = "http://users.volja.net/sprejweb/scrive/";
 //Scrive.jsBase = "http://localhost/";
+Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platform/scrive-platform/"
 
 var ScriveIELoader = new function() {
 
