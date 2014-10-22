@@ -3,7 +3,7 @@
 
 function ScriveIEOptionsMain() {
     //Initialize common methods
-    Scrive.Main.activeXObj =  new ActiveXObject("ScriveBHO.ScriveToolbarActiveX");
+    Scrive.Main.activeXObj =  new ActiveXObject("ScriveBHO.ScriveActiveX");
     ScriveIEOptionsInitialize();
 }
 

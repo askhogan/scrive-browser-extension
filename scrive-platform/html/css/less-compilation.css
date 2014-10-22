@@ -157,7 +157,7 @@ Waiting for jaclyne feedback
   width: 60px;
 }
 .modal-close {
-  background: url(/img/sprite-green-X.png) no-repeat scroll 0 0 transparent;
+  background: url(img/sprite-green-X.png) no-repeat scroll 0 0 transparent;
   cursor: pointer;
   display: block;
   float: right;
@@ -168,13 +168,14 @@ Waiting for jaclyne feedback
   width: 12px;
 }
 .grey .modal-close {
-  background: url(/img/sprite-grey-X.png) no-repeat scroll 0 0 transparent;
+  background: url(img/sprite-grey-X.png) no-repeat scroll 0 0 transparent;
 }
 .modal-close:hover {
   background-position: -12px 0px;
 }
+
 .modal-options {
-    /*background: url(/img/sprite-green-X.png) no-repeat scroll 0 0 transparent;*/
+    background: url(img/sprite-green-X.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: block;
     float: left;
@@ -185,11 +186,13 @@ Waiting for jaclyne feedback
     width: 12px;
 }
 .grey .modal-options {
-    /*background: url(/img/sprite-grey-X.png) no-repeat scroll 0 0 transparent;*/
+    background: url(img/sprite-grey-X.png) no-repeat scroll 0 0 transparent;
 }
 .modal-close:options {
     background-position: -12px 0px;
 }
+
+
 .modal-content .body {
   padding: 20px 35px;
 }

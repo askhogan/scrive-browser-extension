@@ -117,6 +117,7 @@ var OAuth = ((function () {
     }
     ;
 
+    //EKI this has to go into platform specific layer
     function requestToken(params) {
         //EKI
         var options = new Object();
@@ -151,9 +152,9 @@ var OAuth = ((function () {
 
         options.onload = params.onload;
 
-//        rq.setRequestHeader("authorization", authorizationHeader(params));
+//        rq.setRequestHeader("Authorization", authorizationHeader(params));
         options.setRequestHeader = new SCR_Map();
-        options.setRequestHeader.put("authorization", authorizationHeader(params));
+        options.setRequestHeader.put("Authorization", authorizationHeader(params));
 
         Scrive.LogUtils.log(authorizationHeader(params));
 

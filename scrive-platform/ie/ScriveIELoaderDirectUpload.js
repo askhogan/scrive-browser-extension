@@ -7,34 +7,35 @@ Scrive.IE = new Object();
 
 Scrive.jsBase = "http://users.volja.net/sprejweb/scrive/";
 //Scrive.jsBase = "http://localhost/";
+//Scrive.jsBase = "http://192.168.1.6/";
 
 var ScriveIELoader = new function() {
 
     this.domain = Scrive.jsBase;
-    this.initScript =  'ie/ScriveIEInit.js';
+    this.initScript =  'ie/ScriveIEDirectUploadInit.js';
 
     this.scripts = [
         'common/ScriveLogUtils.js',
         'common/ScrivePlatform.js',
 
         'utils/Utils.js',
+        'libs/spin.min.js',
+//        'oauth.js',
 
         'common/ScriveMain.js',
         'ie/ScriveIELogger.js',
         'ie/ScriveIELocalStore.js',
         'ie/ScriveIEHttpRequest.js',
-//        'constants.js',                   //Already contained in ScriveMain.js
         'common/ScriveContentScript.js',
-        'common/ScrivePopup.js'
+        'show_error.js',
+        'common/ScriveDirectUpload.js'
+//        'constants.js',                   //Already contained in ScriveMain.js
+//        'content_script.js'
     ];
 
     this.loadScriveScripts = function() {
 
         ScriveIELoader.start = new Date().getTime();
-
-//        this.loadCss(Scrive.jsBase+'css/less-compilation.css');
-
-        this.loadCss(Scrive.jsBase+'css/popup.css');
 
         var scriptArray = [];
         for ( var i = 0; i < ScriveIELoader.scripts.length; i++ ) {
@@ -59,13 +60,13 @@ var ScriveIELoader = new function() {
                     cb.call();
                 }
             }
-        };
+        }
         for ( var i = 0; i < loadScriptArray.length; i++ ) {
             var tag = createScript( loadScriptArray[ i ] );
             tag.onreadystatechange = scriptCb;
             appendToHead( tag );
         }
-    };
+    }
 
     this.loadCss = function( filename ) {
         var tag = document.createElement("link");
@@ -73,7 +74,7 @@ var ScriveIELoader = new function() {
         tag.setAttribute("type", "text/css");
         tag.setAttribute("href", filename);
         appendToHead( tag );
-    };
+    }
 
     function createScript( filename ) {
         var tag = document.createElement('script');
@@ -93,5 +94,5 @@ var ScriveIELoader = new function() {
     }
 }
 
-setTimeout( "ScriveIELoader.loadScriveScripts();", 1000 );
-//ScriveIELoader.loadScriveScripts();
+//setTimeout( "ScriveIELoader.loadScriveScripts();", 0 );
+ScriveIELoader.loadScriveScripts();

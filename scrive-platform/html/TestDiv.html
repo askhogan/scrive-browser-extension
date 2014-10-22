@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scrive Print to E-sign</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" type="text/css" href="css/less-compilation.css"></link>
+      <!--<link rel="stylesheet" type="text/css" href="css/page.css"></link>-->
+      <link rel="stylesheet" type="text/css" href="css/options.css"></link>
+
+      <!--<link rel="stylesheet" type="text/css" href="/css/less-compilation.css"></link>-->
+      <link rel="stylesheet" type="text/css" href="css/popup.css"></link>
+
+
+
+    <link rel="stylesheet" type="text/css" href="xgluebar.css"></link>
+
+  </head>
+
+  <body>
+
+    <div class="header">
+        <div class="header-inner">
+            <label class="subtitle">E-signing powered by Scrive</label>
+        </div>
+    </div>
+
+    <div class="two-containers">
+        <div class="left">
+            <div class="container options">
+                <div class="container-inner">
+                    <h1 id="options-header"></h1>
+
+                    <form id="form" action="#">
+                        <label for="url" id="url-label">
+                        </label>
+                        <input type="text" id="url" />
+                        <label id="client_id-label">
+                            Client credentials identifier
+                            <input type="text" id="client_id" />
+                        </label>
+                        <label id="client_secret-label">
+                            Client credentials secret
+                            <input type="text" id="client_secret" />
+                        </label>
+                        <label id="token_id-label">
+                            Token credentials identifier
+                            <input type="text" id="token_id" />
+                        </label>
+                        <label id="token_secret-label">
+                            Token credentials secret
+                            <input type="text" id="token_secret" />
+                        </label>
+                        <br />
+                        <a class="float-right button button-green save">
+                            <div class="label"></div>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="container wide oauth">
+                <div class="container-inner">
+                    <h1>OAuth</h1>
+                    <p id="oauth-instructions"></p>
+
+                    <a class="float-right button button-green oauth">
+                        <div class="label">OAuth</div>
+                    </a>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div>
+                <a href="#" class="goto-list-of-jobs"></a>
+            </div>
+        </div>
+    </div>
+    <div id="adb_spacer">
+
+        <div id="adb_topBar">
+            <div class="modal-header no-icon">
+                <a class="modal-options">
+                    <div class="label">Options</div>
+                </a>
+                <span class="modal-title">Print to paper?</span>
+                <a class="modal-close"></a>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-content">
+                    <div class="body">We could not find a PDF on this page.</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="float-left cancel button button-gray">
+                    <div class="label">Cancel</div>
+                </a>
+                <a class="float-left direct-upload button button-gray">
+                    <div class="label">Upload</div>
+                </a>
+                <a class="float-right accept green button button-green">
+                    <div class="label">Print</div>
+                </a>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

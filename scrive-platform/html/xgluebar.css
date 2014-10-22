@@ -1,0 +1,449 @@
+/* Shelf */
+.adb_shelf { height: 122px; width: 100%; background: transparent url(http://s3.amazonaws.com/blueorganizer/images/gluebar/shelf/bg.png) repeat-x; position: fixed; left: 0; bottom: 35px; z-index: 1000001; }
+#adb_shelf_closeButton {position: absolute !important; right: 18px !important; top: 30px !important;}
+#adb_shelf_closeButton a.close { margin-left: 7px ! important;background-image: url(http://s3.amazonaws.com/blueorganizer/images/gluebar/buttons/options/shelfClose.png) !important; }
+#adb_shelf_closeButton div { color:#FFF !important;margin-top: 4px ! important;font-size:11px !important; }
+    .adb_shelfInner { padding: 20px 0 0 20px !important; }
+        .adb_shelfInner div.adb_shelfText, .adb_shelfInner div.adb_shelfText * { font-size: 48px !important; color: #fff !important; line-height: 122px !important; text-align: center !important; width: 100% !important; }
+            .adb_shelfInner div.adb_shelfText strong { font-weight: bold !important; }
+        .adb_shelfInner div.adb_h2text { float:left !important;margin-top: 10px !important; font-size: 16px !important; color: #FFFFFF !important; margin-bottom: 9px !important; }
+            .adb_shelfInner a { cursor: pointer !important; font-size: 18px !important; color: #fff !important; }
+        .adb_shelfInner ul#adb_tryThese { float:left !important; }
+            .adb_shelfInner ul#adb_tryThese li { float: left !important; margin-left: 13px !important; }
+                .adb_shelfInner ul#adb_tryThese li h3 { font-size: 12px !important; color: #fff !important; line-height: 34px !important; } 
+                .adb_shelfInner ul#adb_tryThese li a { margin-top: 8px !important;}
+                    a.adb_favicon { height: 18px !important; width: 16px !important; cursor: pointer !important; display: block !important; background-color: #fff !important; border: 1px solid #fff !important; }
+                            a.adb_favicon:hover { border: 1px solid #3399cc !important; }
+                            a.adb_favicon img { width: 16px !important; height: 16px !important; cursor: pointer !important; }
+        .adb_shelfInner .adb_shelfTip { position: absolute !important; top: 65px !important; }
+            .adb_shelfInner .adb_shelfTip p { font-size: 13px !important; padding: 13px 18px 0 46px !important }
+                .adb_shelfInner .adb_shelfTip p strong { font-size: 14px !important; font-weight: bold !important; }
+            .adb_shelfInner .adb_shelfTip#adb_shelfTip_1 { left: 25px !important; width: 178px !important; height:51px !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/shelf/1.png) no-repeat !important; }
+            .adb_shelfInner .adb_shelfTip#adb_shelfTip_2 { left: 300px !important; width: 229px !important; height:51px !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/shelf/2.png) no-repeat !important; }
+            .adb_shelfInner .adb_shelfTip#adb_shelfTip_3 { right: 100px !important; width: 273px !important; height:51px !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/shelf/3.png) no-repeat !important; }
+
+/* Spacer */
+#adb_spacer { height: auto !important; top: 0 !important;position: fixed !important; right: 0 !important; width: auto !important;}
+
+/* Glue Bar */
+#adb_topBar { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: 36px; width: 100%; }
+    #adb_topBar.adb_personTopBar { min-width: 639px; }
+#adb_topBar a:hover * { text-decoration: none !important; }
+#adb_topBarInner { height:35px !important; margin-top:1px !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/bg_gluebar.png) repeat-x !important;background-position: 0 0 !important; }
+	/* Sections */
+
+    #adb_topBar .adb_topBar_section { float: left !important; }
+    #adb_topBar .adb_module { padding: 2px 5px !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/bg_module.png) repeat-x right 0px !important; }
+        #adb_topBar .adb_module .adb_module_border { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_right.png) no-repeat left 0px !important; padding: 2px 4px 2px 5px !important; }
+        #adb_topBar .adb_module#adb_similar { padding: 0 !important;  }
+
+    /* Primary */
+    #adb_topBar .adb_primary { padding-left:4px !important; padding-right: 6px !important; }
+        #adb_topBar a.adb_primaryImage { overflow: hidden !important; border: 1px solid #ffffff !important; cursor: pointer !important; width: 29px !important; height: 29px !important; display: block !important; position: relative !important; }
+        #adb_topBar a.adb_primaryImage:hover { border-color: #000 !important }        
+        #adb_topBar a.adb_primaryImage img { top: -5px !important; left: -5px !important; cursor: pointer !important; min-width: 34px !important; min-height: 34px !important; max-height: 43px !important; max-width: 43px !important; position: absolute !important; }
+
+    /* Badges */
+    #adb_topBar div.adb_badges { margin: 4px 17px 4px 16px !important; }
+
+
+    /* Like/Dislike */
+    #adb_topBar div.adb_buttons { margin: 5px 17px 4px 16px !important; }   
+
+    /* Info section */
+    #adb_topBar .adb_all_info { position:relative !important; }
+
+    #adb_topBar .adb_infobox { display:block !important; color:#4A4A4A !important; float:left !important; width:77px !important; height:35px !important; background-repeat: no-repeat !important; background-position: 0 0 !important; }
+        #adb_topBar .adb_infobox > span { font-size: 11px !important; line-height: 10px !important }
+        #adb_topBar a.adb_infobox:hover div > span { color: #fff !important; }
+        #adb_topBar a.adb_infobox:hover { background-position: 0 -35px !important; }
+        #adb_topBar .adb_infobox:hover { text-decoration:none !important; }
+
+        #adb_topBar a.adb_infobox div{ margin:5px 0 0 5px !important; }
+
+        #adb_topBar a.adb_infobox div.total { float:left !important;width:34px !important; }
+        #adb_topBar a.adb_infobox div.liked { float:left !important; }
+
+        #adb_topBar .adb_infobox span.large {line-height:15px !important; font-size:17px !important;display:block !important;}
+        #adb_topBar .adb_infobox span.label { line-height:11px !important; font-size:11px !important; }
+        #adb_topBar .adb_infobox span.thumb { background: url(http://glueimg.s3.amazonaws.com/4_5/thumb.png) no-repeat left -1px !important; color:#aaa !important; height: 11px !important; line-height:8px !important;display:block !important;margin-left:10px !important; margin-top:2px !important; padding-left:12px !important; }
+            #adb_topBar .adb_infobox:hover div span.thumb { background-position: 0 -11px !important; }
+        #adb_topBar .adb_infobox span.count { height: 10px !important; margin-top:-1px !important; display:block !important; font-size:10px !important; margin-left:3px !important; text-align:center !important; width:22px !important;  }
+
+    #adb_topBar a.adb_visitors { display:block !important; background-image: url(http://glueimg.s3.amazonaws.com/4_5/infobox_visits.png) !important; }
+    #adb_topBar .adb_friends { width:80px !important;background-image: url(http://glueimg.s3.amazonaws.com/4_5/infobox_friends.png) !important;background-position:right 0 !important; }
+        #adb_topBar .ask_friends { width:auto !important;background-image: url(http://glueimg.s3.amazonaws.com/4_5/infobox_askfriends.png) !important;background-position:right 0 !important; }
+
+    #adb_topBar .adb_roll { width: auto !important;float:left !important; }
+        #adb_topBar .adb_roll.adb_overflow { height: 36px !important; width: 3000px !important; background-position: left top !important; }
+
+    #adb_topBar a.adb_person_visits{ width:51px !important; display:block !important; background-image: url(http://glueimg.s3.amazonaws.com/4_5/person_visits.png) !important; }
+    #adb_topBar a.adb_person_likes{ width:51px !important; background-image: url(http://glueimg.s3.amazonaws.com/4_5/person_likes.png) !important; }
+    #adb_topBar a.adb_person_comments{ width: 69px !important; background-image: url(http://glueimg.s3.amazonaws.com/4_5/person_comments.png) !important; }
+
+    #adb_topBar a.adb_visitors:hover span.adb_count, #adb_topBar a.adb_friends:hover span.adb_count { background-position: 0 -12px !important; }
+    #adb_topBar .adb_comments { width:auto !important; background-image: url(http://glueimg.s3.amazonaws.com/4_5/bg_comments.png) !important;background-position:right 0 !important; }
+    #adb_topBar #adb_ask { display:block !important; padding: 0 !important; margin:0 7px !important;background-image:url(http://glueimg.s3.amazonaws.com/4_5/button_ask.png) !important; height:30px !important; width:115px !important; }
+        #adb_topBar #adb_ask:hover { text-decoration: none !important; background-position: 0 -30px !important; }
+            #adb_topBar #adb_ask:hover > span { text-decoration: none !important; color: #fff !important; }
+        #adb_topBar #adb_ask span { margin: 3px 5px 5px 45px !important;display:block !important; line-height: 30px !important;}
+
+    #adb_topBar ul.adb_facerollList { float:left !important; }
+        #adb_topBar ul.adb_facerollList#adb_similar_roll { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_similar.png) no-repeat left -1px !important; padding-left: 5px !important; }
+    #adb_topBar ul.adb_facerollList li { cursor: pointer !important;float: left !important; margin-right:5px !important;position:relative !important;  }
+
+        #adb_topBar ul.adb_facerollList li span.adb_icon_overlay { position: absolute ! important; width: 12px ! important; height: 12px !important; right: 1px !important; top: 18px !important; }
+            #adb_topBar ul.adb_facerollList li span.adb_bg_guru { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_overlay_guru.png) no-repeat bottom left !important;width:15px !important;height:14px !important; }
+            #adb_topBar ul.adb_facerollList li span.adb_bg_Disliked { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_overlay_Disliked.png) no-repeat bottom left !important; }
+            #adb_topBar ul.adb_facerollList li span.adb_bg_Liked { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_overlay_Liked.png) no-repeat bottom left !important; }
+            #adb_topBar ul.adb_facerollList li span.adb_bg_Comment,#adb_topBar ul.adb_facerollList li span.adb_bg_LikedComment,#adb_topBar ul.adb_facerollList li span.adb_bg_DislikedComment { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_overlay_Comment.png) no-repeat bottom left !important; }
+            #adb_topBar ul.adb_facerollList li span.adb_bg_Favorited { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_overlay_Favorited.png) no-repeat bottom left !important; }
+            #adb_topBar ul.adb_facerollList li span.adb_bg_Saved { background: url(http://glueimg.s3.amazonaws.com/4_5/bg_overlay_Saved.png) no-repeat bottom left !important; }
+            #adb_topBar ul.adb_facerollList#adb_similar_roll li { margin-left: 1px !important; }
+            #adb_topBar ul.adb_facerollList li a { display: block !important; width: 30px !important; height: 30px !important; overflow: visible !important; position: relative !important; top: 1px !important; }
+            #adb_topBar ul.adb_facerollList li a img { border: 1px solid #fff !important;cursor: pointer !important; width: 28px !important; height: 28px !important; }
+                #adb_topBar ul.adb_facerollList li a:hover img { border-color: #000 !important; }
+
+    #adb_topBar .adb_more { left: -3px !important; position: relative !important; margin-right: 12px !important; float: left !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/bg_more.png) no-repeat left top!important;width:30px !important;height:36px !important; }
+    #adb_topBar #adb_more_cursor { display: block !important; width:30px !important; height:36px !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/more_visitors.png) no-repeat center 0 !important; }
+        #adb_topBar #adb_more_cursor:hover { background-position: center -35px !important; }
+
+    /* Similar */
+    #adb_topBar #adb_similar div.label { float:left !important; margin: 1px 5px !important; }
+    #adb_topBar #adb_similar div.label span { display:block; color: #4a4a4a !important; }
+        #adb_topBar #adb_similar div.label span.adb_large { font-size: 16px !important;line-height:17px !important;}
+        #adb_topBar #adb_similar div.label span.adb_small { font-size:11px !important;text-transform:capitalize !important; }
+
+    /* Person Bar Promo */
+    #adb_topBar div.adb_personBar_promo { -2px 10px 0 -5px !important; cursor:pointer !important;float:left !important;width:158px !important; height:70px !important; background: url(http://glueimg.s3.amazonaws.com/4_5/promo_personbar.png) no-repeat top left !important; }
+    #adb_topBar div.adb_personBar_promo span { font-size:12px !important;color:#126db3 !important; }
+        #adb_topBar div.adb_personBar_promo:hover { background-position: 0 -35px !important; }
+        #adb_topBar div.adb_personBar_promo:hover span { color:#fff !important;  }
+    #adb_topBar div.adb_personBar_promo span.adb_title {display:block !important;line-height:12px !important;font-weight:bold !important; }
+    #adb_topBar div.adb_personBar_promo a { text-decoration:none !important;display:block;margin: 5px 10px 0 45px !important; }
+
+    /* Suggestions Bar */
+    #adb_topBar div#adb_suggestions_bar { padding: 0 !important }
+    #adb_topBar a#adb_suggestions_title { text-decoration:none !important; width:130px !important; height:70px !important;margin-right:10px !important; float:left !important;background: url(http://glueimg.s3.amazonaws.com/4_5/arrow.png) no-repeat top left !important; }
+            #adb_topBar a#adb_suggestions_title span { color:#004664 !important;margin-left:8px !important;line-height:11px !important; font-size:12px !important; display: block !important; }
+            #adb_topBar a#adb_suggestions_title span.title { margin-top:5px !important;font-size:14px !important;line-height:13px !important; }
+            #adb_topBar a#adb_suggestions_title:hover span { color:#FFFFFF !important; }
+        #adb_topBar a#adb_suggestions_title:hover { background-position: 0 -35px !important; }
+    #adb_topBar div#adb_suggestions_bar ul li.adb_object { width:225px !important; }
+        #adb_topBar div#adb_suggestions_bar ul li.adb_object a { width:225px !important;height:36px !important;text-decoration:none !important; }
+        #adb_topBar div#adb_suggestions_bar ul li.adb_object:hover { background: transparent url(http://glueimg.s3.amazonaws.com/4_5/bg_suggestions.png) repeat-x 0 0px !important; }
+
+        #adb_topBar div#adb_suggestions_bar ul li.adb_object div.adb_image { float:left !important;margin:3px 5px 0 5px !important; }
+        #adb_topBar div#adb_suggestions_bar ul li.adb_object div.adb_details { float:left !important;margin-top:5px !important;width:183px !important; }
+            #adb_topBar div#adb_suggestions_bar ul li.adb_object div.adb_details span { display:block !important; }
+                #adb_topBar div#adb_suggestions_bar ul li.adb_object div.adb_details span.adb_title { line-height:14px !important;display:block !important;color:#126db3 !important; }
+                #adb_topBar div#adb_suggestions_bar ul li.adb_object div.adb_details span.adb_reason { font-size: 11px !important; }
+                    #adb_topBar div#adb_suggestions_bar ul li.adb_object:hover div.adb_details span.adb_title { color:#FFF !important; }
+                    #adb_topBar div#adb_suggestions_bar ul li.adb_object:hover div.adb_details span.adb_reason { color:#FFF !important; }
+        #adb_topBar #adb_suggestions_bar a#adb_more_suggestions { margin:4px 5px !important; }
+
+
+    /* Right Section */
+    #adb_topBar #adb_topBar_left { z-index: 1000; width: 9999px !important; position: absolute !important; left: 0 !important; background: transparent url(http://glueimg.s3.amazonaws.com/4_5/bg_gluebar.png) repeat-x scroll 0 0px !important; }
+    #adb_topBar #adb_topBar_right { background: transparent url(http://glueimg.s3.amazonaws.com/4_5/bg_gluebar.png) repeat-x scroll 0 0 !important; z-index: 1001; position: absolute !important; right: 0 !important; padding-right: 8px !important; }
+    #adb_topBar #adb_topBar_right .adb_topBar_section.adb_topBar_sectionShadow { left: -28px !important; position: absolute !important; width: 30px !important; background: transparent url(http://s3.amazonaws.com/blueorganizer/images/gluebar/topbar/sectionShadow.png) no-repeat left center !important; }
+        /* Close Button */
+        #adb_topBar #adb_topBar_right #adb_close { float:left !important; margin-top: 9px !important;margin-left:7px !important;background-image: url(http://glueimg.s3.amazonaws.com/4_5/button_close.png) !important; background-position: 0 0px !important; width: 20px !important;height:19px !important;}
+            #adb_topBar #adb_topBar_right #adb_close:hover { background-position: 0 -19px !important; }
+        /* More Suggestions */
+        #adb_topBar a#adb_more_suggestions { float:left !important; margin:2px !important; cursor: pointer !important; display: block !important; width: 136px !important; height: 28px !important; background: url(http://glueimg.s3.amazonaws.com/4_5/button_suggestions.gif) no-repeat 0 0 !important;background-repeat: no-repeat !important; background-position: 0 0 !important; }
+        #adb_topBar a#adb_more_suggestions:hover { text-decoration:none !important; }
+            #adb_topBar a#adb_more_suggestions span.adb_label { font-size:11px !important; color:#fff !important; position:relative !important; top:7px !important; left:15px !important;  }
+            #adb_topBar a#adb_more_suggestions:hover { background-position: 0 -28px !important; }
+
+    /* Chicklet */
+    #adb_topBar span.chicklet {
+        position: absolute !important;
+        background: transparent url(http://glueimg.s3.amazonaws.com/4_5/chicklet.png) repeat scroll 0 0 !important;
+        display: block !important;
+        text-align: center !important;
+        color: #fff !important;
+        text-indent: 0 !important;
+        margin: 0 auto !important;
+        font-size:10px !important;
+        height:16px !important;
+        line-height:13px !important;
+        left:-10px !important;
+        top:-9px !important;
+        width:35px !important;
+    }
+
+
+/* action buttons */
+#adb_topBar .actions {
+    position: relative !important;
+    background: none !important;
+    padding: 0 !important;
+    display: block !important;
+    height: 28px !important;
+}
+
+    #adb_topBar .actions a,
+    #adb_topBar .actions a:hover,
+    #adb_topBar .actions a:active,
+    #adb_topBar .actions a:focus{
+        outline: none !important;
+    }
+
+     #adb_topBar .actions a.button {
+        float: left !important;
+        display: block !important;
+        height: 28px !important;
+        text-indent: 0 !important;
+        background-position: 0 0 !important;
+    }
+
+         #adb_topBar .actions a.button span {
+            background: transparent url(http://glueimg.s3.amazonaws.com/4_5/actions/icons.png) no-repeat scroll !important;
+            display: block !important;
+            background-position: 0 -24px !important;
+            padding-left: 16px !important;
+            white-space: nowrap !important;
+            font-size: 12px !important;
+            color: #737474 !important;
+            text-align: left !important;
+            height: 12px !important;
+            margin: 8px 0 0 10px !important;
+        }
+
+             #adb_topBar .actions a.button:hover span {
+                color: #fff !important;
+                background-position: 0 -36px !important;
+            }
+
+
+        #adb_topBar .actions.Liked a.button span, #adb_topBar .actions.Saved a.button span, #adb_topBar  .actions.LikedComment a.button span, #adb_topBar .actions.Favorited a.button span,
+        #adb_topBar .actions.Liked a.button:hover span, #adb_topBar .actions.Saved a.button:hover span, #adb_topBar .actions.LikedComment a.button:hover span, #adb_topBar .actions.Favorited a.button:hover span {
+            color: #126db3 !important;
+        }
+
+            #adb_topBar .actions.Liked a.button span, #adb_topBar .actions.Liked a.button:hover span,
+            #adb_topBar .actions.LikedComment a.button span, #adb_topBar .actions.LikedComment a.button:hover span {
+                background-position: 0 -48px !important;
+            }
+
+            #adb_topBar .actions.Saved a.button span, #adb_topBar .actions.Saved a.button:hover span {
+                background-position: 0 -119px !important;
+            }
+
+            #adb_topBar .actions.Favorited a.button span, #adb_topBar .actions.Favorited a.button:hover span {
+                background-position: 0 -156px !important;
+            }
+
+            #adb_topBar .actions.Disliked a.button span, #adb_topBar .actions.Disliked a.button:hover span {
+                background-position: 0 -84px !important;
+            }
+
+        #adb_topBar .actions.Disliked a.button span, #adb_topBar .actions.Disliked a.button:hover span {
+            color: #924736 !important;
+        }
+
+        /* Different Widths / Sections && Text Centering */
+
+        /* Default (Stream, Serch, List Views) */
+        #adb_topBar .actions a.button {
+            background: transparent url(http://glueimg.s3.amazonaws.com/4_5/actions/tools_106.png) no-repeat scroll !important;
+            width: 89px !important;
+        }
+
+            #adb_topBar .actions a.button span, #adb_topBar .actions.Comment a.button span {
+                margin-left: 15px !important;
+            }
+
+            #adb_topBar .actions.Liked a.button span {
+                margin-left: 18px !important;
+            }
+
+            #adb_topBar .actions.Disliked a.button span {
+                margin-left: 12px !important;
+            }
+
+            #adb_topBar .actions.Saved a.button span {
+                margin-left: 16px !important;
+            }
+
+            #adb_topBar .actions.Favorited a.button span {
+                margin-left: 8px !important;
+            }
+
+
+
+        #adb_topBar .actions a.button:hover {
+            background-position: 0 -28px !important;
+        }
+
+        #adb_topBar .actions a.button:hover, #adb_topBar .actions a.button:hover * {
+            text-decoration: none !important;
+        }
+
+        #adb_topBar .actions a.button.noHover:hover {
+            background-position: 0 0 !important;
+        }
+
+        #adb_topBar .actions a.button.noHover:hover span {
+            color: #737474 !important;
+            background-position: 0 -24px !important;
+        }
+
+
+        #adb_topBar .actions.Liked a.button, #adb_topBar .actions.Saved a.button, #adb_topBar .actions.LikedComment a.button, #adb_topBar .actions.Favorited a.button {
+            background-position: 0 -56px !important;
+        }
+
+            #adb_topBar .actions.Liked a.button:hover, #adb_topBar .actions.Saved a.button:hover, #adb_topBar .actions.LikedComment a.button:hover, #adb_topBar .actions.Favorited a.button:hover {
+                background-position: 0 -112px !important;
+            }
+
+        #adb_topBar .actions.Disliked a.button {
+            background-position: 0 -84px !important;
+        }
+
+            #adb_topBar .actions.Disliked a.button:hover {
+                background-position: 0 -140px !important;
+            }
+
+    #adb_topBar .actions a.dropdown {
+       text-indent: -9999px !important;
+       width: 21px !important;
+       height: 28px !important;
+       float: left !important;
+       display: block !important;
+       background: transparent url(http://glueimg.s3.amazonaws.com/4_5/actions/dropdown.png) no-repeat scroll !important;
+       background-position: 0 0 !important;
+    }
+
+        .unverified #adb_topBar .actions a.dropdown {
+            display: none !important;
+        }
+
+        #adb_topBar .actions a.dropdown:hover {
+            background-position: 0 -28px !important;
+        }
+
+    #adb_topBar .actions div.menu {
+        background: url("http://glueimg.s3.amazonaws.com/4_5/actions/pulldown.png") no-repeat scroll 0 bottom transparent !important;
+        bottom: -3px !important;
+        display: none !important;
+        padding-bottom: 33px !important;
+        position: absolute !important;
+        right: -4px !important;
+        width: 122px !important;
+        z-index: 999999 !important;
+    }
+
+        #adb_topBar .actions div.menu ul {
+            background: transparent url(http://glueimg.s3.amazonaws.com/4_5/actions/pulldown.png) no-repeat scroll !important;
+            background-position: top !important;
+            padding-top: 4px !important;
+            width: 122px !important;
+        }
+
+        #adb_topBar .actions div.menu ul li  {
+            padding: 0 4px 0 2px !important;
+            background: transparent url(http://glueimg.s3.amazonaws.com/4_5/actions/pulldown_repeat.png) repeat-y scroll !important;
+            width:116px !important;
+        }
+
+            #adb_topBar .actions div.menu ul li a {
+                background: none !important;
+                color: #737474 !important;
+                display: block !important;
+                height: 15px !important;
+                line-height: 17px !important;
+                padding: 3px 6px 0 !important;
+                white-space: nowrap !important;
+            }
+
+                #adb_topBar .actions div.menu ul li a:hover, #adb_topBar .actions div.menu ul li a:hover span {
+                    background-color: #1b61b9 !important;
+                    text-decoration: none !important;
+                    color: #fff !important;
+                }
+
+                    #adb_topBar .actions div.menu ul li a.delete:hover,
+                    #adb_topBar .actions div.menu ul li a.delete:hover span {
+                        background-color: #924736 !important;
+                    }
+
+                #adb_topBar .actions div.menu ul li a span {
+                    background: transparent url(http://glueimg.s3.amazonaws.com/4_5/actions/icons.png) no-repeat scroll !important;
+                    padding-left: 16px !important;
+                    display: block !important;
+                    height: 12px !important;
+                    font-size: 11px !important;
+                    text-align: left !important;
+                    line-height: 12px !important;
+                }
+
+                    #adb_topBar .actions div.menu ul li a.like span {
+                        background-position: 0 -24px !important;
+                    }
+
+                        #adb_topBar .actions div.menu ul li a.like:hover span {
+                            background-position: 0 -36px !important;
+                        }
+
+                        #adb_topBar .actions div.menu ul li.like {
+                            display: none !important;
+                        }
+
+                        #adb_topBar .actions.Disliked div.menu ul li.like, #adb_topBar .actions.Saved div.menu ul li.like, #adb_topBar .actions.Favorited div.menu ul li.like {
+                            display: block !important;
+                        }
+
+                    #adb_topBar .actions div.menu ul li a.dislike span {
+                        background-position: 0 -60px !important;
+                    }
+
+                        #adb_topBar .actions div.menu ul li a.dislike:hover span {
+                            background-position: 0 -72px !important;
+                        }
+
+                        #adb_topBar .actions.Disliked div.menu ul li.dislike {
+                            display: none !important;
+                        }
+
+                    #adb_topBar .actions div.menu ul li a.save span {
+                        background-position: 0 -96px !important;
+                    }
+
+                        #adb_topBar .actions div.menu ul li a.save:hover span {
+                            background-position: 0 -108px !important;
+                        }
+
+                        #adb_topBar .actions.Saved div.menu ul li.save {
+                            display: none !important;
+                        }
+
+                    #adb_topBar .actions div.menu ul li a.favorite span {
+                        background-position: 0 -132px !important;
+                    }
+
+                        #adb_topBar .actions div.menu ul li a.favorite:hover span {
+                            background-position: 0 -144px !important;
+                        }
+
+                        #adb_topBar .actions.Favorited div.menu ul li.favorite {
+                            display: none !important;
+                        }
+
+                    #adb_topBar .actions div.menu ul li a.delete span {
+                        background-position: 0 0 !important;
+                    }
+
+                        #adb_topBar .actions div.menu ul li a.delete:hover span {
+                            background-position: 0 -12px !important;
+                        }
+
+                        #adb_topBar .actions div.menu ul li.delete {
+                            display: block !important;
+                        }
+
+            #adb_topBar .actions.menu div.menu{
+                display: block !important;
+            }

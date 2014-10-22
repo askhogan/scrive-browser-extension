@@ -1,8 +1,23 @@
-body, html {
-  width: 450px;
-  height: inherit;
-  overflow: hidden;
+/*body, html {*/
+  /*width: 450px;*/
+  /*height: inherit;*/
+  /*overflow: hidden;*/
+/*}*/
+
+/* Spacer */
+#scr_spacer { height: auto !important; top: 0 !important;position: fixed !important; right: 0 !important; width: auto !important; z-index: 100000 !important;}
+
+#scr_spacer iframe.cover {
+    position: absolute;
+    border: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
 }
+/* Scrive Popup */
+#scr_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: 36px; width: 100%; }
 
 .modal-footer {
   height: 20px;

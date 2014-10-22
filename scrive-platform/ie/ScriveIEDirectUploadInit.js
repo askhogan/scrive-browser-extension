@@ -1,13 +1,13 @@
 //C++ should inject this file ONCE per document, after it injects all the other files
 //Scrive.IE.Logger.fbl=true;  // turns-on FireBug console
 
-function ScriveIEMain() {
+function ScriveIEDirectUploadMain() {
     //Initialize common methods
     Scrive.Main.activeXObj =  new ActiveXObject("ScriveBHO.ScriveActiveX");
-    ScriveIEInitialize();
+    ScriveIEDirectUploadInitialize();
 }
 
-function ScriveIEInitialize(){
+function ScriveIEDirectUploadInitialize(){
     try {
         Scrive.LogUtils.debugOn = true;
         Scrive.LogUtils.profileOn = false;
@@ -15,8 +15,7 @@ function ScriveIEInitialize(){
 
         //Initialize platform specific stuff
         Scrive.Platform.init();
-        Scrive.ContentScript.init();
-        Scrive.Popup.init();
+        Scrive.DirectUpload.init();
 
         Scrive.LogUtils.info( "Loaded all scripts " + ( new Date().getTime() - ScriveIELoader.start ) + "ms" );
 
@@ -27,4 +26,4 @@ function ScriveIEInitialize(){
     }
 }
 
-ScriveIEMain();
+ScriveIEDirectUploadMain();

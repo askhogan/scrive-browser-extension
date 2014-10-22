@@ -204,4 +204,4 @@ Scrive.Options = new function() {
             "privileges": "DOC_CREATE+DOC_CHECK+DOC_SEND"
         });
     };
-}
+};
