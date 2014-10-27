@@ -138,7 +138,16 @@ var keepErrorInfo : { [x :string]: string } = {};
                               errorCallback) {
     var getpdfXHR = new XMLHttpRequest();
     getpdfXHR.onload = function() {
-      if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
+      /*
+       * status 0 is for local files shown directly in browser
+       * status 200..299 is for HTTP(S) traffic
+       *
+       * Note that this works only for files directly visible in
+       * chrome, PDFs embedded in local HTML will not work due to
+       * Chrome having bugs and missing implementations in local
+       * security domain.
+       */
+      if (getpdfXHR.status == 0 || (getpdfXHR.status >= 200 && getpdfXHR.status <= 299)) {
         uploadPDFData(getpdfXHR.response, errorCallback, false);
       }
       else {
