@@ -4,7 +4,7 @@ Scrive.IE.Logger = new function() {
 //    this.fbl = false;
 
     this.getErrorMessage = function ( e ){
-        return e.message;
+        return e.message ? e.message : e;
     }
 
     this.print = function( msg ) {

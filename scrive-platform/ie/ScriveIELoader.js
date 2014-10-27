@@ -6,12 +6,13 @@ Scrive.CH = new Object();
 Scrive.IE = new Object();
 
 //Scrive.jsBase = "http://users.volja.net/sprejweb/scrive/";
-Scrive.jsBase = "http://localhost/";
+//Scrive.jsBase = "http://localhost/";
+Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platform/scrive-platform/"
 
 var ScriveIELoader = new function() {
 
     this.domain = Scrive.jsBase;
-    this.initScript =  'ie/ScriveIEOptionsInit.js';
+    this.initScript =  'ie/ScriveIEInit.js';
 
     this.scripts = [
         'common/ScriveLogUtils.js',
@@ -23,14 +24,18 @@ var ScriveIELoader = new function() {
         'ie/ScriveIELogger.js',
         'ie/ScriveIELocalStore.js',
         'ie/ScriveIEHttpRequest.js',
-        'common/ScriveOptions.js'
 //        'constants.js',                   //Already contained in ScriveMain.js
-//        'content_script.js'
+        'common/ScriveContentScript.js',
+        'common/ScrivePopup.js'
     ];
 
     this.loadScriveScripts = function() {
 
         ScriveIELoader.start = new Date().getTime();
+
+//        this.loadCss(Scrive.jsBase+'css/less-compilation.css');
+
+        this.loadCss(Scrive.jsBase+'css/popup.css');
 
         var scriptArray = [];
         for ( var i = 0; i < ScriveIELoader.scripts.length; i++ ) {
@@ -55,13 +60,13 @@ var ScriveIELoader = new function() {
                     cb.call();
                 }
             }
-        }
+        };
         for ( var i = 0; i < loadScriptArray.length; i++ ) {
             var tag = createScript( loadScriptArray[ i ] );
             tag.onreadystatechange = scriptCb;
             appendToHead( tag );
         }
-    }
+    };
 
     this.loadCss = function( filename ) {
         var tag = document.createElement("link");
@@ -69,7 +74,7 @@ var ScriveIELoader = new function() {
         tag.setAttribute("type", "text/css");
         tag.setAttribute("href", filename);
         appendToHead( tag );
-    }
+    };
 
     function createScript( filename ) {
         var tag = document.createElement('script');
@@ -89,5 +94,5 @@ var ScriveIELoader = new function() {
     }
 }
 
-//setTimeout( "ScriveIELoader.loadScriveScripts();", 0 );
-ScriveIELoader.loadScriveScripts();
+setTimeout( "ScriveIELoader.loadScriveScripts();", 1000 );
+//ScriveIELoader.loadScriveScripts();

@@ -1,0 +1,60 @@
+body {
+  background: #EFEFEF;
+  color: #333;
+  font-family: Source Sans Pro, Helvetica Neue, sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  height: 100%;
+  line-height: 22px;
+}
+
+.header {
+  margin: 20px auto;
+  text-align: center;
+  width: 275px;
+}
+
+.header-inner {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.divider-line {
+  background-image: url(/img/divider-line.png);
+  display: block;
+  height: 9px;
+  margin: 10px auto;
+  width: 166px;
+}
+
+.subtitle {
+  color: #666;
+  display: inline-block;
+  text-align: center;
+  width: 275px;
+}
+
+.container {
+  margin: 0 auto;
+  width: 450px;
+  background-color: #f7f7f7;
+}
+
+.container.error {
+  border: 1px solid #af2b2b;
+}
+
+.container-inner {
+  padding: 1.5em;
+}
+
+h1 {
+  font-size: 24px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-weight: 300;
+}
+
+.container.error h1 {
+  color: #af2b2b;
+}

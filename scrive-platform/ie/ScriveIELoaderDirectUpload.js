@@ -13,20 +13,23 @@ Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platf
 var ScriveIELoader = new function() {
 
     this.domain = Scrive.jsBase;
-    this.initScript =  'ie/ScriveIEOptionsInit.js';
+    this.initScript =  'ie/ScriveIEDirectUploadInit.js';
 
     this.scripts = [
         'common/ScriveLogUtils.js',
         'common/ScrivePlatform.js',
 
         'utils/Utils.js',
-        'oauth.js',
+        'libs/spin.min.js',
+//        'oauth.js',
 
         'common/ScriveMain.js',
         'ie/ScriveIELogger.js',
         'ie/ScriveIELocalStore.js',
         'ie/ScriveIEHttpRequest.js',
-        'common/ScriveOptions.js'
+        'common/ScriveContentScript.js',
+        'show_error.js',
+        'common/ScriveDirectUpload.js'
 //        'constants.js',                   //Already contained in ScriveMain.js
 //        'content_script.js'
     ];

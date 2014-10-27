@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Files property test</title> 
+    <script type="text/javascript">
+        function getFiles() {
+            // Get input element
+            myFileList = document.getElementById("myfiles");
+            // loop through files property, using length to get number of files chosen
+            for (var i = 0; i < myFileList.files.length; i++) {
+                // display them in the div
+                document.getElementById("display").innerHTML += "<br/>" + myFileList.files[i].name ;
+            }
+        }
+</script>
+</head>
+<body>
+<label>Use <strong>shift</strong> or <strong>ctrl</strong> click to pick a few files: 
+<input type="file" multiple id="myfiles" onchange="getFiles();" /></label>
+
+<div id="display"></div>
+</body>
+</html>
