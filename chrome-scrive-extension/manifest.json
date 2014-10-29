@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "Scrive",
+  "name": "Scrive Print to E-sign",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "icons": {
     "16": "img/icon-16x16.png",
     "48": "img/icon-48x48.png",
