@@ -19,48 +19,49 @@
 */
 var keepErrorInfo = {};
 
-(function () {
-    setupListeners();
+Scrive.ContentScript = new function () {
+//    this.init = function(){
+//        this.setupListeners();
+//    };
+//
+//    this.setupListeners = function () {
+//        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//            if (request.type == MESSAGES.PDFEXISTSONPAGE) {
+//                var pdfs = findEmbedTagURLs(document);
+//                sendResponse(pdfs);
+//            }
+//
+//            if (request.type == MESSAGES.PRINTTOPAPER) {
+//                window.print();
+//            }
+//
+//            if (request.type == MESSAGES.PRINTTOESIGN) {
+//                // TODO make this more clever
+//                sendPDF(request, sendResponse);
+//
+//                /*
+//                 * Keep the return response channel open by returning
+//                 * 'true'.
+//                 */
+//                return true;
+//            }
+//            if (request.type == MESSAGES.XMLHTTPREQUESTERROR) {
+//                keepErrorInfo[request.url] = request.error;
+//                return false;
+//            }
+//        });
+//    };
 
-    function setupListeners() {
-        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-            if (request.type == MESSAGES.PDFEXISTSONPAGE) {
-                var pdfs = findEmbedTagURLs(document);
-                sendResponse(pdfs);
-            }
-
-            if (request.type == MESSAGES.PRINTTOPAPER) {
-                window.print();
-            }
-
-            if (request.type == MESSAGES.PRINTTOESIGN) {
-                // TODO make this more clever
-                sendPDF(request, sendResponse);
-
-                /*
-                * Keep the return response channel open by returning
-                * 'true'.
-                */
-                return true;
-            }
-            if (request.type == MESSAGES.XMLHTTPREQUESTERROR) {
-                keepErrorInfo[request.url] = request.error;
-                return false;
-            }
-        });
-    }
-    ;
-
-    function getAbsoluteURL(url, document) {
+    this.getAbsoluteURL = function (url, document) {
         /* Some say that it is better to use IMG here, but experiments
-        * show that Chrome tries to load the IMG, which is not a good
-        * thing. A tag works ok.
-        */
+         * show that Chrome tries to load the IMG, which is not a good
+         * thing. A tag works ok.
+         */
         var a = document.createElement('a');
         a.href = url; // set string url
         url = a.href; // get qualified url, browser magic has happened
         return url;
-    }
+    };
 
     // uploadData has the form:
     //
@@ -70,7 +71,7 @@ var keepErrorInfo = {};
     // {'key': ['value1', 'value2']}.
     //
     // Note that this is something else than thing called UploadData
-    function uploadDataToFormData(uploadData) {
+    this.uploadDataToFormData = function (uploadData) {
         var formData = new FormData();
         for (var k in uploadData) {
             for (var i in uploadData[k]) {
@@ -78,14 +79,14 @@ var keepErrorInfo = {};
             }
         }
         return formData;
-    }
+    };
 
     /**
-    * Look through the DOM and search for PDF's
-    *
-    * @return Array the urls of pdfs that were found.
-    */
-    function findEmbedTagURLs(document) {
+     * Look through the DOM and search for PDF's
+     *
+     * @return Array the urls of pdfs that were found.
+     */
+    this.findEmbedTagURLs = function (document) {
         var results = [];
         var elems = document.querySelectorAll("embed, frame, iframe");
         var count = elems.length;
@@ -95,11 +96,11 @@ var keepErrorInfo = {};
 
             if (tagName == "embed") {
                 var src_relative = elem.getAttribute("src");
-                var src = getAbsoluteURL(src_relative, document);
+                var src = this.getAbsoluteURL(src_relative, document);
                 results.push(src);
             } else if (tagName == "iframe" || tagName == "frame") {
-                try  {
-                    var elems2 = findEmbedTagURLs(elem.contentDocument);
+                try {
+                    var elems2 = this.findEmbedTagURLs(elem.contentDocument);
                     results = results.concat(elems2);
                 } catch (e) {
                     // this happens when unallowed frame traversals are done
@@ -110,22 +111,22 @@ var keepErrorInfo = {};
             }
         }
         return results;
-    }
+    };
 
     /*
-    * First get the PDF with a xhr call, then put it to the middleware
-    */
-    function sendPDF(request, errorCallback) {
+     * First get the PDF with a xhr call, then put it to the middleware
+     */
+    this.sendPDF = function (request, errorCallback) {
         var getpdfXHR = new XMLHttpRequest();
         getpdfXHR.onload = function () {
             if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
-                uploadPDFData(getpdfXHR.response, errorCallback, false);
+                Scrive.ContentScript.uploadPDFData(getpdfXHR.response, errorCallback, false);
             } else {
-                errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
+                Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
             }
         };
         getpdfXHR.onerror = function () {
-            errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
+            Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
         };
         getpdfXHR.open(request.method, request.url);
         getpdfXHR.responseType = "blob";
@@ -135,100 +136,102 @@ var keepErrorInfo = {};
             getpdfXHR.send();
         }
         /*
-        * I'm not sure what is the real difference between 'blob' and
-        * 'arraybuffer', they look similar enough to me. 'Blob' has mime
-        * type associated with it, ArrayBuffer does not. ArrayBuffer
-        * seems deprecated in favor of ArrayBufferView, but
-        * ArrayBufferView is not legal here.
-        */
-    }
-})();
+         * I'm not sure what is the real difference between 'blob' and
+         * 'arraybuffer', they look similar enough to me. 'Blob' has mime
+         * type associated with it, ArrayBuffer does not. ArrayBuffer
+         * seems deprecated in favor of ArrayBufferView, but
+         * ArrayBufferView is not legal here.
+         */
+    };
 
-function errorCallbackFromXMLHttpRequest(url, errorCallback, xmlHttpRequest) {
-    /*
-    * This information is actually good only for HTTP level errors,
-    * when there is HTTP status code and statusText and maybe even
-    * responseText.
-    *
-    * For any kind of error that is a bit lower level, like
-    * net::ERR_CONNECTION_REFUSED we do not have good information at
-    * this point.
-    *
-    * To get that information background page subscribes to
-    * chrome.webRequest.onErrorOccurred and there in the callback there
-    * is a string field called 'error'. We get notified on this tab
-    * with a message of 'xmlhttprequesterror'. That information is
-    * stored in global keepErrorInfo variable.
-    *
-    * And also timing issues: lets wait till all messages come in.
-    */
-    setTimeout(function () {
-        errorCallback({
-            type: 'error',
-            url: url,
-            headers: xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function (x) {
-                return x != "";
-            }),
-            response: xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
-            status: xmlHttpRequest.status,
-            statusText: xmlHttpRequest.statusText
+    this.errorCallbackFromXMLHttpRequest = function (url, errorCallback, xmlHttpRequest) {
+        /*
+         * This information is actually good only for HTTP level errors,
+         * when there is HTTP status code and statusText and maybe even
+         * responseText.
+         *
+         * For any kind of error that is a bit lower level, like
+         * net::ERR_CONNECTION_REFUSED we do not have good information at
+         * this point.
+         *
+         * To get that information background page subscribes to
+         * chrome.webRequest.onErrorOccurred and there in the callback there
+         * is a string field called 'error'. We get notified on this tab
+         * with a message of 'xmlhttprequesterror'. That information is
+         * stored in global keepErrorInfo variable.
+         *
+         * And also timing issues: lets wait till all messages come in.
+         */
+        setTimeout(function () {
+            errorCallback({
+                type: 'error',
+                url: url,
+                headers: xmlHttpRequest.getAllResponseHeaders().split("\n").filter(function (x) {
+                    return x != "";
+                }),
+                response: xmlHttpRequest.responseText ? xmlHttpRequest.responseText : keepErrorInfo[url],
+                status: xmlHttpRequest.status,
+                statusText: xmlHttpRequest.statusText
+            });
+        }, 200);
+    };
+
+    this.uploadPDFData = function (data, errorCallback, sameWindow) {
+        chrome.storage.sync.get([
+            KEYS.PRINTER_URL,
+            KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
+            KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET], function (items) {
+            Scrive.ContentScript.uploadPDFDataWithCredentials(data, errorCallback, sameWindow, items);
         });
-    }, 200);
-}
+    };
 
-function uploadPDFData(data, errorCallback, sameWindow) {
-    chrome.storage.sync.get([
-        KEYS.PRINTER_URL,
-        KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
-        KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET], function (items) {
-        uploadPDFDataWithCredentials(data, errorCallback, sameWindow, items);
-    });
-}
+    this.uploadPDFDataWithCredentials = function (data, errorCallback, sameWindow, items) {
+        var xmlHttpRequestPUT = new XMLHttpRequest();
+        var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
+        var clientId = items[KEYS.OAUTH_CLIENT_ID] || "";
+        var clientSecret = items[KEYS.OAUTH_CLIENT_SECRET] || "";
+        var tokenId = items[KEYS.OAUTH_TOKEN_ID] || "";
+        var tokenSecret = items[KEYS.OAUTH_TOKEN_SECRET] || "";
 
-function uploadPDFDataWithCredentials(data, errorCallback, sameWindow, items) {
-    var xmlHttpRequestPUT = new XMLHttpRequest();
-    var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
-    var clientId = items[KEYS.OAUTH_CLIENT_ID] || "";
-    var clientSecret = items[KEYS.OAUTH_CLIENT_SECRET] || "";
-    var tokenId = items[KEYS.OAUTH_TOKEN_ID] || "";
-    var tokenSecret = items[KEYS.OAUTH_TOKEN_SECRET] || "";
-
-    xmlHttpRequestPUT.onload = function () {
-        if (xmlHttpRequestPUT.status >= 200 && xmlHttpRequestPUT.status <= 299) {
-            var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
-            if (openBrowser) {
-                if (sameWindow) {
-                    window.location.href = openBrowser;
+        xmlHttpRequestPUT.onload = function () {
+            if (xmlHttpRequestPUT.status >= 200 && xmlHttpRequestPUT.status <= 299) {
+                var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
+                if (openBrowser) {
+                    if (sameWindow) {
+                        window.location.href = openBrowser;
+                    } else {
+                        window.open(openBrowser, '_blank');
+                    }
                 } else {
-                    window.open(openBrowser, '_blank');
+                    // Is this still needed?
+                    alert("Done! Look at your tablet!");
                 }
             } else {
-                // Is this still needed?
-                alert("Done! Look at your tablet!");
+                Scrive.ContentScript.errorCallbackFromXMLHttpRequest(printer_url, errorCallback, this);
             }
-        } else {
-            errorCallbackFromXMLHttpRequest(printer_url, errorCallback, this);
+        };
+
+        xmlHttpRequestPUT.onerror = function () {
+            Scrive.ContentScript.errorCallbackFromXMLHttpRequest(printer_url, errorCallback, this);
+        };
+
+        console.log("Sending PDF data to: " + printer_url);
+        xmlHttpRequestPUT.open("PUT", printer_url);
+
+        if (clientId + "" != "" && clientSecret + "" != "" && tokenId + "" != "" && tokenSecret + "" != "") {
+            var oauthComponents = [
+                "oauth_signature_method=\"PLAINTEXT\"",
+                    "oauth_consumer_key=\"" + clientId + "\"",
+                    "oauth_token=\"" + tokenId + "\"",
+                    "oauth_signature=\"" + clientSecret + "&" + tokenSecret + "\""];
+
+            var oauthHeader = "OAuth " + oauthComponents.join(",");
+
+            xmlHttpRequestPUT.setRequestHeader("Authorization", oauthHeader);
         }
+        xmlHttpRequestPUT.send(data);
     };
-
-    xmlHttpRequestPUT.onerror = function () {
-        errorCallbackFromXMLHttpRequest(printer_url, errorCallback, this);
-    };
-
-    console.log("Sending PDF data to: " + printer_url);
-    xmlHttpRequestPUT.open("PUT", printer_url);
-
-    if (clientId + "" != "" && clientSecret + "" != "" && tokenId + "" != "" && tokenSecret + "" != "") {
-        var oauthComponents = [
-            "oauth_signature_method=\"PLAINTEXT\"",
-            "oauth_consumer_key=\"" + clientId + "\"",
-            "oauth_token=\"" + tokenId + "\"",
-            "oauth_signature=\"" + clientSecret + "&" + tokenSecret + "\""];
-
-        var oauthHeader = "OAuth " + oauthComponents.join(",");
-
-        xmlHttpRequestPUT.setRequestHeader("Authorization", oauthHeader);
-    }
-    xmlHttpRequestPUT.send(data);
-}
+};
 //# sourceMappingURL=content_script.js.map
+
+//Scrive.ContentScript.init();

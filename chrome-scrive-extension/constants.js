@@ -1,3 +1,8 @@
+if (Scrive == null || typeof(Scrive) != "object") {
+    var Scrive = new Object();
+}
+Scrive.jsBase = "chrome-extension://cmkpeebfmfecffgdggabjikmlkkegbci"
+
 var KEYS = {
     PRINTER_URL: 'printer_url',
     OAUTH_CLIENT_ID: 'oauth_client_id',

@@ -16,7 +16,7 @@ function handleFiles() {
 
         showUploading();
 
-        uploadPDFData(file, errorCallback, true);
+        Scrive.ContentScript.uploadPDFData(file, errorCallback, true);
     }
 }
 

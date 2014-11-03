@@ -7,6 +7,20 @@
 
 ;
 
+chrome.browserAction.onClicked.addListener(function(tab) {
+//chrome.tabs.executeScript(null,{code:"document.body.style.backgroundColor='red'"});
+;
+    chrome.tabs.executeScript(tab.id,{code:"Scrive.Popup.toggleDiv()"});
+
+//chrome.tabs.query({active: true}, function (tab){
+// // //      //
+
+    }
+);
+//chrome.tabs.executeScript(null, {file: "content_script.js"});
+//});
+
+
 /*
 * Here we try to keep all requests that are coming so that we can
 * redo them again with XMLHttpRequest using proper method, POST
