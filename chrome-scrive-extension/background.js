@@ -8,17 +8,25 @@
 ;
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-//chrome.tabs.executeScript(null,{code:"document.body.style.backgroundColor='red'"});
-;
     chrome.tabs.executeScript(tab.id,{code:"Scrive.Popup.toggleDiv()"});
-
-//chrome.tabs.query({active: true}, function (tab){
-// // //      //
-
     }
 );
-//chrome.tabs.executeScript(null, {file: "content_script.js"});
-//});
+
+//EKI
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+      console.log(request.type);
+//    if (request.greeting == "getJSONParser")  sendResponse({farewell: "AAAA"});
+
+      if (request.type == "savedDataForRequest")  sendResponse({savedData: savedDataForRequests[request.url]});
+
+});
+
+//chrome.extension.onRequest.addListener(
+//    function(request, sender, sendResponse) {
+//        console.log(request.greeting);
+//        if (request.greeting == "getJSONParser")  sendResponse({farewell: "AAAA"});
+//    }
+//);
 
 
 /*

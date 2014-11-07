@@ -4,6 +4,20 @@
 /// <reference path="background.ts" />
 /// <reference path="show_error.ts" />
 
+//chrome.extension.sendRequest( { greeting: "getJSONParser", emailHash: "BBBB" },
+//    function (response)
+//    {
+//        console.log(response.farewell);
+//
+//    }
+//)
+//chrome.runtime.sendMessage( { greeting: "getJSONParser", emailHash: "BBBB", type: "crap" },
+//    function (response)
+//    {
+//        console.log(response.farewell);
+//
+//    }
+//)
 
 Scrive.Popup = new function() {
 
@@ -21,13 +35,17 @@ Scrive.Popup = new function() {
     var popup;
     var divToggle = false;
 
+var sendMessage = function (message, responseCallback) {
+    chrome.runtime.sendMessage( message, responseCallback);
+};
+
 //var sendMessage = function (message, responseCallback) {
 //    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 //        var tab = tabs[0];
 //        chrome.tabs.sendMessage(tab.id, message, responseCallback);
 //    });
 //};
-//
+
 //document.addEventListener("DOMContentLoaded", function () {
 //    // Steps:
 //    // - Ask if there is a PDF
@@ -157,7 +175,8 @@ Scrive.Popup = new function() {
         //   - If false pdf, ask user to print page to paper
         //   - If true pdf, ask if user wants to print to e-sign
 
-        //EKI this calls //            sendMessage({ 'type': MESSAGES.PDFEXISTSONPAGE }, f);
+        //EKI this calls //
+//        sendMessage({ 'type': MESSAGES.PDFEXISTSONPAGE }, null);
 //    var response = Scrive.ContentScript.findEmbedTagURLs(document);
         var response = Scrive.ContentScript.findEmbedTagURLs(document);
 
@@ -296,21 +315,39 @@ Scrive.Popup = new function() {
              */
             var pdfurl = pdfs[0];
 //        var savedData = bg.savedDataForRequests[pdfurl];
-//        sendPDF(request, sendResponse);
 //        sendMessage({
 //            type: 'printtoesign',
 //            method: savedData.method,
 //            formData: savedData.formData,
 //            url: pdfurl
 //        }, errorCallback);
-            Scrive.ContentScript.sendPDF({
-                type: 'printtoesign',
-//            method: savedData.method,
-//            formData: savedData.formData,
-                method: 'PUT',
-                formData: '',
-                url: pdfurl
-            }, Scrive.Popup.errorCallback);
+
+        sendMessage({
+            type: 'savedDataForRequest',
+            url: pdfurl
+        },
+            function (response)
+            {
+                console.log(response.savedData);
+
+                Scrive.ContentScript.sendPDF({
+                    type: 'printtoesign',
+                    method: response.savedData.method,
+                    formData: response.savedData.formData,
+                    url: pdfurl
+                }, Scrive.Popup.errorCallback);
+            }
+        );
+
+
+//            Scrive.ContentScript.sendPDF({
+//                type: 'printtoesign',
+////            method: savedData.method,
+////            formData: savedData.formData,
+//                method: 'PUT',
+//                formData: '',
+//                url: pdfurl
+//            }, Scrive.Popup.errorCallback);
             acceptButton.removeEventListener('click', onAccept);
             Scrive.Popup.uploadingPDF();
         };
