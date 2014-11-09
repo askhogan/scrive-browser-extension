@@ -22,6 +22,7 @@
 Scrive.Popup = new function() {
 
 //var bg = chrome.extension.getBackgroundPage();
+    var modalOptions;
     var modalTitle;
     var modalContent;
     var acceptButton;
@@ -107,7 +108,7 @@ var sendMessage = function (message, responseCallback) {
 //    directUploadButton = document.querySelector('.modal-footer .direct-upload');
 //
 //    directUploadButton.addEventListener('click', function () {
-//        mixpanel.track("Direct upload accept");
+//        Scrive.Mixpanel.track("Direct upload accept");
 //        chrome.tabs.create({ 'url': chrome.extension.getURL('html/direct_upload.html') });
 //    });
 //});
@@ -232,7 +233,7 @@ var sendMessage = function (message, responseCallback) {
 
 //    directUploadButton.addEventListener('click', function () {
 //        //EKI add this in for final version
-////                mixpanel.track("Direct upload accept");
+////                Scrive.Mixpanel.track("Direct upload accept");
 //        //EKI open in new tab
 ////                chrome.tabs.create({ 'url': chrome.extension.getURL('html/direct_upload.html') });
 ////        window.location.href = Scrive.jsBase + "/html/direct_upload.html";
@@ -299,7 +300,7 @@ var sendMessage = function (message, responseCallback) {
         cancelButton.innerText = chrome.i18n.getMessage("no");
         directUploadButton.style.display = "none";
         var onAccept = function () {
-//        mixpanel.track("Print to e-sign accept");
+        Scrive.Mixpanel.track("Print to e-sign accept");
 
             /*
              * Here we would actually like to inspect what was saved in the
@@ -353,7 +354,7 @@ var sendMessage = function (message, responseCallback) {
         };
         var onCancel = function () {
             Scrive.Popup.toggleDiv();
-            mixpanel.track("Print to e-sign cancel", {}, function () {
+            Scrive.Mixpanel.track("Print to e-sign cancel", {}, function () {
                 ;
 //            window.close();
 //            toggleDiv();
@@ -375,7 +376,7 @@ var sendMessage = function (message, responseCallback) {
         var onAccept = function () {
             Scrive.Popup.toggleDiv();
             window.print();
-            mixpanel.track("Print to paper accept");
+            Scrive.Mixpanel.track("Print to paper accept");
 //        sendMessage({ 'type': MESSAGES.PRINTTOPAPER }, function (e) {
 //            return;
 //        });
@@ -384,7 +385,7 @@ var sendMessage = function (message, responseCallback) {
         };
         var onCancel = function () {
             Scrive.Popup.toggleDiv();
-            mixpanel.track("Print to paper cancel", {}, function () {
+            Scrive.Mixpanel.track("Print to paper cancel", {}, function () {
                 ;
 //            window.close();
 //            toggleDiv();
@@ -427,12 +428,12 @@ var sendMessage = function (message, responseCallback) {
     };
 
     this.errorCallback = function (errorData) {
-        this.showError(modalContent, errorData);
+        showError(modalContent, errorData);
 
         clearInterval(uploadingPDFInterval);
         cancelButton.style.display = "none";
         directUploadButton.style.display = "none";
-        acceptButton.className = "button button-green float-right";
+        acceptButton.className = "scrive-button scrive-button-green scrive-float-right";
         acceptButton.innerText = chrome.i18n.getMessage("ok");
         var onAccept = function () {
             acceptButton.removeEventListener('click', onAccept);

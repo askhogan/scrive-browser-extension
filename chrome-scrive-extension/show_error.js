@@ -29,7 +29,8 @@ function showError(element, errorData) {
         buildHTML += "</p>";
         element.innerHTML = buildHTML;
 
-        mixpanel.track("Error detected", { content: buildHTML });
+        //EKI we have to check the structure in Mixpanel for this one
+        Scrive.Mixpanel.track("Error detected", { content: buildHTML });
     });
 }
 //# sourceMappingURL=show_error.js.map
