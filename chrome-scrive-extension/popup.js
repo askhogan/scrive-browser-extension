@@ -202,7 +202,7 @@ var sendMessage = function (message, responseCallback) {
 //                                sendMessage({ 'type': MESSAGES.PDFEXISTSONPAGE }, f);
 //                            }, 1000);
 //                        });
-            console.log("findEmbedTagURLs(document) = undefined");
+                    Scrive.LogUtils.log("findEmbedTagURLs(document) = undefined");
 //                    } else {
 //                        /*
 //                         * Seems we do not have rights to load content_script.js on
@@ -212,10 +212,10 @@ var sendMessage = function (message, responseCallback) {
 //                    }
         } else if (response.length != 0) {
             pdfs = response;
-            console.log("findEmbedTagURLs(document) = " + response.length);
+                    Scrive.LogUtils.log("findEmbedTagURLs(document) = " +  response.length);
             Scrive.Popup.askPrintToEsign();
         } else {
-            console.log("findEmbedTagURLs(document) = " + response.length);
+                    Scrive.LogUtils.log("findEmbedTagURLs(document) = " +  response.length);
             /*
              * This is slightly creepy as it will print main frame. Usually
              * data is presented as an IFRAME or FRAME in a FRAMESET, but
@@ -329,7 +329,7 @@ var sendMessage = function (message, responseCallback) {
         },
             function (response)
             {
-                console.log(response.savedData);
+                Scrive.LogUtils.log(response.savedData);
 
                 Scrive.ContentScript.sendPDF({
                     type: 'printtoesign',
@@ -381,7 +381,7 @@ var sendMessage = function (message, responseCallback) {
 //            return;
 //        });
 
-            acceptButton.removeListener('click', onAccept);
+            acceptButton.removeEventListener('click', onAccept);
         };
         var onCancel = function () {
             Scrive.Popup.toggleDiv();
@@ -441,8 +441,6 @@ var sendMessage = function (message, responseCallback) {
         };
         acceptButton.addEventListener('click', onAccept);
     };
-
-//# sourceMappingURL=popup.js.map
 };
 
 setTimeout(Scrive.Popup.init, 1000);

@@ -13,7 +13,14 @@
     {
       "matches": ["https://*/**", "http://*/**"],
       "css": ["css/popupdiv.css"],
-      "js": ["constants.js", "content_script.js", "libs/mixpanel_init.js", "show_error.js", "popup.js"],
+      "js": ["constants.js",
+            "common/ScrivePlatform.js",
+            "common/ScriveLogUtils.js",
+            "chrome/ScriveChromeLogger.js",
+            "content_script.js",
+            "libs/mixpanel_init.js",
+            "show_error.js",
+            "popup.js"],
       "run_at": "document_start"
     }
   ],

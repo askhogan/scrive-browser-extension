@@ -20,9 +20,15 @@
 var keepErrorInfo = {};
 
 Scrive.ContentScript = new function () {
-//    this.init = function(){
+    this.init = function(){
 //        this.setupListeners();
-//    };
+        Scrive.LogUtils.debugOn = true;
+        Scrive.LogUtils.profileOn = false;
+        Scrive.LogUtils.infoOn = true;
+
+        //Initialize platform specific stuff
+        Scrive.Platform.init();
+    };
 //
 //    this.setupListeners = function () {
 //        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -106,7 +112,8 @@ Scrive.ContentScript = new function () {
                     // this happens when unallowed frame traversals are done
                     // but we are ok with that as it usually is cross-domain
                     // security protection
-                    console.log("error while traversing frames", e);
+                    Scrive.LogUtils.error("error while traversing frames", e);
+                    //Scrive.LogUtils.error("error while traversing frames", e);
                 }
             }
         }
@@ -215,7 +222,7 @@ Scrive.ContentScript = new function () {
             Scrive.ContentScript.errorCallbackFromXMLHttpRequest(printer_url, errorCallback, this);
         };
 
-        console.log("Sending PDF data to: " + printer_url);
+        Scrive.LogUtils.log("Sending PDF data to: " + printer_url);
         xmlHttpRequestPUT.open("PUT", printer_url);
 
         if (clientId + "" != "" && clientSecret + "" != "" && tokenId + "" != "" && tokenSecret + "" != "") {
@@ -232,6 +239,5 @@ Scrive.ContentScript = new function () {
         xmlHttpRequestPUT.send(data);
     };
 };
-//# sourceMappingURL=content_script.js.map
 
-//Scrive.ContentScript.init();
+Scrive.ContentScript.init();

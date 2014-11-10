@@ -1,6 +1,10 @@
 if (Scrive == null || typeof(Scrive) != "object") {
     var Scrive = new Object();
 }
+
+Scrive.CH = new Object();
+Scrive.IE = new Object();
+
 Scrive.jsBase = "chrome-extension://cmkpeebfmfecffgdggabjikmlkkegbci"
 
 var KEYS = {
@@ -21,4 +25,3 @@ var MESSAGES = {
     PRINTTOESIGN: 'printtoesign',
     XMLHTTPREQUESTERROR: 'xmlhttprequesterror'
 };
-//# sourceMappingURL=constants.js.map

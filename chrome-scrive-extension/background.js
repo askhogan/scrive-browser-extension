@@ -173,4 +173,3 @@ chrome.windows.getCurrent({}, function (w) {
         });
     }
 });
-//# sourceMappingURL=background.js.map

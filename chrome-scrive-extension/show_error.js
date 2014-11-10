@@ -33,4 +33,4 @@ function showError(element, errorData) {
         Scrive.Mixpanel.track("Error detected", { content: buildHTML });
     });
 }
-//# sourceMappingURL=show_error.js.map
+

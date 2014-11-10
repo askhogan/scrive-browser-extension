@@ -204,4 +204,3 @@ var OAuth = ((function () {
         "handleCallback": handleCallback,
         "authorizationHeader": authorizationHeader };
 })());
-//# sourceMappingURL=oauth.js.map
