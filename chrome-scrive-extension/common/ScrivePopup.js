@@ -60,7 +60,7 @@ var sendMessage = function (message, responseCallback) {
 //            if (!alreadyReloaded) {
 //                /*
 //                * Do reload once as we might get into infinite look
-//                * here. Some pages will not load content_script.js due to
+//                * here. Some pages will not load ScriveContentScript.js due to
 //                * security reasons. For example local file:// pages are
 //                * excluded by our manifest.json as there are chrome bugs in
 //                * security domain implemention for local pages anyway.
@@ -75,7 +75,7 @@ var sendMessage = function (message, responseCallback) {
 //                });
 //            } else {
 //                /*
-//                * Seems we do not have rights to load content_script.js on
+//                * Seems we do not have rights to load ScriveContentScript.js on
 //                * the page, the best we can do is to print.
 //                */
 //                askPrintToPaper();
@@ -189,7 +189,7 @@ var sendMessage = function (message, responseCallback) {
 //                    if (!alreadyReloaded) {
 //                        /*
 //                         * Do reload once as we might get into infinite look
-//                         * here. Some pages will not load content_script.js due to
+//                         * here. Some pages will not load ScriveContentScript.js due to
 //                         * security reasons. For example local file:// pages are
 //                         * excluded by our manifest.json as there are chrome bugs in
 //                         * security domain implementation for local pages anyway.
@@ -205,7 +205,7 @@ var sendMessage = function (message, responseCallback) {
                     Scrive.LogUtils.log("findEmbedTagURLs(document) = undefined");
 //                    } else {
 //                        /*
-//                         * Seems we do not have rights to load content_script.js on
+//                         * Seems we do not have rights to load ScriveContentScript.js on
 //                         * the page, the best we can do is to print.
 //                         */
 //                        this.askPrintToPaper();
@@ -288,7 +288,7 @@ var sendMessage = function (message, responseCallback) {
     };
 
     this.toggleDiv = function() {
-        this.toggleElem(spacer);
+        Scrive.Popup.toggleElem(spacer);
         divToggle = !divToggle;
     };
 
