@@ -64,29 +64,25 @@ function cleanupOldSavedDataForRequests():void
 
 var webRequestFilter : chrome.webRequest.RequestFilter = { urls: ["http://*/*","https://*/*"],
                          //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
-                         types: ["main_frame", "object", "sub_frame"]
+                         types: ["main_frame", "object", "sub_frame", "image", "other"]
                        };
 
 
 chrome.webRequest.onBeforeRequest.addListener(function(info : chrome.webRequest.OnBeforeRequestDetails) {
-    if( (info.method=="POST" || info.method=="GET") && info.tabId >=0 ) {
-        savedDataForRequests[info.url] = { formData: (info.requestBody && info.requestBody.formData)
-                                              ? info.requestBody.formData : undefined,
-                                           timeStamp: info.timeStamp,
-                                           method: info.method,
-                                           type: info.type,
-                                           tabId: info.tabId
-                                         };
-    }
+  savedDataForRequests[info.url] = { formData: (info.requestBody && info.requestBody.formData)
+                                     ? info.requestBody.formData : undefined,
+                                     timeStamp: info.timeStamp,
+                                     method: info.method,
+                                     type: info.type,
+                                     tabId: info.tabId
+                                   };
 }, webRequestFilter, ["requestBody"]);
 
 chrome.webRequest.onHeadersReceived.addListener(function(info : chrome.webRequest.OnHeadersReceivedDetails) {
-    if( (info.method=="POST" || info.method=="GET") && info.tabId >=0 ) {
-        var obj = savedDataForRequests[info.url];
-        if( obj ) {
-            obj.responseHeaders = <HttpHeader[]>info.responseHeaders;
-        }
-    }
+  var obj = savedDataForRequests[info.url];
+  if( obj ) {
+    obj.responseHeaders = <HttpHeader[]>info.responseHeaders;
+  }
   cleanupOldSavedDataForRequests();
 }, webRequestFilter, ["responseHeaders"]);
 
