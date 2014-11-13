@@ -120,8 +120,8 @@ var askPrintToEsign = function() {
     var pdfurl = pdfs[0];
     var savedData : SavedRequest = bg.savedDataForRequests[pdfurl];
     sendMessage({type: 'printtoesign',
-                 method: savedData.method,
-                 formData: savedData.formData,
+                 method: savedData ? savedData.method : "GET",
+                 formData: savedData ? savedData.formData : null,
                  url: pdfurl
                 },
                 errorCallback
