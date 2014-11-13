@@ -40,7 +40,7 @@ function cleanupOldSavedDataForRequests():void
    */
   var timeStamp;
   var url;
-  while( Object.keys(savedDataForRequests).length >50 ) {
+  while( Object.keys(savedDataForRequests).length >1000 ) {
     // need to find oldest object
     timeStamp = undefined;
     url = undefined;
