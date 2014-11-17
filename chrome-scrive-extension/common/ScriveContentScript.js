@@ -184,7 +184,8 @@ Scrive.ContentScript = new function () {
     };
 
     this.uploadPDFData = function (data, errorCallback, sameWindow) {
-        chrome.storage.sync.get([
+//        chrome.storage.sync.get([
+        Scrive.Platform.LocalStore.get([
             KEYS.PRINTER_URL,
             KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
             KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET], function (items) {

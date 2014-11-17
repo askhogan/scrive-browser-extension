@@ -20,10 +20,12 @@ function showError(element, errorData) {
 
     buildHTML += "</p>";
 
-    chrome.storage.sync.get(KEYS.PRINTER_URL, function (items) {
+//    chrome.storage.sync.get(KEYS.PRINTER_URL, function (items) {
+    Scrive.Platform.LocalStore.get(KEYS.PRINTER_URL, function (items) {
         var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
         buildHTML += "<p>" + chrome.i18n.getMessage("systemInformation") + ":<br/>";
-        buildHTML += "Chrome Extension Version: " + chrome.runtime.getManifest()["version"] + "<br />";
+//        buildHTML += "Chrome Extension Version: " + chrome.runtime.getManifest()["version"] + "<br />";
+        buildHTML += "Chrome Extension Version: " + Scrive.Platform.BrowserUtils.getExtensionVersion() + "<br />";
         buildHTML += chrome.i18n.getMessage("time") + ": " + new Date() + "<br />";
         buildHTML += "Scrive URL: " + printer_url;
         buildHTML += "</p>";

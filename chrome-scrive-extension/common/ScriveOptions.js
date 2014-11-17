@@ -28,6 +28,15 @@ Scrive.Options = new function() {
 
     this.init = function() {
 
+        Scrive.LogUtils.debugOn = true;
+        Scrive.LogUtils.profileOn = false;
+        Scrive.LogUtils.infoOn = true;
+
+        //Initialize platform specific stuff
+        Scrive.Platform.init();
+
+//        alert("Chrome Extension Version: " + Scrive.Platform.BrowserUtils.getExtensionVersion());
+
         form.addEventListener('submit', function () {
             return false;
         });
@@ -53,7 +62,8 @@ Scrive.Options = new function() {
                     obj[KEYS.OAUTH_TOKEN_SECRET] = cred.oauth_token_secret;
                     obj[KEYS.OAUTH_CLIENT_ID] = client_id;
                     obj[KEYS.OAUTH_CLIENT_SECRET] = client_secret;
-                    chrome.storage.sync.set(obj, function () {
+//                    chrome.storage.sync.set(obj, function () {
+                    Scrive.Platform.LocalStore.put(obj, function () {
                         /*
                          * Drop 'oauth_token' and 'oauth_verifier'.
                          */
@@ -94,7 +104,17 @@ Scrive.Options = new function() {
         obj[KEYS.OAUTH_CLIENT_SECRET] = clientSecretInput.value;
         obj[KEYS.OAUTH_TOKEN_ID] = tokenIdInput.value;
         obj[KEYS.OAUTH_TOKEN_SECRET] = tokenSecretInput.value;
-        chrome.storage.sync.set(obj, function () {
+
+        Scrive.LogUtils.debug("Scrive.Options.save_options: \n" +
+            "\n urlInput.value = " + urlInput.value +
+            "\n clientIdInput.value = " + clientIdInput.value +
+            "\n clientSecretInput.value = " + clientSecretInput.value +
+            "\n tokenIdInput.value = " + tokenIdInput.value +
+            "\n tokenSecretInput.value = " + tokenSecretInput.value +
+            "");
+
+//        chrome.storage.sync.set(obj, function () {
+        Scrive.Platform.LocalStore.put(obj, function () {
             var oldButtonText = saveButton.innerText;
             saveButton.innerText = chrome.i18n.getMessage("saved");
             setTimeout(function () {
@@ -115,7 +135,8 @@ Scrive.Options = new function() {
 };
 
     this.restore_options = function() {
-        chrome.storage.sync.get([
+//        chrome.storage.sync.get([
+        Scrive.Platform.LocalStore.get([
             KEYS.PRINTER_URL,
             KEYS.OAUTH_CLIENT_ID, KEYS.OAUTH_CLIENT_SECRET,
             KEYS.OAUTH_TOKEN_ID, KEYS.OAUTH_TOKEN_SECRET], function (items) {

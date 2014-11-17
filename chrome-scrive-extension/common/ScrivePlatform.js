@@ -11,11 +11,14 @@ Scrive.Platform = new function() {
         try {
             var chrome = isChrome();
 
-//            Scrive.Platform.LocalStore = chrome ? Scrive.Chrome.LocalStore : Scrive.IE.LocalStore;
-//            if ( Scrive.Platform.LocalStore.init ) Scrive.Platform.LocalStore.init();
+            Scrive.Platform.LocalStore = chrome ? Scrive.CH.LocalStore : Scrive.IE.LocalStore;
+            if ( Scrive.Platform.LocalStore.init ) Scrive.Platform.LocalStore.init();
 
             Scrive.Platform.Logger = chrome ? Scrive.CH.Logger : Scrive.IE.Logger;
             if ( Scrive.Platform.Logger.init ) Scrive.Platform.Logger.init();
+
+            Scrive.Platform.BrowserUtils = chrome ? Scrive.CH.BrowserUtils : Scrive.IE.BrowserUtils;
+            if ( Scrive.Platform.BrowserUtils.init ) Scrive.Platform.BrowserUtils.init();
 
 //            Scrive.Platform.HttpRequest = chrome ? Scrive.Chrome.HttpRequest : Scrive.IE.HttpRequest;
 //            if ( Scrive.Platform.HttpRequest.init ) Scrive.Platform.HttpRequest.init();

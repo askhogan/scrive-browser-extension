@@ -17,6 +17,8 @@
             "common/ScrivePlatform.js",
             "common/ScriveLogUtils.js",
             "chrome/ScriveChromeLogger.js",
+            "chrome/ScriveChromeLocalStore.js",
+            "chrome/ScriveChromeBrowserUtils.js",
             "common/ScriveContentScript.js",
             "libs/mixpanel_init.js",
             "show_error.js",
