@@ -22,20 +22,22 @@ Scrive.Mixpanel = new function() {
     };
 
     this.get = function (request, errorCallback) {
-        var getpdfXHR = new XMLHttpRequest();
-        getpdfXHR.onload = function () {
-            if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
+        var options = new Object();
+        options.onload = function (rq) {
+            if (rq.status >= 200 && rq.status <= 299) {
                 ;//Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
             } else {
                 Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
             }
         };
-        getpdfXHR.onerror = function () {
+        options.onerror = function () {
             Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
         };
 
-        getpdfXHR.open(request.method, request.url);
-        getpdfXHR.send();
+        options.method = request.method;
+        options.url = request.url;
+
+        Scrive.Platform.HttpRequest.get(options.url, options);
     };
 
     this.track = function(event , content) {

@@ -21,13 +21,6 @@ var keepErrorInfo = {};
 
 Scrive.ContentScript = new function () {
     this.init = function(){
-//        this.setupListeners();
-        Scrive.LogUtils.debugOn = true;
-        Scrive.LogUtils.profileOn = false;
-        Scrive.LogUtils.infoOn = true;
-
-        //Initialize platform specific stuff
-        Scrive.Platform.init();
     };
 //
 //    this.setupListeners = function () {
@@ -120,37 +113,6 @@ Scrive.ContentScript = new function () {
         return results;
     };
 
-    /*
-     * First get the PDF with a xhr call, then put it to the middleware
-     */
-    this.sendPDF = function (request, errorCallback) {
-        var getpdfXHR = new XMLHttpRequest();
-        getpdfXHR.onload = function () {
-            if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
-                Scrive.ContentScript.uploadPDFData(getpdfXHR.response, errorCallback, false);
-            } else {
-                Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
-            }
-        };
-        getpdfXHR.onerror = function () {
-            Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
-        };
-        getpdfXHR.open(request.method, request.url);
-        getpdfXHR.responseType = "blob";
-        if (request.formData) {
-            getpdfXHR.send(uploadDataToFormData(request.formData));
-        } else {
-            getpdfXHR.send();
-        }
-        /*
-         * I'm not sure what is the real difference between 'blob' and
-         * 'arraybuffer', they look similar enough to me. 'Blob' has mime
-         * type associated with it, ArrayBuffer does not. ArrayBuffer
-         * seems deprecated in favor of ArrayBufferView, but
-         * ArrayBufferView is not legal here.
-         */
-    };
-
     this.errorCallbackFromXMLHttpRequest = function (url, errorCallback, xmlHttpRequest) {
         /*
          * This information is actually good only for HTTP level errors,
@@ -194,16 +156,17 @@ Scrive.ContentScript = new function () {
     };
 
     this.uploadPDFDataWithCredentials = function (data, errorCallback, sameWindow, items) {
-        var xmlHttpRequestPUT = new XMLHttpRequest();
+//        var xmlHttpRequestPUT = new XMLHttpRequest();
+        var options = new Object();
         var printer_url = items[KEYS.PRINTER_URL] || DEFAULTS.PRINTER_URL;
         var clientId = items[KEYS.OAUTH_CLIENT_ID] || "";
         var clientSecret = items[KEYS.OAUTH_CLIENT_SECRET] || "";
         var tokenId = items[KEYS.OAUTH_TOKEN_ID] || "";
         var tokenSecret = items[KEYS.OAUTH_TOKEN_SECRET] || "";
 
-        xmlHttpRequestPUT.onload = function () {
-            if (xmlHttpRequestPUT.status >= 200 && xmlHttpRequestPUT.status <= 299) {
-                var openBrowser = xmlHttpRequestPUT.getResponseHeader("X-Open-Browser");
+        options.onload = function (rq) {
+            if (rq.status >= 200 && rq.status <= 299) {
+                var openBrowser = rq.getResponseHeader("X-Open-Browser");
                 if (openBrowser) {
                     if (sameWindow) {
                         window.location.href = openBrowser;
@@ -219,12 +182,13 @@ Scrive.ContentScript = new function () {
             }
         };
 
-        xmlHttpRequestPUT.onerror = function () {
+        options.onerror = function () {
             Scrive.ContentScript.errorCallbackFromXMLHttpRequest(printer_url, errorCallback, this);
         };
 
         Scrive.LogUtils.log("Sending PDF data to: " + printer_url);
-        xmlHttpRequestPUT.open("PUT", printer_url);
+//        xmlHttpRequestPUT.open("PUT", printer_url);
+        options.method = "PUT";
 
         if (clientId + "" != "" && clientSecret + "" != "" && tokenId + "" != "" && tokenSecret + "" != "") {
             var oauthComponents = [
@@ -235,10 +199,15 @@ Scrive.ContentScript = new function () {
 
             var oauthHeader = "OAuth " + oauthComponents.join(",");
 
-            xmlHttpRequestPUT.setRequestHeader("Authorization", oauthHeader);
+            options.headers = new Object();
+            options.headers["Authorization"] = oauthHeader;
         }
-        xmlHttpRequestPUT.send(data);
+//        xmlHttpRequestPUT.send(data);
+        //EKI need to pass url for IE extension
+        options.url = data.url;
+        //data.data is undefined for IE
+        options.data = data.data;
+        Scrive.Platform.HttpRequest.put(printer_url,options);
     };
 };
 
-Scrive.ContentScript.init();

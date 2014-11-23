@@ -17,12 +17,15 @@
             "common/ScrivePlatform.js",
             "common/ScriveLogUtils.js",
             "chrome/ScriveChromeLogger.js",
+            "chrome/ScriveChromei18n.js",
             "chrome/ScriveChromeLocalStore.js",
             "chrome/ScriveChromeBrowserUtils.js",
+            "chrome/ScriveChromeHttpRequest.js",
             "common/ScriveContentScript.js",
             "libs/mixpanel_init.js",
             "show_error.js",
-            "common/ScrivePopup.js"],
+            "common/ScrivePopup.js",
+            "chrome/ScriveChromeInit.js"],
       "run_at": "document_start"
     }
   ],

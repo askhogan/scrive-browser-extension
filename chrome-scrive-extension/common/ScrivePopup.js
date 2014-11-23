@@ -4,24 +4,9 @@
 /// <reference path="background.ts" />
 /// <reference path="show_error.ts" />
 
-//chrome.extension.sendRequest( { greeting: "getJSONParser", emailHash: "BBBB" },
-//    function (response)
-//    {
-//        console.log(response.farewell);
-//
-//    }
-//)
-//chrome.runtime.sendMessage( { greeting: "getJSONParser", emailHash: "BBBB", type: "crap" },
-//    function (response)
-//    {
-//        console.log(response.farewell);
-//
-//    }
-//)
-
 Scrive.Popup = new function() {
 
-//var bg = chrome.extension.getBackgroundPage();
+//    var bg = chrome.extension.getBackgroundPage();
     var modalOptions;
     var modalTitle;
     var modalContent;
@@ -34,87 +19,11 @@ Scrive.Popup = new function() {
     var pdfs = [];
     var spacer;
     var popup;
-    var divToggle = false;
-
-var sendMessage = function (message, responseCallback) {
-    chrome.runtime.sendMessage( message, responseCallback);
-};
-
-//var sendMessage = function (message, responseCallback) {
-//    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//        var tab = tabs[0];
-//        chrome.tabs.sendMessage(tab.id, message, responseCallback);
-//    });
-//};
-
-//document.addEventListener("DOMContentLoaded", function () {
-//    // Steps:
-//    // - Ask if there is a PDF
-//    //   - If false pdf, ask user to print page to paper
-//    //   - If true pdf, ask if user wants to print to e-sign
-//    var alreadyReloaded = false;
-//    var f = function   (response) {
-//        if (response == undefined) {
-//            // we happen to be here because new chrome extension did not
-//            // get loaded in the context of a page
-//            if (!alreadyReloaded) {
-//                /*
-//                * Do reload once as we might get into infinite look
-//                * here. Some pages will not load ScriveContentScript.js due to
-//                * security reasons. For example local file:// pages are
-//                * excluded by our manifest.json as there are chrome bugs in
-//                * security domain implemention for local pages anyway.
-//                */
-//                alreadyReloaded = true;
-//                chrome.tabs.executeScript(null, { "code": "window.location.reload()" }, function () {
-//                    // let the new page actually load
-//                    setTimeout(function () {
-//                        console.log("Reloaded Extension content script");
-//                        sendMessage({ 'type': MESSAGES.PDFEXISTSONPAGE }, f);
-//                    }, 1000);
-//                });
-//            } else {
-//                /*
-//                * Seems we do not have rights to load ScriveContentScript.js on
-//                * the page, the best we can do is to print.
-//                */
-//                askPrintToPaper();
-//            }
-//        } else if (response.length != 0) {
-//            pdfs = response;
-//            askPrintToEsign();
-//        } else {
-//            /*
-//            * This is slightly creepy as it will print main frame. Usually
-//            * data is presented as an IFRAME or FRAME in a FRAMESET, but
-//            * from this point we cannot really know which of the subframes
-//            * contains useful data.
-//            *
-//            * Just hope that people will do this once and then learn not to
-//            * touch this again.
-//            */
-//            askPrintToPaper();
-//        }
-//    };
-//
-//    sendMessage({ 'type': MESSAGES.PDFEXISTSONPAGE }, f);
-//
-//    // Set up the templateable parts of the modal
-//    modalTitle = document.querySelector('.modal-title');
-//    modalContent = document.querySelector('.modal-content .body');
-//    acceptButton = document.querySelector('.modal-footer .accept');
-//    cancelButton = document.querySelector('.modal-footer .cancel');
-//    closeWindowButton = document.querySelector('.modal-header .modal-close');
-//    directUploadButton = document.querySelector('.modal-footer .direct-upload');
-//
-//    directUploadButton.addEventListener('click', function () {
-//        Scrive.Mixpanel.track("Direct upload accept");
-//        chrome.tabs.create({ 'url': chrome.extension.getURL('html/direct_upload.html') });
-//    });
-//});
-
+    var divToggle;
 
     this.init = function () {
+
+        divToggle = Scrive.Platform.BrowserUtils.divToggle;
 
         var body = Scrive.Popup.getBody(document);
 
@@ -227,29 +136,17 @@ var sendMessage = function (message, responseCallback) {
              */
             Scrive.Popup.askPrintToPaper();
         }
-//            };
-
-//            sendMessage({ 'type': MESSAGES.PDFEXISTSONPAGE }, f);
-
-//    directUploadButton.addEventListener('click', function () {
-//        //EKI add this in for final version
-////                Scrive.Mixpanel.track("Direct upload accept");
-//        //EKI open in new tab
-////                chrome.tabs.create({ 'url': chrome.extension.getURL('html/direct_upload.html') });
-////        window.location.href = Scrive.jsBase + "/html/direct_upload.html";
-////        alert("not implemented yet");
-//    });
 
         var onDirectUpload = function () {
             window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
-        }
+        };
 
         directUploadButton.addEventListener('click', onDirectUpload);
 
         var onOptions = function () {
 //        window.open(Scrive.jsBase + "/html/options.html", '_blank');
             window.location.href = Scrive.jsBase + "/html/options.html";
-        }
+        };
 
         modalOptions.addEventListener('click', onOptions);
 
@@ -293,19 +190,19 @@ var sendMessage = function (message, responseCallback) {
     };
 
     this.askPrintToEsign = function () {
-        modalTitle.innerText = chrome.i18n.getMessage("startEsigningQuestion");
+        modalTitle.innerText = Scrive.Platform.i18n.getMessage("startEsigningQuestion");
         modalContent.style.display = "none";
-        modalOptions.innerText = chrome.i18n.getMessage("options");
-        acceptButton.innerText = chrome.i18n.getMessage("yes");
-        cancelButton.innerText = chrome.i18n.getMessage("no");
+        modalOptions.innerText = Scrive.Platform.i18n.getMessage("options");
+        acceptButton.innerText = Scrive.Platform.i18n.getMessage("yes");
+        cancelButton.innerText = Scrive.Platform.i18n.getMessage("no");
         directUploadButton.style.display = "none";
         var onAccept = function () {
-        Scrive.Mixpanel.track("Print to e-sign accept");
+            Scrive.Mixpanel.track("Print to e-sign accept");
 
             /*
              * Here we would actually like to inspect what was saved in the
              * request to weed out anything looking like an EMBED element but
-             * not refering to an actual PDF. Candidates are:
+             * not referring to an actual PDF. Candidates are:
              *
              * - type attribute on embed element (but it is sometimes missing)
              * - .pdf as extension of url (but sometimes it is not there)
@@ -315,40 +212,9 @@ var sendMessage = function (message, responseCallback) {
              * EMBED tag, otherwise just go with what happens to be there.
              */
             var pdfurl = pdfs[0];
-//        var savedData = bg.savedDataForRequests[pdfurl];
-//        sendMessage({
-//            type: 'printtoesign',
-//            method: savedData.method,
-//            formData: savedData.formData,
-//            url: pdfurl
-//        }, errorCallback);
 
-        sendMessage({
-            type: 'savedDataForRequest',
-            url: pdfurl
-        },
-            function (response)
-            {
-                Scrive.LogUtils.log(response.savedData);
+            Scrive.Platform.HttpRequest.PrintToEsign(pdfurl);
 
-                Scrive.ContentScript.sendPDF({
-                    type: 'printtoesign',
-                    method: response.savedData.method,
-                    formData: response.savedData.formData,
-                    url: pdfurl
-                }, Scrive.Popup.errorCallback);
-            }
-        );
-
-
-//            Scrive.ContentScript.sendPDF({
-//                type: 'printtoesign',
-////            method: savedData.method,
-////            formData: savedData.formData,
-//                method: 'PUT',
-//                formData: '',
-//                url: pdfurl
-//            }, Scrive.Popup.errorCallback);
             acceptButton.removeEventListener('click', onAccept);
             Scrive.Popup.uploadingPDF();
         };
@@ -367,20 +233,18 @@ var sendMessage = function (message, responseCallback) {
     };
 
     this.askPrintToPaper = function () {
-        modalOptions.innerText = chrome.i18n.getMessage("options");
-        modalTitle.innerText = chrome.i18n.getMessage("printToPaperQuestion");
-        modalContent.innerHTML = chrome.i18n.getMessage("noPDFFound");
-        acceptButton.innerText = chrome.i18n.getMessage("print");
-        directUploadButton.innerText = chrome.i18n.getMessage("upload");
-        cancelButton.innerText = chrome.i18n.getMessage("cancel");
+        modalOptions.innerText = Scrive.Platform.i18n.getMessage("options");
+        modalTitle.innerText = Scrive.Platform.i18n.getMessage("printToPaperQuestion");
+        modalContent.innerHTML = Scrive.Platform.i18n.getMessage("noPDFFound");
+        acceptButton.innerText = Scrive.Platform.i18n.getMessage("print");
+        directUploadButton.innerText = Scrive.Platform.i18n.getMessage("upload");
+        cancelButton.innerText = Scrive.Platform.i18n.getMessage("cancel");
         var onAccept = function () {
             Scrive.Popup.toggleDiv();
             window.print();
             Scrive.Mixpanel.track("Print to paper accept");
-//        sendMessage({ 'type': MESSAGES.PRINTTOPAPER }, function (e) {
-//            return;
-//        });
-
+            //EKI possible error
+//            acceptButton.removeListener('click', onAccept);
             acceptButton.removeEventListener('click', onAccept);
         };
         var onCancel = function () {
@@ -399,7 +263,7 @@ var sendMessage = function (message, responseCallback) {
 
     var dots = 3;
     this.updateWaitingButtonText = function () {
-        var html = chrome.i18n.getMessage("wait") + "<span id='scrive-dot-0'>.</span><span id='scrive-dot-1'>.</span><span id='scrive-dot-2'>.</span>";
+        var html = Scrive.Platform.i18n.getMessage("wait") + "<span id='scrive-dot-0'>.</span><span id='scrive-dot-1'>.</span><span id='scrive-dot-2'>.</span>";
         acceptButton.innerHTML = html;
 
         dotElements = acceptButton.querySelectorAll('[id^=scrive-dot-]');
@@ -434,7 +298,7 @@ var sendMessage = function (message, responseCallback) {
         cancelButton.style.display = "none";
         directUploadButton.style.display = "none";
         acceptButton.className = "scrive-button scrive-button-green scrive-float-right";
-        acceptButton.innerText = chrome.i18n.getMessage("ok");
+        acceptButton.innerText = Scrive.Platform.i18n.getMessage("ok");
         var onAccept = function () {
             acceptButton.removeEventListener('click', onAccept);
             window.close();
@@ -442,5 +306,3 @@ var sendMessage = function (message, responseCallback) {
         acceptButton.addEventListener('click', onAccept);
     };
 };
-
-setTimeout(Scrive.Popup.init, 1000);

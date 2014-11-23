@@ -116,7 +116,7 @@ Scrive.Options = new function() {
 //        chrome.storage.sync.set(obj, function () {
         Scrive.Platform.LocalStore.put(obj, function () {
             var oldButtonText = saveButton.innerText;
-            saveButton.innerText = chrome.i18n.getMessage("saved");
+            saveButton.innerText = Scrive.Platform.i18n.getMessage("saved");
             setTimeout(function () {
                 saveButton.innerText = oldButtonText;
             }, 2500);
@@ -126,12 +126,12 @@ Scrive.Options = new function() {
     };
 
     this.translate_ui = function() {
-        document.querySelector('#options-header').innerText = chrome.i18n.getMessage("options");
-        document.querySelector('.button.save .label').innerText = chrome.i18n.getMessage("save");
-        document.querySelector('#url-label').innerText = chrome.i18n.getMessage("printerUrlOptionLabel");
-        document.querySelector('#oauth-instructions').innerText = chrome.i18n.getMessage("oauthInstructions");
-        document.querySelector('title').innerText = chrome.i18n.getMessage("options");
-        document.querySelector('.goto-list-of-jobs').innerText = chrome.i18n.getMessage("gotoListOfJobs");
+        document.querySelector('#options-header').innerText = Scrive.Platform.i18n.getMessage("options");
+        document.querySelector('.button.save .label').innerText = Scrive.Platform.i18n.getMessage("save");
+        document.querySelector('#url-label').innerText = Scrive.Platform.i18n.getMessage("printerUrlOptionLabel");
+        document.querySelector('#oauth-instructions').innerText = Scrive.Platform.i18n.getMessage("oauthInstructions");
+        document.querySelector('title').innerText = Scrive.Platform.i18n.getMessage("options");
+        document.querySelector('.goto-list-of-jobs').innerText = Scrive.Platform.i18n.getMessage("gotoListOfJobs");
 };
 
     this.restore_options = function() {

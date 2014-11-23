@@ -104,38 +104,41 @@ var OAuth = ((function () {
     * This is a fallback method when onerror was not given.
     */
     function oauthOnError(rq) {
-        if (console != undefined && console.log != undefined) {
-            console.log("OAuth communication error: " + rq.status + " " + rq.statusText);
-            console.log("OAuth URL: " + rq.status + " " + rq.statusText);
-            console.log("" + rq.getAllResponseHeaders());
-            console.log("Response type: " + rq.responseType);
-            console.log(rq.responseText);
-        }
+        Scrive.LogUtils.log("OAuth communication error: " + rq.status + " " + rq.statusText);
+        Scrive.LogUtils.log("OAuth URL: " + rq.status + " " + rq.statusText);
+        Scrive.LogUtils.log("" + rq.getAllResponseHeaders());
+        Scrive.LogUtils.log("Response type: " + rq.responseType);
+        Scrive.LogUtils.log(rq.responseText);
     }
     ;
 
     function requestToken(params) {
-        var rq = new XMLHttpRequest();
+        var options = new Object();
 
         var endpoint = params.endpoint;
 
         if (params.privileges) {
             endpoint = endpoint + "?privileges=" + encodeURIComponent(params.privileges);
         }
-        rq.open("GET", endpoint);
 
-        rq.responseType = 'x-www-form-urlencoded';
-        rq.onerror = params.onerror || oauthOnError;
-        rq.onload = function () {
+        options.responseType = 'x-www-form-urlencoded';
+        options.onerror = params.onerror || oauthOnError;
+        options.onload = function (rq) {
             if ((rq.status >= 200 && rq.status <= 299) || rq.status < 100) {
+                Scrive.LogUtils.debug("responseText: " + rq.responseText);
                 params.onload(decodeQueryString(rq.responseText));
             } else {
                 (params.onerror || oauthOnError)(rq);
             }
         };
-        rq.setRequestHeader("authorization", authorizationHeader(params));
 
-        rq.send();
+        options.headers = new Object();
+        options.headers["Authorization"] = authorizationHeader(params);
+
+        Scrive.LogUtils.log(authorizationHeader(params));
+
+        Scrive.Platform.HttpRequest.get(endpoint,options);
+
     }
     ;
 

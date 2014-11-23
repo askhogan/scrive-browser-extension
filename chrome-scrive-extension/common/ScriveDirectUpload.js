@@ -13,6 +13,14 @@ Scrive.DirectUpload = new function() {
     var error;
 
     this.init = function() {
+
+        Scrive.LogUtils.debugOn = true;
+        Scrive.LogUtils.profileOn = false;
+        Scrive.LogUtils.infoOn = true;
+
+        //Initialize platform specific stuff
+        Scrive.Platform.init();
+
         //EKI not sure this will work in IE if not we will have to use
         document.addEventListener("DOMContentLoaded", function () {
             // Set up the templateable parts of the modal
@@ -97,10 +105,10 @@ Scrive.DirectUpload = new function() {
     };
 
     this.translateUi = function () {
-        document.querySelector("#upload-pdf-document").innerText = chrome.i18n.getMessage("uploadPDFDocument");
-        document.querySelector("#choose-pdf-document").innerText = chrome.i18n.getMessage("choosePDFDocument");
-        document.querySelector("#drop-file-here").innerText = chrome.i18n.getMessage("dropFileHere");
-        document.querySelector(".dnd-instructions").innerText = chrome.i18n.getMessage("orDragAndDrop");
+        document.querySelector("#upload-pdf-document").innerText = Scrive.Platform.i18n.getMessage("uploadPDFDocument");
+        document.querySelector("#choose-pdf-document").innerText = Scrive.Platform.i18n.getMessage("choosePDFDocument");
+        document.querySelector("#drop-file-here").innerText = Scrive.Platform.i18n.getMessage("dropFileHere");
+        document.querySelector(".dnd-instructions").innerText = Scrive.Platform.i18n.getMessage("orDragAndDrop");
     };
 
     this.errorCallback = function (errorData) {
