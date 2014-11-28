@@ -206,7 +206,8 @@ Scrive.ContentScript = new function () {
         //EKI need to pass url for IE extension
         options.url = data.url;
         //data.data is undefined for IE
-        options.data = data.data;
+        if (data.data)  options.data = data.data;
+        else            options.data = data;
         Scrive.Platform.HttpRequest.put(printer_url,options);
     };
 };

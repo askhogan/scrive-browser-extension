@@ -1,15 +1,200 @@
-body, html {
-  width: 450px;
-  height: inherit;
-  overflow: hidden;
+/*body, html {*/
+/*width: 450px;*/
+/*height: inherit;*/
+/*overflow: hidden;*/
+/*}*/
+
+/* Spacer */
+#scrive_spacer { height: auto !important; top: 0 !important;position: fixed !important; right: 0 !important; width: auto !important; z-index: 100000 !important;
+
+    color: #333333;
+    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 22px;
+    background-color: #f2f2f2;
+    visibility: hidden;
 }
 
-.modal-footer {
-  height: 20px;
-  width: 380px;
-  text-align: center;
+#scrive_spacer iframe.scrive-cover {
+    position: absolute;
+    border: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+/* Scrive Popup */
+#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: 36px; width: 100%;
+
 }
 
-.direct-upload {
-  margin-left: 10px;
+#scrive_popup .scrive-modal-header.scrive-no-icon {
+    height: auto;
+    text-align: center;
+    background: none repeat scroll 0 0 #53b688;
+    border-bottom: 1px solid #dee4ed;
+    color: #ffffff;
+    padding: 25px 20px;
+}
+
+#scrive_popup .scrive-modal-header.scrive-no-icon .scrive-modal-options {
+    color: #eeeeee;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 12px;
+    left: 15px;
+    position: absolute;
+    /*top: 20px;*/
+    top: 0px;
+    width: 12px;
+    text-decoration: none;
+}
+
+#scrive_popup .scrive-modal-header.scrive-no-icon .scrive-modal-options:hover {
+    color: #ffffff;
+}
+
+
+#scrive_popup .scrive-modal-title {
+    display: block;
+    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-size: 28px;
+    line-height: 25px;
+    padding-top: 0;
+}
+
+#scrive_popup .scrive-modal-close {
+    background: url("http://users.volja.net/sprejweb/scrive/img/sprite-green-X.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: block;
+    float: right;
+    height: 12px;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    width: 12px;
+    text-decoration: none;
+}
+
+#scrive_popup .scrive-grey .scrive-modal-close {
+    background: url("http://users.volja.net/sprejweb/scrive/img/sprite-grey-X.png") no-repeat scroll 0 0 transparent;
+}
+
+#scrive_popup .scrive-modal-close:hover {
+    background-position: -12px 0;
+}
+
+#scrive_popup .scrive-modal-body .scrive-modal-content .scrive-body {
+    padding: 20px 35px;
+}
+
+#scrive_popup .scrive-modal-footer {
+    height: 20px;
+    width: 380px;
+    text-align: center;
+
+    border-top: 1px solid #dee4ed;
+    margin-left: 35px;
+    margin-right: 35px;
+    padding: 35px 0;
+}
+
+#scrive_popup .scrive-modal-footer .scrive-button {
+    margin-top: -11px;
+}
+
+#scrive_popup .scrive-button {
+    background-clip: padding-box;
+    background-color: #323b45;
+    border-radius: 1px;
+    color: #ffffff !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 16px;
+    margin: 0;
+    max-height: 16px;
+    min-width: 50px;
+    padding: 13px 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.15s ease-in-out 0s;
+}
+
+#scrive_popup .scrive-button-green {
+    background-color: #53b688;
+}
+
+#scrive_popup .scrive-button-green:hover {
+    background-color: #49a979;
+}
+
+#scrive_popup .scrive-button-green:active {
+    background-color: #53b688;
+}
+
+#scrive_popup .scrive-button-green.is-waiting {
+    background-color: #49a979;
+    cursor: wait;
+}
+#scrive_popup .scrive-button-green.is-waiting:hover {
+    background-color: #49a979;
+}
+
+#scrive_popup .scrive-button-green.is-waiting:active {
+    background-color: #49a979;
+}
+
+#scrive_popup .scrive-button-green.is-inactive {
+    background-color: #eaeaea;
+    border-color: transparent !important;
+    color: #999999 !important;
+    cursor: default;
+}
+
+#scrive_popup .scrive-button-green.is-inactive:hover {
+    background-color: #eaeaea;
+}
+
+#scrive_popup .scrive-button-green.is-inactive:active {
+    background-color: #eaeaea;
+}
+
+#scrive_popup .scrive-button-gray {
+    background-color: #e6e6e6;
+    color: #262626 !important;
+}
+
+#scrive_popup .scrive-button-gray:hover {
+    background-color: #d9d9d9;
+}
+
+#scrive_popup .scrive-button-gray:active {
+    background-color: #e6e6e6;
+}
+
+#scrive_popup .scrive-modal-footer .scrive-left {
+    float: left;
+}
+
+#scrive_popup .scrive-modal-footer .scrive-right {
+    float: right;
+}
+
+#scrive_popup .scrive-modal-footer .scrive-float-left {
+    float: left;
+}
+
+#scrive_popup .scrive-modal-footer .scrive-float-right {
+    float: right;
+}
+
+#scrive_popup .scrive-direct-upload {
+    margin-left: 10px;
 }

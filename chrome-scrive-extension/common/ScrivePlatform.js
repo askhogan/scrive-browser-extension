@@ -2,35 +2,34 @@
 
 Scrive.Platform = new function() {
 
+    this.chrome = Scrive.Main.chrome;
+
     // Call this explicitly to initialize platform specific code.
     this.init = function() {
         try {
-            var chrome = isChrome();
+//            this.chrome = isChrome();
+            if (!Scrive.Platform.chrome)
+                Scrive.Main.activeXObj =  new ActiveXObject("ScriveBHO.ScriveActiveX");
 
-            Scrive.Platform.Logger = chrome ? Scrive.CH.Logger : Scrive.IE.Logger;
+            Scrive.Platform.Logger = this.chrome ? Scrive.CH.Logger : Scrive.IE.Logger;
             if ( Scrive.Platform.Logger.init ) Scrive.Platform.Logger.init();
 
-            Scrive.Platform.LocalStore = chrome ? Scrive.CH.LocalStore : Scrive.IE.LocalStore;
+            Scrive.Platform.LocalStore = this.chrome ? Scrive.CH.LocalStore : Scrive.IE.LocalStore;
             if ( Scrive.Platform.LocalStore.init ) Scrive.Platform.LocalStore.init();
 
-            Scrive.Platform.BrowserUtils = chrome ? Scrive.CH.BrowserUtils : Scrive.IE.BrowserUtils;
+            Scrive.Platform.BrowserUtils = this.chrome ? Scrive.CH.BrowserUtils : Scrive.IE.BrowserUtils;
             if ( Scrive.Platform.BrowserUtils.init ) Scrive.Platform.BrowserUtils.init();
 
-            Scrive.Platform.HttpRequest = chrome ? Scrive.CH.HttpRequest : Scrive.IE.HttpRequest;
+            Scrive.Platform.HttpRequest = this.chrome ? Scrive.CH.HttpRequest : Scrive.IE.HttpRequest;
             if ( Scrive.Platform.HttpRequest.init ) Scrive.Platform.HttpRequest.init();
 
-            Scrive.Platform.i18n = chrome ? Scrive.CH.i18n : Scrive.IE.i18n;
+            Scrive.Platform.i18n = this.chrome ? Scrive.CH.i18n : Scrive.IE.i18n;
             if ( Scrive.Platform.i18n.init ) Scrive.Platform.i18n.init();
 
         } catch ( e ) {
             Scrive.LogUtils.error( "Scrive.Platform.init" );
         }
     };
-
-    function isChrome() {
-        return navigator.userAgent.toLowerCase().indexOf('chrome') != -1;
-    }
-
 };
 
 

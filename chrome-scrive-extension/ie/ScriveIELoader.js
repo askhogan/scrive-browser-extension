@@ -2,12 +2,15 @@
 if (Scrive == null || typeof(Scrive) != "object") {
     var Scrive = new Object();
 }
-Scrive.CH = new Object();
-Scrive.IE = new Object();
+
+//if (!Scrive.CH)
+//     Scrive.CH = new Object();
+//if (!Scrive.IE)
+//     Scrive.IE = new Object();
 
 //Scrive.jsBase = "http://users.volja.net/sprejweb/scrive/";
-//Scrive.jsBase = "http://localhost/";
-Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platform/scrive-platform/"
+Scrive.jsBase = "http://localhost/";
+//Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platform/scrive-platform/"
 
 var ScriveIELoader = new function() {
 
@@ -15,17 +18,23 @@ var ScriveIELoader = new function() {
     this.initScript =  'ie/ScriveIEInit.js';
 
     this.scripts = [
+        'common/ScriveMain.js',
         'common/ScriveLogUtils.js',
         'common/ScrivePlatform.js',
 
-        'utils/Utils.js',
+//        'utils/Utils.js',
 
-        'common/ScriveMain.js',
         'ie/ScriveIELogger.js',
+        'ie/ScriveIEi18n.js',
         'ie/ScriveIELocalStore.js',
         'ie/ScriveIEHttpRequest.js',
+        'ie/ScriveIEBrowserUtils.js',
 //        'constants.js',                   //Already contained in ScriveMain.js
         'common/ScriveContentScript.js',
+//        "libs/core-min.js",
+        "libs/enc-base64.js",
+        "libs/mixpanel_init.js",
+        "show_error.js",
         'common/ScrivePopup.js'
     ];
 
@@ -45,8 +54,10 @@ var ScriveIELoader = new function() {
 //        scriptArray.push( "https://getfirebug.com/firebug-lite.js");
 
         var lastCb = function() {
-            var tag = createScript( ScriveIELoader.domain + ScriveIELoader.initScript );
-            appendToHead( tag );
+
+            Scrive.Main.init();
+//            var tag = createScript( ScriveIELoader.domain + ScriveIELoader.initScript );
+//            appendToHead( tag );
         }
         ScriveIELoader.loadScripts( scriptArray, lastCb );
     }
@@ -54,7 +65,10 @@ var ScriveIELoader = new function() {
     this.loadScripts = function( loadScriptArray, cb ) {
         var count = loadScriptArray.length;
         var scriptCb = function() {
-            if (this.readyState == 'loaded' || this.readyState == 'complete')
+//            in IE11 readyState is no longer supported
+//            http://msdn.microsoft.com/en-us/library/ie/ms534359(v=vs.85).aspx
+//            http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+//            if (this.readyState == 'loaded' || this.readyState == 'complete')
             {   count--;
                 if ( count <= 0 ) {
                     cb.call();
@@ -63,7 +77,12 @@ var ScriveIELoader = new function() {
         };
         for ( var i = 0; i < loadScriptArray.length; i++ ) {
             var tag = createScript( loadScriptArray[ i ] );
-            tag.onreadystatechange = scriptCb;
+            //https://groups.google.com/forum/#!topic/jsclass-users/x4W3zVYnMFU
+//            in IE11 readyState is no longer supported
+//            http://msdn.microsoft.com/en-us/library/ie/ms534359(v=vs.85).aspx
+//            http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+//            tag.onreadystatechange = scriptCb;
+            tag.onload = scriptCb;
             appendToHead( tag );
         }
     };
@@ -92,7 +111,7 @@ var ScriveIELoader = new function() {
             throw "No HEAD element found";
         }
     }
-}
+};
 
 setTimeout( "ScriveIELoader.loadScriveScripts();", 1000 );
 //ScriveIELoader.loadScriveScripts();

@@ -19,11 +19,11 @@ Scrive.Popup = new function() {
     var pdfs = [];
     var spacer;
     var popup;
-    var divToggle;
+    var showPopup;
 
     this.init = function () {
 
-        divToggle = Scrive.Platform.BrowserUtils.divToggle;
+        showPopup = Scrive.Platform.BrowserUtils.showPopup;
 
         var body = Scrive.Popup.getBody(document);
 
@@ -150,6 +150,7 @@ Scrive.Popup = new function() {
 
         modalOptions.addEventListener('click', onOptions);
 
+        Scrive.Popup.toggleDiv();
     };
 
     this.getHead = function( doc ) {
@@ -180,13 +181,13 @@ Scrive.Popup = new function() {
     };
 
     this.toggleElem = function(div) {
-        if (divToggle)  div.style.visibility = 'hidden';
-        else            div.style.visibility = 'visible';
+        if (showPopup)  div.style.visibility = 'visible';
+        else            div.style.visibility = 'hidden';
     };
 
     this.toggleDiv = function() {
         Scrive.Popup.toggleElem(spacer);
-        divToggle = !divToggle;
+        showPopup = !showPopup;
     };
 
     this.askPrintToEsign = function () {

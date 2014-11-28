@@ -3,8 +3,10 @@ if (Scrive == null || typeof(Scrive) != "object") {
     var Scrive = new Object();
 }
 
-Scrive.CH = new Object();
-Scrive.IE = new Object();
+if (!Scrive.CH)
+    Scrive.CH = new Object();
+if (!Scrive.IE)
+    Scrive.IE = new Object();
 
 //from constants.js
 var KEYS = {
@@ -28,6 +30,8 @@ var MESSAGES = {
 
 Scrive.Main = new function() {
 
+    this.chrome = isChrome();
+
     this.init = function() {
         try {
             Scrive.LogUtils.debugOn = true;
@@ -37,9 +41,16 @@ Scrive.Main = new function() {
             mainStart = new Date().getTime();
 
             //Initialize platform specific stuff
-            Scrive.Platform.init();
-            Scrive.ContentScript.init();
-            Scrive.Popup.init();
+            if (Scrive.Platform && Scrive.Platform.init)
+                Scrive.Platform.init();
+            if (Scrive.ContentScript && Scrive.ContentScript.init)
+                Scrive.ContentScript.init();
+            if (Scrive.Popup && Scrive.Popup.init)
+                Scrive.Popup.init();
+            if (Scrive.Options && Scrive.Options.init)
+                Scrive.Options.init();
+            if (Scrive.DirectUpload && Scrive.DirectUpload.init)
+                Scrive.DirectUpload.init();
 
             Scrive.LogUtils.info( "Scrive.Main.init Total time " + ( new Date().getTime() - mainStart ) + "ms" );
 
@@ -47,4 +58,8 @@ Scrive.Main = new function() {
             alert( "While initializing Scrive: " + e.message );
         }
     };
+
+    function isChrome() {
+        return navigator.userAgent.toLowerCase().indexOf('chrome') != -1;
+    }
 };

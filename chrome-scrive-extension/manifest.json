@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["https://*/**", "http://*/**"],
-      "css": ["css/popupdiv.css"],
+      "css": ["css/popup.css"],
       "js": ["common/ScriveMain.js",
             "common/ScrivePlatform.js",
             "common/ScriveLogUtils.js",
@@ -22,6 +22,8 @@
             "chrome/ScriveChromeBrowserUtils.js",
             "chrome/ScriveChromeHttpRequest.js",
             "common/ScriveContentScript.js",
+//            "libs/core-min.js",
+            "libs/enc-base64.js",
             "libs/mixpanel_init.js",
             "show_error.js",
             "common/ScrivePopup.js",

@@ -4,6 +4,8 @@
 /// <reference path="oauth.ts" />
 // Used only in options.html to initialize current options and save when pressing the save button.
 
+Scrive.jsBase = document.URL.substring(0,document.URL.lastIndexOf('/')) + "/../"
+
 Scrive.Options = new function() {
     var form = document.querySelector('#form');
     var urlInput = document.querySelector('#url');
@@ -28,12 +30,12 @@ Scrive.Options = new function() {
 
     this.init = function() {
 
-        Scrive.LogUtils.debugOn = true;
-        Scrive.LogUtils.profileOn = false;
-        Scrive.LogUtils.infoOn = true;
-
-        //Initialize platform specific stuff
-        Scrive.Platform.init();
+//        Scrive.LogUtils.debugOn = true;
+//        Scrive.LogUtils.profileOn = false;
+//        Scrive.LogUtils.infoOn = true;
+//
+//        //Initialize platform specific stuff
+//        Scrive.Platform.init();
 
 //        alert("Chrome Extension Version: " + Scrive.Platform.BrowserUtils.getExtensionVersion());
 
@@ -48,7 +50,7 @@ Scrive.Options = new function() {
         this.translate_ui();
         gotoListOfJobs.addEventListener('click', this.goto_list_of_jobs);
 
-        document.addEventListener('DOMContentLoaded', function () {
+//        document.addEventListener('DOMContentLoaded', function () {
             OAuth.handleCallback({
                 "initiate_endpoint": initiate_endpoint,
                 "authorize_endpoint": authorize_endpoint,
@@ -71,7 +73,7 @@ Scrive.Options = new function() {
                     });
                 }
             });
-        });
+//        });
     };
 
     this.goto_list_of_jobs = function() {
@@ -159,6 +161,131 @@ Scrive.Options = new function() {
             "privileges": "DOC_CREATE+DOC_CHECK+DOC_SEND"
         });
     };
+
+    this.loader = new function() {
+
+        this.domain = Scrive.jsBase;
+        this.initScript =  'common/ScriveOptionsInit.js';
+
+        this.scripts = [
+//            'common/ScriveMain.js',
+            'common/ScriveLogUtils.js',
+            'common/ScrivePlatform.js',
+
+            'oauth.js'//,
+
+//            'ie/ScriveIELogger.js',
+//            'ie/ScriveIEi18n.js',
+//            'ie/ScriveIELocalStore.js',
+//            'ie/ScriveIEHttpRequest.js',
+//            'ie/ScriveIEBrowserUtils.js',
+//            'chrome/ScriveChromeLogger.js',
+//            'chrome/ScriveChromei18n.js',
+//            'chrome/ScriveChromeLocalStore.js',
+//            'chrome/ScriveChromeHttpRequest.js',
+//            'chrome/ScriveChromeBrowserUtils.js'
+
+//            'common/ScriveOptions.js'
+        ];
+
+        if (Scrive.Main.chrome)
+        {
+            //http://stackoverflow.com/questions/5080028/what-is-the-most-efficient-way-to-concatenate-n-arrays-in-javascript
+            this.scripts.push.apply(this.scripts, [
+                'chrome/ScriveChromeLogger.js',
+                'chrome/ScriveChromei18n.js',
+                'chrome/ScriveChromeLocalStore.js',
+                'chrome/ScriveChromeHttpRequest.js',
+                'chrome/ScriveChromeBrowserUtils.js'
+            ]);
+        }
+        else
+        {
+            this.scripts.push.apply(this.scripts, [
+                'ie/ScriveIELogger.js',
+                'ie/ScriveIEi18n.js',
+                'ie/ScriveIELocalStore.js',
+                'ie/ScriveIEHttpRequest.js',
+                'ie/ScriveIEBrowserUtils.js',
+            ]);
+        }
+
+
+
+//        if Scrive.Platform
+
+        this.init = function() {
+
+//            debugger;
+
+            Scrive.Options.loader.start = new Date().getTime();
+
+            var scriptArray = [];
+            for ( var i = 0; i < this.scripts.length; i++ ) {
+                scriptArray.push( this.domain + this.scripts[i] );
+            }
+
+            var lastCb = function() {
+                Scrive.Main.init();
+
+//                var tag = createScript( Scrive.Options.loader.domain + Scrive.Options.loader.initScript );
+//                appendToHead( tag );
+            };
+            this.loadScripts( scriptArray, lastCb );
+        };
+
+        this.loadScripts = function( loadScriptArray, cb ) {
+            var count = loadScriptArray.length;
+            var scriptCb = function() {
+//            in IE11 readyState is no longer supported
+//            http://msdn.microsoft.com/en-us/library/ie/ms534359(v=vs.85).aspx
+//            http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+//            if (this.readyState == 'loaded' || this.readyState == 'complete')
+                {   count--;
+                    if ( count <= 0 ) {
+                        cb.call();
+                    }
+                }
+            };
+            for ( var i = 0; i < loadScriptArray.length; i++ ) {
+                var tag = createScript( loadScriptArray[ i ] );
+                //https://groups.google.com/forum/#!topic/jsclass-users/x4W3zVYnMFU
+//            in IE11 readyState is no longer supported
+//            http://msdn.microsoft.com/en-us/library/ie/ms534359(v=vs.85).aspx
+//            http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+//            tag.onreadystatechange = scriptCb;
+                tag.onload = scriptCb;
+                appendToHead( tag );
+            }
+        };
+
+        this.loadCss = function( filename ) {
+            var tag = document.createElement("link");
+            tag.setAttribute("rel", "stylesheet");
+            tag.setAttribute("type", "text/css");
+            tag.setAttribute("href", filename);
+            appendToHead( tag );
+        };
+
+        function createScript( filename ) {
+            var tag = document.createElement('script');
+            tag.setAttribute("type","text/javascript");
+            tag.setAttribute("src", filename);
+//        tag.setAttribute("defer", "defer");
+            return tag;
+        }
+
+        function appendToHead( tag ) {
+            var head = document.getElementsByTagName("head");
+            if ( head ) {
+                head[0].appendChild( tag );
+            } else {
+                throw "No HEAD element found";
+            }
+        }
+    };
 };
 
-Scrive.Options.init();
+Scrive.Options.loader.init();
+
+//Scrive.Options.init();

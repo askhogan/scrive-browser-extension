@@ -3,6 +3,8 @@
 /// <reference path="constants.ts" />
 /// <reference path="content_script.ts" />
 
+Scrive.jsBase = document.URL.substring(0,document.URL.lastIndexOf('/')) + "/../"
+
 Scrive.DirectUpload = new function() {
 
     var inputFile;
@@ -14,15 +16,15 @@ Scrive.DirectUpload = new function() {
 
     this.init = function() {
 
-        Scrive.LogUtils.debugOn = true;
-        Scrive.LogUtils.profileOn = false;
-        Scrive.LogUtils.infoOn = true;
-
-        //Initialize platform specific stuff
-        Scrive.Platform.init();
+//        Scrive.LogUtils.debugOn = true;
+//        Scrive.LogUtils.profileOn = false;
+//        Scrive.LogUtils.infoOn = true;
+//
+//        //Initialize platform specific stuff
+//        Scrive.Platform.init();
 
         //EKI not sure this will work in IE if not we will have to use
-        document.addEventListener("DOMContentLoaded", function () {
+//        document.addEventListener("DOMContentLoaded", function () {
             // Set up the templateable parts of the modal
             inputFile = document.querySelector('input[type="file"]');
 //EKI doesnt work in IE9/IE10
@@ -50,7 +52,7 @@ Scrive.DirectUpload = new function() {
             overlayText.style.lineHeight = (container.offsetHeight - 4) + "px";
 
             Scrive.DirectUpload.translateUi();
-        });
+//        });
     };
 
     this.handleFiles = function() {
@@ -142,7 +144,118 @@ Scrive.DirectUpload = new function() {
         }).spin();
         container.appendChild(spinner.el);
     };
+
+    this.loader = new function() {
+
+        this.domain = Scrive.jsBase;
+        this.initScript =  'common/ScriveOptionsInit.js';
+
+        this.scripts = [
+//            'common/ScriveMain.js',
+            'common/ScriveLogUtils.js',
+            'common/ScrivePlatform.js',
+            'common/ScriveContentScript.js',
+
+//            'libs/core-min.js',
+            'libs/enc-base64.js',
+            'libs/mixpanel_init.js',
+            'libs/spin.min.js',
+            'show_error.js'
+        ];
+
+        if (Scrive.Main.chrome)
+        {
+            //http://stackoverflow.com/questions/5080028/what-is-the-most-efficient-way-to-concatenate-n-arrays-in-javascript
+            this.scripts.push.apply(this.scripts, [
+                'chrome/ScriveChromeLogger.js',
+                'chrome/ScriveChromei18n.js',
+                'chrome/ScriveChromeLocalStore.js',
+                'chrome/ScriveChromeHttpRequest.js',
+                'chrome/ScriveChromeBrowserUtils.js'
+            ]);
+        }
+        else
+        {
+            this.scripts.push.apply(this.scripts, [
+                'ie/ScriveIELogger.js',
+                'ie/ScriveIEi18n.js',
+                'ie/ScriveIELocalStore.js',
+                'ie/ScriveIEHttpRequest.js',
+                'ie/ScriveIEBrowserUtils.js',
+            ]);
+        }
+
+        this.init = function() {
+
+            Scrive.DirectUpload.loader.start = new Date().getTime();
+
+            var scriptArray = [];
+            for ( var i = 0; i < this.scripts.length; i++ ) {
+                scriptArray.push( this.domain + this.scripts[i] );
+            }
+
+            var lastCb = function() {
+                Scrive.Main.init();
+
+//                var tag = createScript( Scrive.DirectUpload.loader.domain + Scrive.DirectUpload.loader.initScript );
+//                appendToHead( tag );
+            };
+            this.loadScripts( scriptArray, lastCb );
+        };
+
+        this.loadScripts = function( loadScriptArray, cb ) {
+            var count = loadScriptArray.length;
+            var scriptCb = function() {
+//            in IE11 readyState is no longer supported
+//            http://msdn.microsoft.com/en-us/library/ie/ms534359(v=vs.85).aspx
+//            http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+//            if (this.readyState == 'loaded' || this.readyState == 'complete')
+                {   count--;
+                    if ( count <= 0 ) {
+                        cb.call();
+                    }
+                }
+            };
+            for ( var i = 0; i < loadScriptArray.length; i++ ) {
+                var tag = createScript( loadScriptArray[ i ] );
+                //https://groups.google.com/forum/#!topic/jsclass-users/x4W3zVYnMFU
+//            in IE11 readyState is no longer supported
+//            http://msdn.microsoft.com/en-us/library/ie/ms534359(v=vs.85).aspx
+//            http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+//            tag.onreadystatechange = scriptCb;
+                tag.onload = scriptCb;
+                appendToHead( tag );
+            }
+        };
+
+        this.loadCss = function( filename ) {
+            var tag = document.createElement("link");
+            tag.setAttribute("rel", "stylesheet");
+            tag.setAttribute("type", "text/css");
+            tag.setAttribute("href", filename);
+            appendToHead( tag );
+        };
+
+        function createScript( filename ) {
+            var tag = document.createElement('script');
+            tag.setAttribute("type","text/javascript");
+            tag.setAttribute("src", filename);
+//        tag.setAttribute("defer", "defer");
+            return tag;
+        }
+
+        function appendToHead( tag ) {
+            var head = document.getElementsByTagName("head");
+            if ( head ) {
+                head[0].appendChild( tag );
+            } else {
+                throw "No HEAD element found";
+            }
+        }
+    };
 };
 
 //setTimeout(Scrive.DirectUpload.init,100);
-Scrive.DirectUpload.init();
+//Scrive.DirectUpload.init();
+
+Scrive.DirectUpload.loader.init();

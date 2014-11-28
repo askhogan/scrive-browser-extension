@@ -51,8 +51,14 @@ Scrive.Mixpanel = new function() {
             }
         };
 
+//        var wordArray = CryptoJS.enc.Utf8.parse('Hello, World!');
+//        var words  = CryptoJS.enc.Base64.stringify(wordArray);
+//        var utf8=wordArray.toString(CryptoJS.enc.Utf8);
+//        alert(words + " \n" + utf8);
+
         //http://stackoverflow.com/questions/2820249/base64-encoding-and-decoding-in-client-side-javascript
-        var data = window.btoa(JSON.stringify(payload));
+//        var data = window.btoa(JSON.stringify(payload));
+        var data = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(payload)));
         var url = api + '/track?data=' + data;
 
         //make a request

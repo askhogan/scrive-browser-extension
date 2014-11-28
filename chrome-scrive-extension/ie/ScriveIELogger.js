@@ -5,7 +5,7 @@ Scrive.IE.Logger = new function() {
 
     this.getErrorMessage = function ( e ){
         return e.message ? e.message : e;
-    }
+    };
 
     this.print = function( msg ) {
         if (typeof window.console == "undefined") {
@@ -44,9 +44,9 @@ Scrive.IE.Logger = new function() {
             alert( "While initializing logger: " + e.message );
         }
 
-    }
+    };
 
-    this.showConsole = function() {
-        if (typeof window.console == "undefined")   Scrive.IE.Logger.console.style.display = "block";
-    }
-}
+//    this.showConsole = function() {
+//        if (typeof window.console == "undefined")   Scrive.IE.Logger.console.style.display = "block";
+//    }
+};
