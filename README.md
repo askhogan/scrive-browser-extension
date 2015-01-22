@@ -64,7 +64,7 @@ while for 2, 3 needs to be hosted on a external web server.
 
  - Server config file: IE extension should fetch a "json.cfg" file from the server(predefined location) with a key,value pairs of VERSIONs and URLs.
        
-     VERSION being the version of IE extension and URL the base url that will be assigned to "Scrive.jsBase" variable of [/ie/ScriveIELoader.js](/chrome-scrive-extension/ie/ScriveIELoader.js) to load the scripts from.
+     VERSION being the version of IE extension and URL the base url that will be assigned to [Scrive.jsBase](/chrome-scrive-extension/ie/ScriveIELoader.js#L14) variable of [/ie/ScriveIELoader.js](/chrome-scrive-extension/ie/ScriveIELoader.js) to load the scripts from.
      
       ```
      { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
