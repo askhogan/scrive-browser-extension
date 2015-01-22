@@ -59,13 +59,13 @@ while for 2, 3 needs to be hosted on a external web server.
        
      VERSION being the version of IE extension and URL the base url that will be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js" to load the scripts from.
      
-```
+      ```
      { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
        "0.7.0": "https://www.scrive.com/ie/v0.7.5/",
        "0.7.5": "https://www.scrive.com/ie/v0.7.5/",
        ..
      }
-```
+      ```
 
  - Browser caching: We will have one to many relationship between released 2 and 3. As additional measure of protection we should try to avoid browser caching of 3 on updates.
         
