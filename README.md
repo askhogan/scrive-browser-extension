@@ -67,11 +67,7 @@ while for 2, 3 needs to be hosted on a external web server.
      }
 ```
 
- - Browser caching:
- 
-    We will have one to many relationship between released 2 and 3.
-
-    As additional measure of protection we should try to avoid browser caching of 3 on updates.
+ - Browser caching: We will have one to many relationship between released 2 and 3. As additional measure of protection we should try to avoid browser caching of 3 on updates.
         
     Possible solution:
     
