@@ -7,13 +7,12 @@ P2eSign solution for web browsers
   
   3. Client-side files (Javascript, HTML, Css, json, etc..)
   
-Dependencies:   1 & 2 depend on and share large part of the 3.
-
-Modus operandi: 1 & 2 are loading(injecting) 3 inside of currently visited web page of a web browser.
-
-Packaging:      1 & 3 are bundled and deployed within the same package<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-while for 2, 3 needs to be hosted on a external web server.
+####Dependencies: 
+1 & 2 depend on and share large part of the 3.
+###Modus operandi: 
+1 & 2 are loading(injecting) 3 inside of currently visited web page of a web browser.
+###Packaging:
+1 & 3 are bundled and deployed within the same package while for 2, 3 needs to be hosted on a external web server.
 
 
 
