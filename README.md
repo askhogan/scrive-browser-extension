@@ -71,12 +71,14 @@ while for 2, 3 needs to be hosted on a external web server.
         }
         
     Browser caching:
-        We will have 1:N relationship between released 1 and 3.
+        We will have one to many relationship between released 2 and 3.
         As additional measure of protection we should try to avoid browser caching of 3 on updates.
-        Possible solutions:
-            adding timestamped random parameter at the end of urls pointing to 3 files
-            generation unique names for files of 3 by adding version number or some other unique 
-            parameter to the file names.
+
+        Possible solution:
+            Timestamping - we add a timestamp based random parameter at the end of each request made by 2
+			   something like:
+
+                   "https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?<random parameter>"
 
 
 
