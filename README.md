@@ -73,7 +73,7 @@ while for 2, 3 needs to be hosted on a external web server.
     
        Timestamping - we add a timestamp based random parameter at the end of each request made by 2
 			   something like:
-           "https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?<random parameter>"
+           `https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?RANDOM_PAR`
 
 
 
