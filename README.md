@@ -18,7 +18,7 @@ Scrive browser extension
 **Packaging:** 1 & 3 are bundled and deployed within the same package<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 while for 2, 3 needs to be hosted on a external web server.
-<br><br>
+<br>
 ---
 ###Build process
 
