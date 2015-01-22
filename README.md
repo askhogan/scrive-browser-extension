@@ -53,7 +53,7 @@ while for 2, 3 needs to be hosted on a external web server.
     Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" 
     has URL of remote hosting location (with trailing '/')
 
-#####4.How to prevent a version mismatch between 2. and 3.
+#####4. How to prevent a version mismatch between 2. and 3.
 
  - Server config file:
 
@@ -89,7 +89,7 @@ while for 2, 3 needs to be hosted on a external web server.
 
 ###Tracking of issues
 
-    Expand mixpanel reporting so that we can detect issues before clients call us.
+ - Expand mixpanel reporting so that we can detect issues before clients call us.
 
 
 
