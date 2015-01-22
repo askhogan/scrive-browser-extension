@@ -24,10 +24,11 @@ while for 2, 3 needs to be hosted on a external web server.
     Version: update "/chrome-scrive-extension/manifest.json"
     Build command: grunt crx
     Windows: use Cygwin
-
+    
     2:
     Prerequisites: Visual Studio 2010, Microsoft Windows platform SDK
-    Version: update "internet-explorer-plugin/ScriveBHO/ScriveBHO.rc" and "internet-explorer-plugin/ScriveSetup/ScriveSetup.vdproj"
+    Version: update "internet-explorer-plugin/ScriveBHO/ScriveBHO.rc" and
+             "internet-explorer-plugin/ScriveSetup/ScriveSetup.vdproj"
     Build command: Open "ScriveBHO.sln" in VS2010 and execute build command.
 
     We will need to automate this build process with grunt.
@@ -46,7 +47,8 @@ while for 2, 3 needs to be hosted on a external web server.
     Upload from "/chrome-scrive-extension" to remote hosting these subfolders:
     /common /libs /ie /html /css /img /_locales
 
-    Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" has URL of remote hosting location with trailing '/'
+    Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" 
+    has URL of remote hosting location with trailing '/'
 
 
 ###How to prevent a version mismatch between 2 and 3
@@ -64,20 +66,20 @@ while for 2, 3 needs to be hosted on a external web server.
            ....
 
         }
-
-    
+        
     Browser caching:
         We will have 1:more relationship between released 1 and 3.
         As additional measure of protection we should try to avoid browser caching of 3 on updates.
         Possible solutions:
             adding timestamped random parameter at the end of urls pointing to 3 files
-            generation unique names for files of 3 by adding version number or some other unique parameter to the file names.
+            generation unique names for files of 3 by adding version number or some other unique 
+            parameter to the file names.
 
 
 
 ###Tracking of issues
 
-  Expand mixpanel reporting so that we can detect issues before clients call us.
+    Expand mixpanel reporting so that we can detect issues before clients call us.
 
 
 
