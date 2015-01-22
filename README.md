@@ -1,7 +1,6 @@
 
-P2eSign solution for web browsers
+Scrive browser extension
 =================================
-
 ###Components:
 
   **1.** Chrome extension
@@ -9,8 +8,9 @@ P2eSign solution for web browsers
   **2.** Internet explorer extension
   
   **3.** Client-side files (Javascript, HTML, Css, json, etc..)
+  <br><br>
  ---
-  
+  <br>
 **Dependencies:** 1 & 2 depend on and share large part of the 3.
 
 **Modus operandi:** 1 & 2 are loading(injecting) 3 inside of currently visited web page of a web browser.
@@ -18,7 +18,7 @@ P2eSign solution for web browsers
 **Packaging:** 1 & 3 are bundled and deployed within the same package<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 while for 2, 3 needs to be hosted on a external web server.
-
+<br><br>
 ---
 ###Build process
 
