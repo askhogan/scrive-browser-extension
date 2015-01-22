@@ -56,35 +56,34 @@ while for 2, 3 needs to be hosted on a external web server.
 #####4.How to prevent a version mismatch between 2. and 3.
 
  - Server config file:
-        2 should fetch a "json.cfg" file from the server(predefined location)
 
-        "json.cfg" should contain a key,value pairs of VERSIONS and URLs.
+     2 should fetch a "json.cfg" file from the server(predefined location)
+     
+     "json.cfg" should contain a key,value pairs of VERSIONS and URLs.
         
-        VERSION being IE ext.ver.number and
+     VERSION being IE ext.ver.number and
         
-        URL root url of a hosted external files that we know works for that version of IE extension.
+     URL root url of a hosted external files that we know works for that version of IE extension.
         
-        This value will then be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js"
+     This value will then be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js"
         
-
-        { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
+     { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
           "0.7.0": "https://www.scrive.com/ie/v0.7.5/",
           "0.7.5": "https://www.scrive.com/ie/v0.7.5/",
            ....
-        }
+      }
         
  - Browser caching:
  
-        We will have one to many relationship between released 2 and 3.
+    We will have one to many relationship between released 2 and 3.
 
-        As additional measure of protection we should try to avoid browser caching of 3 on updates.
+    As additional measure of protection we should try to avoid browser caching of 3 on updates.
         
-
-        Possible solution:
-            Timestamping - we add a timestamp based random parameter at the end of each request made by 2
+    Possible solution:
+    
+       Timestamping - we add a timestamp based random parameter at the end of each request made by 2
 			   something like:
-
-                   "https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?<random parameter>"
+           "https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?<random parameter>"
 
 
 
