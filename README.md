@@ -24,15 +24,15 @@ while for 2, 3 needs to be hosted on a external web server.
 
 #####1. Chrome extension
  - Prerequisites: nodejs, grunt, grunt-cli, grunt-crx, node-rsa
- - Version: update "/chrome-scrive-extension/manifest.json"
+ - Version: update [/chrome-scrive-extension/manifest.json](/chrome-scrive-extension/manifest.json)
  - Build command: grunt crx
  - Windows: use Cygwin
     
 #####2. Internet explorer extension
  - Prerequisites: Visual Studio 2010, Microsoft Windows platform SDK
- - Version: update "internet-explorer-plugin/ScriveBHO/ScriveBHO.rc" and
-             "internet-explorer-plugin/ScriveSetup/ScriveSetup.vdproj"
- - Build command: Open "ScriveBHO.sln" in VS2010 and execute build command.
+ - Version: update [/internet-explorer-plugin/ScriveBHO/ScriveBHO.rc](/internet-explorer-plugin/ScriveBHO/ScriveBHO.rc)" and
+             [/internet-explorer-plugin/ScriveSetup/ScriveSetup.vdproj](/internet-explorer-plugin/ScriveSetup/ScriveSetup.vdproj)
+ - Build command: Open [ScriveBHO.sln](/internet-explorer-plugin/ScriveBHO.sln) in VS2010 and execute build command.
 
     We will need to automate this build process with grunt.
     For IE we need a Windows based machine.
@@ -47,7 +47,7 @@ while for 2, 3 needs to be hosted on a external web server.
  - Deploy new MSI setup package from "/internet-explorer-plugin/ScriveSetup/Release/ScriveSetup.msi"
 
 #####3. Client-side files (Javascript, HTML, Css, json, etc..)
- - Upload from "/chrome-scrive-extension" to remote hosting these subfolders:
+ - Upload from [/chrome-scrive-extension](/chrome-scrive-extension) to remote hosting these subfolders:
     /common /libs /ie /html /css /img /_locales
 
     Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" 
