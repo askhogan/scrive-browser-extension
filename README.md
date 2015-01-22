@@ -71,7 +71,7 @@ while for 2, 3 needs to be hosted on a external web server.
         
     Possible solution:
     
-       Timestamping - we add a timestamp based random parameter at the end of each request made by 2
+       Timestamping - we add a timestamp based random parameter at the end of each request.
            `https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?RANDOM_PAR`
 
 
