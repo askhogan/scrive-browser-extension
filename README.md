@@ -35,19 +35,19 @@ while for 2, 3 needs to be hosted on a external web server.
  - Build command: Open "ScriveBHO.sln" in VS2010 and execute build command.
 
     We will need to automate this build process with grunt.
-    For IE we need a Windows based VM.
+    For IE we need a Windows based machine.
 
 
 ###Deploy process
 
-    1:
-    Deploy new CRX package from "/output/scrive-browser-extension-<VERSION>-dev.crx"
+#####1. Chrome extension
+ - Deploy new CRX package from "/output/scrive-browser-extension-<VERSION>-dev.crx"
 
-    2:
-    Deploy new MSI setup package from "/internet-explorer-plugin/ScriveSetup/Release/ScriveSetup.msi"
+#####2. Internet explorer extension
+ - Deploy new MSI setup package from "/internet-explorer-plugin/ScriveSetup/Release/ScriveSetup.msi"
 
-    3:
-    Upload from "/chrome-scrive-extension" to remote hosting these subfolders:
+#####3. Client-side files (Javascript, HTML, Css, json, etc..)
+ - Upload from "/chrome-scrive-extension" to remote hosting these subfolders:
     /common /libs /ie /html /css /img /_locales
 
     Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" 
