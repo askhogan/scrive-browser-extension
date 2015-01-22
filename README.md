@@ -72,7 +72,6 @@ while for 2, 3 needs to be hosted on a external web server.
     Possible solution:
     
        Timestamping - we add a timestamp based random parameter at the end of each request made by 2
-			   something like:
            `https://www.scrive.com/ie/v0.7.5/ie/ScriveIELoader.js?RANDOM_PAR`
 
 
@@ -80,7 +79,3 @@ while for 2, 3 needs to be hosted on a external web server.
 ###Tracking of issues
 
  - Expand mixpanel reporting so that we can detect issues before clients call us.
-
-
-
-
