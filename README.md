@@ -55,17 +55,11 @@ while for 2, 3 needs to be hosted on a external web server.
 
 #####4. How to prevent a version mismatch between 2. and 3.
 
- - Server config file:
-
-     2 should fetch a "json.cfg" file from the server(predefined location)
-     
-     "json.cfg" should contain a key,value pairs of VERSIONS and URLs.
+ - Server config file: IE extension should fetch a "json.cfg" file from the server(predefined location) with a key,value pairs of VERSIONS and URLs.
+       
+     VERSION being the version of IE extension and
         
-     VERSION being IE ext.ver.number and
-        
-     URL root url of a hosted external files that we know works for that version of IE extension.
-        
-     This value will then be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js"
+     URL the base url that will be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js" to load the scripts from.
      
 ```
      { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
