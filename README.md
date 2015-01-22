@@ -71,7 +71,7 @@ while for 2, 3 needs to be hosted on a external web server.
         }
         
     Browser caching:
-        We will have 1:more relationship between released 1 and 3.
+        We will have 1:N relationship between released 1 and 3.
         As additional measure of protection we should try to avoid browser caching of 3 on updates.
         Possible solutions:
             adding timestamped random parameter at the end of urls pointing to 3 files
