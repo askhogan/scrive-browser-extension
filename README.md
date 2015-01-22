@@ -22,20 +22,20 @@ while for 2, 3 needs to be hosted on a external web server.
 ---
 ###Build process
 
-    1:
-    Prerequisites: nodejs, grunt, grunt-cli, grunt-crx, node-rsa
-    Version: update "/chrome-scrive-extension/manifest.json"
-    Build command: grunt crx
-    Windows: use Cygwin
+#####1. Chrome extension
+ - Prerequisites: nodejs, grunt, grunt-cli, grunt-crx, node-rsa
+ - Version: update "/chrome-scrive-extension/manifest.json"
+ - Build command: grunt crx
+ - Windows: use Cygwin
     
-    2:
-    Prerequisites: Visual Studio 2010, Microsoft Windows platform SDK
-    Version: update "internet-explorer-plugin/ScriveBHO/ScriveBHO.rc" and
+#####2. Internet explorer extension
+ - Prerequisites: Visual Studio 2010, Microsoft Windows platform SDK
+ - Version: update "internet-explorer-plugin/ScriveBHO/ScriveBHO.rc" and
              "internet-explorer-plugin/ScriveSetup/ScriveSetup.vdproj"
-    Build command: Open "ScriveBHO.sln" in VS2010 and execute build command.
+ - Build command: Open "ScriveBHO.sln" in VS2010 and execute build command.
 
     We will need to automate this build process with grunt.
-    For 2 Windows based VM is needed.
+    For IE we need a Windows based VM.
 
 
 ###Deploy process
