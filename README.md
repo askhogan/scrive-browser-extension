@@ -47,8 +47,15 @@ while for 2, 3 needs to be hosted on a external web server.
  - Deploy new MSI setup package from "/internet-explorer-plugin/ScriveSetup/Release/ScriveSetup.msi"
 
 #####3. Client-side files (Javascript, HTML, Css, json, etc..)
- - Upload from [/chrome-scrive-extension](/chrome-scrive-extension) to remote hosting these subfolders:
-    /common /libs /ie /html /css /img /_locales
+ - Upload from [/chrome-scrive-extension](/chrome-scrive-extension) to remote hosting these subfolders:<BR>
+    [/common](/chrome-scrive-extension/common) 
+[/libs](/chrome-scrive-extension/libs) 
+[/ie](/chrome-scrive-extension/ie) 
+[/html](/chrome-scrive-extension/html) 
+[/css](/chrome-scrive-extension/css) 
+[/img](/chrome-scrive-extension/img) 
+[/_locales](/chrome-scrive-extension/_locales) 
+
 
     Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" 
     has URL of remote hosting location (with trailing '/')
