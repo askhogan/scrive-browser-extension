@@ -7,9 +7,9 @@ P2eSign solution for web browsers
   
   3. Client-side files (Javascript, HTML, Css, json, etc..)
   
-Dependencies:   1 & 2 depend and share large part of the 3.
+Dependencies:   1 & 2 depend on and share large part of the 3.
 
-Modus operandi: 1 & 2 are loading(injecting) 3 inside currently visited web page of web browser.
+Modus operandi: 1 & 2 are loading(injecting) 3 inside of currently visited web page of a web browser.
 
 Packaging:      1 & 3 are bundled and deployed within the same package<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17,7 +17,7 @@ while for 2, 3 needs to be hosted on a external web server.
 
 
 
-Build process
+###Build process
 
     1:
     Prerequisites: nodejs, grunt, grunt-cli, grunt-crx, node-rsa
@@ -34,7 +34,7 @@ Build process
     For 2 Windows based VM is needed.
 
 
-Deploy process
+###Deploy process
 
     1:
     Deploy new CRX package from "/output/scrive-browser-extension-<VERSION>-dev.crx"
@@ -49,7 +49,7 @@ Deploy process
     Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" has URL of remote hosting location with trailing '/'
 
 
-How to prevent a version mismatch between 2 and 3
+###How to prevent a version mismatch between 2 and 3
 
     Server config file:
         2 should fetch a "json.cfg" file from the server(predefined location)
@@ -75,8 +75,9 @@ How to prevent a version mismatch between 2 and 3
 
 
 
-Tracking of issues
-    ⋅⋅⋅Expand mixpanel reporting so that we can detect issues before clients call us.
+###Tracking of issues
+
+  Expand mixpanel reporting so that we can detect issues before clients call us.
 
 
 
