@@ -51,7 +51,7 @@ while for 2, 3 needs to be hosted on a external web server.
     /common /libs /ie /html /css /img /_locales
 
     Also make sure that "Scrive.jsBase" variable in "/ie/ScriveIELoader.js" 
-    has URL of remote hosting location with trailing '/'
+    has URL of remote hosting location (with trailing '/')
 
 
 ###How to prevent a version mismatch between 2 and 3
