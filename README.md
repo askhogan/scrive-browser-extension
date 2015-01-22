@@ -41,7 +41,7 @@ while for 2, 3 needs to be hosted on a external web server.
 ###Deploy process
 
 #####1. Chrome extension
- - Deploy new CRX package from "/output/scrive-browser-extension-<VERSION>-dev.crx"
+ - Deploy new CRX package from "/output/scrive-browser-extension-VERSION-dev.crx"
 
 #####2. Internet explorer extension
  - Deploy new MSI setup package from "/internet-explorer-plugin/ScriveSetup/Release/ScriveSetup.msi"
@@ -66,12 +66,14 @@ while for 2, 3 needs to be hosted on a external web server.
      URL root url of a hosted external files that we know works for that version of IE extension.
         
      This value will then be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js"
-        
-     { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
-          "0.7.0": "https://www.scrive.com/ie/v0.7.5/",
+`  
+
+      { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
+           "0.7.0": "https://www.scrive.com/ie/v0.7.5/",
           "0.7.5": "https://www.scrive.com/ie/v0.7.5/",
            ....
       }
+`      
         
  - Browser caching:
  
