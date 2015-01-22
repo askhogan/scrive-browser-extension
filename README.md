@@ -68,15 +68,11 @@ while for 2, 3 needs to be hosted on a external web server.
      This value will then be assigned to "Scrive.jsBase" variable of "/ie/ScriveIELoader.js"
      
 `    
-      { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
-      
-           "0.7.0": "https://www.scrive.com/ie/v0.7.5/",
-           
+        { "0.5.0": "https://www.scrive.com/ie/v0.5.0/",
+          "0.7.0": "https://www.scrive.com/ie/v0.7.5/",
           "0.7.5": "https://www.scrive.com/ie/v0.7.5/",
-          
            ....
-           
-      }
+        }
 `      
         
  - Browser caching:
