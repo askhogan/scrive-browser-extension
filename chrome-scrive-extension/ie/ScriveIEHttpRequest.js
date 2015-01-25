@@ -92,6 +92,12 @@ Scrive.IE.HttpRequest = new function() {
         //EKI   we will download PDF and send a request in IE extension
 //        Scrive.ContentScript.uploadPDFDataWithCredentials(request, errorCallback, false);
         //EKI2 Scrive.LocalStore
+
+        //EKI maybe we will have add this also for IE!
+//        Author: Gracjan Polak
+//        Date: 27.10.2014 9:36:42
+//        Message: Add support for local files
+
         Scrive.ContentScript.uploadPDFData(request, errorCallback, false);
 
     };

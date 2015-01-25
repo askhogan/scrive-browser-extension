@@ -78,8 +78,8 @@ Scrive.CH.HttpRequest = new function() {
 //                Scrive.ContentScript.sendPDF({
                 Scrive.Platform.HttpRequest.sendPDF({
                     type: 'printtoesign',
-                    method: response.savedData.method,
-                    formData: response.savedData.formData,
+                    method: response.savedData ? response.savedData.method : "GET",
+                    formData: response.savedData ? response.savedData.formData : null,
                     url: pdfurl
                 }, Scrive.Popup.errorCallback);
             }
@@ -92,7 +92,16 @@ Scrive.CH.HttpRequest = new function() {
     this.sendPDF = function (request, errorCallback) {
         var getpdfXHR = new XMLHttpRequest();
         getpdfXHR.onload = function () {
-            if (getpdfXHR.status >= 200 && getpdfXHR.status <= 299) {
+            /*
+             * status 0 is for local files shown directly in browser
+             * status 200..299 is for HTTP(S) traffic
+             *
+             * Note that this works only for files directly visible in
+             * chrome, PDFs embedded in local HTML will not work due to
+             * Chrome having bugs and missing implementations in local
+             * security domain.
+             */
+            if (getpdfXHR.status == 0 || (getpdfXHR.status >= 200 && getpdfXHR.status <= 299)) {
                 //EKI need to pass url for IE extension
 //                Scrive.ContentScript.uploadPDFData(getpdfXHR.response, errorCallback, false);
                 request.data = getpdfXHR.response;

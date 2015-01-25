@@ -46,7 +46,7 @@ function cleanupOldSavedDataForRequests() {
     */
     var timeStamp;
     var url;
-    while (Object.keys(savedDataForRequests).length > 50) {
+    while( Object.keys(savedDataForRequests).length >1000 ) {
         // need to find oldest object
         timeStamp = undefined;
         url = undefined;
@@ -70,11 +70,11 @@ function cleanupOldSavedDataForRequests() {
 var webRequestFilter = {
     urls: ["http://*/*", "https://*/*"],
     //types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
-    types: ["main_frame", "object", "sub_frame"]
+    types: ["main_frame", "object", "sub_frame", "image", "other"]
 };
 
 chrome.webRequest.onBeforeRequest.addListener(function (info) {
-    if ((info.method == "POST" || info.method == "GET") && info.tabId >= 0) {
+//    if ((info.method == "POST" || info.method == "GET") && info.tabId >= 0) {
         savedDataForRequests[info.url] = {
             formData: (info.requestBody && info.requestBody.formData) ? info.requestBody.formData : undefined,
             timeStamp: info.timeStamp,
@@ -82,16 +82,16 @@ chrome.webRequest.onBeforeRequest.addListener(function (info) {
             type: info.type,
             tabId: info.tabId
         };
-    }
+//    }
 }, webRequestFilter, ["requestBody"]);
 
 chrome.webRequest.onHeadersReceived.addListener(function (info) {
-    if ((info.method == "POST" || info.method == "GET") && info.tabId >= 0) {
+//    if ((info.method == "POST" || info.method == "GET") && info.tabId >= 0) {
         var obj = savedDataForRequests[info.url];
         if (obj) {
             obj.responseHeaders = info.responseHeaders;
         }
-    }
+//    }
     cleanupOldSavedDataForRequests();
 }, webRequestFilter, ["responseHeaders"]);
 
