@@ -103,7 +103,7 @@ var keepErrorInfo : { [x :string]: string } = {};
   function findEmbedTagURLs(document : HTMLDocument) : string[]
   {
     var results = [];
-    var elems = document.querySelectorAll("embed, frame, iframe");
+    var elems = document.querySelectorAll("embed, object, frame, iframe");
     var count = elems.length;
     for( var i=0; i<count; i++ ) {
       var elem = <HTMLElement>elems[i]
@@ -113,6 +113,11 @@ var keepErrorInfo : { [x :string]: string } = {};
         var src_relative = elem.getAttribute("src")
         var src = getAbsoluteURL(src_relative,document);
         results.push(src);
+      }
+      else if( tagName=="object" ) {
+            var src_relative = elem.getAttribute("data")
+            var src = getAbsoluteURL(src_relative,document);
+            results.push(src);
       }
       else if( tagName=="iframe" || tagName=="frame") {
         try {
