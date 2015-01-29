@@ -109,15 +109,35 @@ var keepErrorInfo : { [x :string]: string } = {};
       var elem = <HTMLElement>elems[i]
       var tagName = elem.tagName.toLowerCase();
 
-      if( tagName=="embed" ) {
-        var src_relative = elem.getAttribute("src")
-        var src = getAbsoluteURL(src_relative,document);
-        results.push(src);
-      }
-      else if( tagName=="object" ) {
-            var src_relative = elem.getAttribute("data")
-            var src = getAbsoluteURL(src_relative,document);
+      if( tagName=="embed" || tagName=="object" ) {
+
+        var src_type = elem.getAttribute("type")
+        var src_relative;
+
+        if( tagName=="embed")
+          src_relative = elem.getAttribute("src")
+        else if (tagName=="object" ) {
+          src_relative = elem.getAttribute("data")
+          if (src_relative == undefined || src_relative != undefined && src_relative.trim() == "")
+            // maybe we have a src parameter
+            src_relative = elem.getAttribute("src")
+        }
+
+        // avoiding the flash
+        if ( src_type!=undefined && src_type.match('flash') ){
+          // handling the case where wrong MIME type was set
+          if (src_relative!=undefined && src_relative.match('.pdf') ) {
+              var src = getAbsoluteURL(src_relative, document);
+              results.push(src);
+          }
+        }
+        // allowing anything else as long as it has non-blank src parameter
+        else {
+          if (src_relative != undefined && src_relative.trim() != "") {
+            var src = getAbsoluteURL(src_relative, document);
             results.push(src);
+          }
+        }
       }
       else if( tagName=="iframe" || tagName=="frame") {
         try {
