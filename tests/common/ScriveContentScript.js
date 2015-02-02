@@ -169,7 +169,7 @@ Scrive.ContentScript = new function () {
 //          };
 
       items = {
-        "printer_url": "https://vm-dev.scrive.com:12345/printer",
+        "printer_url": "http://vm-dev.scrive.com:12345/printer",
         "oauth_token_id": "e038da4030fd9b93_2112",
         "oauth_token_secret": "e22b69cde89da8c9",
         "oauth_client_secret": "41e9e594dee82cb2",
