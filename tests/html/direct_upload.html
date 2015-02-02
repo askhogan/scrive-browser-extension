@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scrive Print to E-sign</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../css/direct-upload.css">
+    <link rel="stylesheet" type="text/css" href="../css/less-compilation.css">
+    <link rel="stylesheet" type="text/css" href="../css/page.css">
+
+    <script type="text/javascript" src="../common/ScriveMain.js"></script>
+    <script type="text/javascript" src="../common/ScriveDirectUpload.js"></script>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="header-inner">
+        <label class="subtitle">E-signing powered by Scrive</label>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="dropbox-overlay">
+        <h1 id="drop-file-here">Drop the file here</h1>
+      </div>
+      <div class="container-inner dropbox">
+        <h1 id="upload-pdf-document">Upload a PDF document</h1>
+        <a style="width: 181px;" class="green button button-large button-green button-round">
+          <div id="choose-pdf-document" class="label">Choose a PDF file</div>
+          <input id="pdf-file-upload" type="file" accept="application/pdf" id="file" />
+        </a>
+
+        <div class="dnd-instructions">or drag and drop a PDF file here</div>
+      </div>
+    </div>
+    <div class="container error">
+      <div class="container-inner">
+        <h1></h1>
+      </div>
+    </div>
+  </body>
+</html>

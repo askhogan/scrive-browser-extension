@@ -1,0 +1,57 @@
+input[type=file] {
+  /*EKI fix this for IE*/
+  opacity: 0;
+  /*opacity: 10;*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.container-inner.dropbox {
+  text-align: center;
+}
+
+.dropbox {
+  padding: 1.5em;
+}
+
+.dnd-instructions {
+  margin-top: 20px;
+}
+
+.dropbox-overlay { 
+  display: none;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px dashed #B3B3B3;
+  z-index: 450000;
+  text-align: center;
+}
+
+.dropbox-overlay.visible {
+  display: block;
+}
+
+.dropbox-overlay.filehover {
+  border-color: #53b688;
+}
+
+.dropbox-overlay.filehover h1 {
+  color: #53b688;
+}
+
+.container.error {
+  display: none;
+  margin-top: 20px;
+}
+
+.spinner {
+  bottom: 30px;
+  left: 137px;
+}
+
+.uploading {
+  margin-top: 15px;
+}
