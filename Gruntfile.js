@@ -8,15 +8,58 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         manifest: grunt.file.readJSON('chrome-scrive-extension/manifest.json'),
+        concat: {
+          ScriveChromeContentScriptAll: {
+            src:["chrome-scrive-extension/common/ScriveMain.js",
+                 "chrome-scrive-extension/common/ScrivePlatform.js",
+                 "chrome-scrive-extension/common/ScriveLogUtils.js",
+                 "chrome-scrive-extension/chrome/ScriveChromeLogger.js",
+                 "chrome-scrive-extension/chrome/ScriveChromei18n.js",
+                 "chrome-scrive-extension/chrome/ScriveChromeLocalStore.js",
+                 "chrome-scrive-extension/chrome/ScriveChromeBrowserUtils.js",
+                 "chrome-scrive-extension/chrome/ScriveChromeHttpRequest.js",
+                 "chrome-scrive-extension/common/ScriveContentScript.js",
+                 "chrome-scrive-extension/libs/enc-base64.js",
+                 "chrome-scrive-extension/libs/mixpanel_init.js",
+                 "chrome-scrive-extension/show_error.js",
+                 "chrome-scrive-extension/common/ScrivePopup.js",
+                 "chrome-scrive-extension/chrome/ScriveChromeInit.js"],
+            dest: 'chrome-scrive-extension/ScriveChromeContentScriptAll.js'
+          },
+          ScriveIEContentScriptAll: {
+            src:["chrome-scrive-extension/common/ScriveMain.js",
+              "chrome-scrive-extension/common/ScrivePlatform.js",
+              "chrome-scrive-extension/common/ScriveLogUtils.js",
+              "chrome-scrive-extension/ie/ScriveIELogger.js",
+              "chrome-scrive-extension/ie/ScriveIEi18n.js",
+              "chrome-scrive-extension/ie/ScriveIELocalStore.js",
+              "chrome-scrive-extension/ie/ScriveIEBrowserUtils.js",
+              "chrome-scrive-extension/ie/ScriveIEHttpRequest.js",
+              "chrome-scrive-extension/common/ScriveContentScript.js",
+              "chrome-scrive-extension/libs/enc-base64.js",
+              "chrome-scrive-extension/libs/mixpanel_init.js",
+              "chrome-scrive-extension/show_error.js",
+              "chrome-scrive-extension/common/ScrivePopup.js",
+              "chrome-scrive-extension/ie/ScriveIEInit.js"],
+            dest: 'chrome-scrive-extension/ScriveIEContentScriptAll.js'
+          }
+        },
         crx: {
-            myPublicPackage: {
+            ScriveCrx: {
                 "privateKey": "chrome-scrive-extension.pem",
                 "src": "chrome-scrive-extension/",
                 "dest": "output/<%= pkg.name %>-<%= manifest.version %>-dev.crx"
             }
         },
         connect: {
-            server: {
+            IEServer: {
+              hostname: 'localhost',
+              options: {
+                port: 8383,
+                base: 'chrome-scrive-extension'
+              }
+            },
+            TestServer: {
                 hostname: 'localhost',
                 options: {
                     port: 8282,
@@ -28,23 +71,18 @@ module.exports = function(grunt) {
                                 var busboy = new Busboy({ headers: req.headers });
                                 var isValid = false;
                                 busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-                                    //console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
                                     file.on('data', function(data) {
-                                        //console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
                                     });
                                     file.on('end', function() {
-                                        //console.log('File [' + fieldname + '] Finished');
                                     });
                                 });
                                 busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated) {
-                                    //console.log('Field [' + fieldname + ']: value: ' + val);
                                     if( fieldname=='a_variable' && val=='a_value' ) {
                                         // We expect a variable to be present
                                         isValid = true;
                                     }
                                 });
                                 busboy.on('finish', function() {
-                                    //console.log('Done parsing form!');
                                     if( isValid ) {
                                         res.writeHead(303, { Connection: 'close', Location: '/sales_contract.pdf' });
                                         res.end();
@@ -70,11 +108,7 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-  // Load the plugin that provides the "uglify" task.
-grunt.loadNpmTasks('grunt-crx');
-
-grunt.registerTask('default', ['myPublicPackage']);
-
+    grunt.registerTask('default', ['concat','crx']);
 };
 
 

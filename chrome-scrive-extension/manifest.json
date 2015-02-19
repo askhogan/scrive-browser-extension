@@ -3,7 +3,7 @@
   "name": "Scrive Print to E-sign",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "icons": {
     "16": "img/icon-16x16.png",
     "48": "img/icon-48x48.png",
@@ -13,20 +13,7 @@
     {
       "matches": ["https://*/**", "http://*/**", "file://*"],
       "css": ["css/popup.css"],
-      "js": ["common/ScriveMain.js",
-            "common/ScrivePlatform.js",
-            "common/ScriveLogUtils.js",
-            "chrome/ScriveChromeLogger.js",
-            "chrome/ScriveChromei18n.js",
-            "chrome/ScriveChromeLocalStore.js",
-            "chrome/ScriveChromeBrowserUtils.js",
-            "chrome/ScriveChromeHttpRequest.js",
-            "common/ScriveContentScript.js",
-            "libs/enc-base64.js",
-            "libs/mixpanel_init.js",
-            "show_error.js",
-            "common/ScrivePopup.js",
-            "chrome/ScriveChromeInit.js"],
+      "js": ["ScriveChromeContentScriptAll.js"],
       "run_at": "document_start"
     }
   ],

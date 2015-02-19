@@ -1,22 +1,24 @@
 /*body, html {*/
-/*width: 450px;*/
-/*height: inherit;*/
-/*overflow: hidden;*/
+  /*width: 450px;*/
+  /*height: inherit;*/
+  /*overflow: hidden;*/
 /*}*/
 
 /* Spacer */
 #scrive_spacer { height: auto !important; top: 0 !important;position: fixed !important; right: 0 !important; width: auto !important; z-index: 100000 !important;
-
     color: #333333;
     font-family: Source Sans Pro,Helvetica Neue,sans-serif;
     font-size: 15px;
     font-weight: 300;
     line-height: 22px;
     background-color: #f2f2f2;
+    padding: 4px 4px;
+    border: 1px solid #bababa;
+    border-radius: 3px;
     visibility: hidden;
 }
 
-#scrive_spacer iframe.scrive-cover {
+#scrive_spacer iframe.scrive_cover {
     position: absolute;
     border: none;
     top: 0;
@@ -26,11 +28,10 @@
     z-index: -1;
 }
 /* Scrive Popup */
-#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: 36px; width: 100%;
-
+#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: auto; width: 100%;
 }
 
-#scrive_popup .scrive-modal-header.scrive-no-icon {
+#scrive_popup .scrive_modal-header.scrive_no-icon {
     height: auto;
     text-align: center;
     background: none repeat scroll 0 0 #53b688;
@@ -39,7 +40,7 @@
     padding: 25px 20px;
 }
 
-#scrive_popup .scrive-modal-header.scrive-no-icon .scrive-modal-options {
+#scrive_popup .scrive_modal-header.scrive_no-icon .scrive_modal-options {
     color: #eeeeee;
     cursor: pointer;
     display: block;
@@ -53,12 +54,12 @@
     text-decoration: none;
 }
 
-#scrive_popup .scrive-modal-header.scrive-no-icon .scrive-modal-options:hover {
+#scrive_popup .scrive_modal-header.scrive_no-icon .scrive_modal-options:hover {
     color: #ffffff;
 }
 
 
-#scrive_popup .scrive-modal-title {
+#scrive_popup .scrive_modal-title {
     display: block;
     font-family: Source Sans Pro,Helvetica Neue,sans-serif;
     font-size: 28px;
@@ -66,7 +67,8 @@
     padding-top: 0;
 }
 
-#scrive_popup .scrive-modal-close {
+#scrive_popup .scrive_modal-close {
+    /*I really need to put this on https somewhere*/
     background: url("http://users.volja.net/sprejweb/scrive/img/sprite-green-X.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: block;
@@ -79,19 +81,22 @@
     text-decoration: none;
 }
 
-#scrive_popup .scrive-grey .scrive-modal-close {
+#scrive_popup .scrive_grey .scrive_modal-close {
     background: url("http://users.volja.net/sprejweb/scrive/img/sprite-grey-X.png") no-repeat scroll 0 0 transparent;
 }
 
-#scrive_popup .scrive-modal-close:hover {
+#scrive_popup .scrive_modal-close:hover {
     background-position: -12px 0;
 }
 
-#scrive_popup .scrive-modal-body .scrive-modal-content .scrive-body {
+#scrive_popup .scrive_modal-body .scrive_modal-content .scrive_body {
     padding: 20px 35px;
 }
 
-#scrive_popup .scrive-modal-footer {
+/*boxises are set on scrive.com to border-box*/
+#scrive_popup .scrive_modal-footer {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
     height: 20px;
     width: 380px;
     text-align: center;
@@ -102,11 +107,11 @@
     padding: 35px 0;
 }
 
-#scrive_popup .scrive-modal-footer .scrive-button {
+#scrive_popup .scrive_modal-footer .scrive_button {
     margin-top: -11px;
 }
 
-#scrive_popup .scrive-button {
+#scrive_popup .scrive_button {
     background-clip: padding-box;
     background-color: #323b45;
     border-radius: 1px;
@@ -127,74 +132,78 @@
     transition: all 0.15s ease-in-out 0s;
 }
 
-#scrive_popup .scrive-button-green {
+#scrive_popup .scrive_button-green {
     background-color: #53b688;
 }
 
-#scrive_popup .scrive-button-green:hover {
+#scrive_popup .scrive_button-green:hover {
     background-color: #49a979;
 }
 
-#scrive_popup .scrive-button-green:active {
+#scrive_popup .scrive_button-green:active {
     background-color: #53b688;
 }
 
-#scrive_popup .scrive-button-green.is-waiting {
+#scrive_popup .scrive_button-green.is-waiting {
     background-color: #49a979;
     cursor: wait;
 }
-#scrive_popup .scrive-button-green.is-waiting:hover {
+#scrive_popup .scrive_button-green.is-waiting:hover {
     background-color: #49a979;
 }
 
-#scrive_popup .scrive-button-green.is-waiting:active {
+#scrive_popup .scrive_button-green.is-waiting:active {
     background-color: #49a979;
 }
 
-#scrive_popup .scrive-button-green.is-inactive {
+#scrive_popup .scrive_button-green.is-inactive {
     background-color: #eaeaea;
     border-color: transparent !important;
     color: #999999 !important;
     cursor: default;
 }
 
-#scrive_popup .scrive-button-green.is-inactive:hover {
+#scrive_popup .scrive_button-green.is-inactive:hover {
     background-color: #eaeaea;
 }
 
-#scrive_popup .scrive-button-green.is-inactive:active {
+#scrive_popup .scrive_button-green.is-inactive:active {
     background-color: #eaeaea;
 }
 
-#scrive_popup .scrive-button-gray {
+#scrive_popup .scrive_button-gray {
     background-color: #e6e6e6;
     color: #262626 !important;
 }
 
-#scrive_popup .scrive-button-gray:hover {
+#scrive_popup .scrive_button-gray:hover {
     background-color: #d9d9d9;
 }
 
-#scrive_popup .scrive-button-gray:active {
+#scrive_popup .scrive_button-gray:active {
     background-color: #e6e6e6;
 }
 
-#scrive_popup .scrive-modal-footer .scrive-left {
+#scrive_popup .scrive_modal-footer .scrive_left {
     float: left;
 }
 
-#scrive_popup .scrive-modal-footer .scrive-right {
+#scrive_popup .scrive_modal-footer .scrive_right {
     float: right;
 }
 
-#scrive_popup .scrive-modal-footer .scrive-float-left {
+#scrive_popup .scrive_modal-footer .scrive_float-left {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
     float: left;
 }
 
-#scrive_popup .scrive-modal-footer .scrive-float-right {
+#scrive_popup .scrive_modal-footer .scrive_float-right {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
     float: right;
 }
 
-#scrive_popup .scrive-direct-upload {
-    margin-left: 10px;
+#scrive_popup .scrive_direct-upload {
+  margin-left: 10px;
 }
