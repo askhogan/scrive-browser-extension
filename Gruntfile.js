@@ -69,7 +69,11 @@ module.exports = function(grunt) {
                         function myMiddleware(req, res, next) {
                             if( req.method=="POST" ) {
                                 var busboy = new Busboy({ headers: req.headers });
-                                var isValid = false;
+                                var isValidVariable = false;
+                                var isValidHeader = false;
+				if( req.headers['X-Magic-Header'] == 'X-Magic-Value' ) {
+				    isValidHeader = true;
+				}
                                 busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                                     file.on('data', function(data) {
                                     });
@@ -79,17 +83,22 @@ module.exports = function(grunt) {
                                 busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated) {
                                     if( fieldname=='a_variable' && val=='a_value' ) {
                                         // We expect a variable to be present
-                                        isValid = true;
+                                        isValidVariable = true;
                                     }
                                 });
                                 busboy.on('finish', function() {
-                                    if( isValid ) {
-                                        res.writeHead(303, { Connection: 'close', Location: '/sales_contract.pdf' });
-                                        res.end();
-                                    }
-                                    else {
+                                    if( !isValidVariable ) {
                                         res.writeHead(404, { Connection: 'close', 'Content-type': 'text/plain; charset=utf-8', 'Cache-control': 'no-cache' });
                                         res.end('Your POST request should have \'a_variable\' with \'a_value\'. Then you would be let through.');
+				    }
+				    else if( !isValidHeader && false ) {
+					// There is no good way to check this one...
+                                        res.writeHead(404, { Connection: 'close', 'Content-type': 'text/plain; charset=utf-8', 'Cache-control': 'no-cache' });
+                                        res.end('Your POST request should have a \'X-Magic-Header\' with \'X-Magic-Value\'. Then you would be let through.');
+				    }
+				    else {
+                                        res.writeHead(303, { Connection: 'close', Location: '/sales_contract.pdf' });
+                                        res.end();
                                     }
                                 });
                                 req.pipe(busboy);
