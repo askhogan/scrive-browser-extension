@@ -1,8 +1,3 @@
-/// <reference path="chrome.d.ts" />
-/// <reference path="chrome-app.d.ts" />
-/// <reference path="constants.ts" />
-/// <reference path="show_error.ts" />
-
 /*
  * (C) 2014 by Scrive
  *
