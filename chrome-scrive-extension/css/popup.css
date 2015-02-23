@@ -68,25 +68,22 @@
 }
 
 #scrive_popup .scrive_modal-close {
-    /*I really need to put this on https somewhere*/
-    background: url("https://rawgit.com/scrive/scrive-browser-extension/Chrome_Div/chrome-scrive-extension/img/sprite-green-X.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: block;
     float: right;
     height: 12px;
     position: absolute;
     right: 15px;
-    top: 20px;
+    top: 14px;
     width: 12px;
     text-decoration: none;
-}
-
-#scrive_popup .scrive_grey .scrive_modal-close {
-    background: url("https://rawgit.com/scrive/scrive-browser-extension/Chrome_Div/chrome-scrive-extension/img/sprite-grey-X.png") no-repeat scroll 0 0 transparent;
+    color: #99cccc;
+    font-size: 28px;
 }
 
 #scrive_popup .scrive_modal-close:hover {
     background-position: -12px 0;
+    color: #ffffff;
 }
 
 #scrive_popup .scrive_modal-body .scrive_modal-content .scrive_body {
