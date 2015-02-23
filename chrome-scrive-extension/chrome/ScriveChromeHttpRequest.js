@@ -37,7 +37,10 @@ Scrive.CH.HttpRequest = new function () {
         }
       }
 
-      xmlHttpReq.onerror = options.onerror;
+      xmlHttpReq.onerror = function () {
+        if ( options.onerror )
+          options.onerror( xmlHttpReq );
+      };
 
       xmlHttpReq.onload = function () {
         if ( options.onload )

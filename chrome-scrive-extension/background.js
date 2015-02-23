@@ -9,7 +9,8 @@
 
 chrome.browserAction.onClicked.addListener( function ( tab ) {
   chrome.tabs.executeScript( tab.id, {
-    code: "Scrive.Popup.toggleDiv()"
+//    code: "Scrive.Popup.toggleDiv()"
+    code: "Scrive.Popup.toggleDivBookmarklet()"
   } );
 } );
 

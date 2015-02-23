@@ -58,10 +58,27 @@ Scrive.Popup = new function () {
     directUploadButton = document.querySelector( '.scrive_modal-footer .scrive_direct-upload' );
     closeWindowButton = document.querySelector( '.scrive_modal-header .scrive_modal-close' );
 
-    // Steps:
-    // - Ask if there is a PDF
-    //   - If false pdf, ask user to print page to paper
-    //   - If true pdf, ask if user wants to print to e-sign
+    var onDirectUpload = function () {
+      window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
+    };
+
+    directUploadButton.addEventListener('click', onDirectUpload);
+
+    var onOptions = function () {
+      window.location.href = Scrive.jsBase + "/html/options.html";
+    };
+
+    //Options removed for chrome - add for IE
+    //modalOptions.addEventListener( 'click', onOptions );
+
+    Scrive.Popup.toggleDiv();
+  };
+
+  // Steps:
+  // - Ask if there is a PDF
+  //   - If false pdf, ask user to print page to paper
+  //   - If true pdf, ask if user wants to print to e-sign
+  this.checkForPDF = function () {
 
     var response = Scrive.ContentScript.findEmbedTagURLs( document );
 
@@ -85,20 +102,6 @@ Scrive.Popup = new function () {
       Scrive.Popup.askPrintToPaper();
     }
 
-    var onDirectUpload = function () {
-      window.open( Scrive.jsBase + "/html/direct_upload.html", '_blank' );
-    };
-
-    directUploadButton.addEventListener( 'click', onDirectUpload );
-
-    var onOptions = function () {
-      window.location.href = Scrive.jsBase + "/html/options.html";
-    };
-
-    //Options removed for chrome - add for IE
-    //modalOptions.addEventListener( 'click', onOptions );
-
-    Scrive.Popup.toggleDiv();
   };
 
   this.getHead = function ( doc ) {
@@ -123,7 +126,13 @@ Scrive.Popup = new function () {
     var body = elements.length > 0 ? elements[ 0 ] : null;
     if ( body == null ) {
       var head = this.getHead( doc );
-      body = head.nextSibling;
+      //body = head.nextSibling;
+      //now we add body if page is missing one
+      if ( head && head.parentNode )
+      {
+        body = document.createElement( "body" );
+        head.parentNode.appendChild( body );
+      }
     }
     return body;
   };
@@ -131,6 +140,11 @@ Scrive.Popup = new function () {
   this.toggleElem = function ( div ) {
     if ( showPopup ) div.style.visibility = 'visible';
     else div.style.visibility = 'hidden';
+  };
+
+  this.toggleDivBookmarklet = function () {
+    this.checkForPDF();
+    this.toggleDiv();
   };
 
   this.toggleDiv = function () {

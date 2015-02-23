@@ -26,11 +26,11 @@ Scrive.Mixpanel = new function () {
     options.onload = function ( rq ) {
       if ( rq.status >= 200 && rq.status <= 299 ) {; //Scrive.ContentScript.errorCallbackFromXMLHttpRequest(request.url, errorCallback, this);
       } else {
-        Scrive.ContentScript.errorCallbackFromXMLHttpRequest( request.url, errorCallback, this );
+        Scrive.ContentScript.errorCallbackFromXMLHttpRequest( request.url, errorCallback, rq );
       }
     };
-    options.onerror = function () {
-      Scrive.ContentScript.errorCallbackFromXMLHttpRequest( request.url, errorCallback, this );
+    options.onerror = function (rq) {
+      Scrive.ContentScript.errorCallbackFromXMLHttpRequest( request.url, errorCallback, rq );
     };
 
     options.method = request.method;

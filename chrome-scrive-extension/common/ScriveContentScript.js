@@ -169,12 +169,12 @@ Scrive.ContentScript = new function () {
           alert( "Done! Look at your tablet!" );
         }
       } else {
-        Scrive.ContentScript.errorCallbackFromXMLHttpRequest( printer_url, errorCallback, this );
+        Scrive.ContentScript.errorCallbackFromXMLHttpRequest( printer_url, errorCallback, rq );
       }
     };
 
-    options.onerror = function () {
-      Scrive.ContentScript.errorCallbackFromXMLHttpRequest( printer_url, errorCallback, this );
+    options.onerror = function (rq) {
+      Scrive.ContentScript.errorCallbackFromXMLHttpRequest( printer_url, errorCallback, rq );
     };
 
     Scrive.LogUtils.log( "Sending PDF data to: " + printer_url );
