@@ -1,7 +1,3 @@
-/// <reference path="chrome.d.ts" />
-/// <reference path="chrome-app.d.ts" />
-/// <reference path="constants.ts" />
-/// <reference path="oauth.ts" />
 // Used only in options.html to initialize current options and save when pressing the save button.
 
 Scrive.jsBase = document.URL.substring( 0, document.URL.lastIndexOf( '/' ) ) + "/../"

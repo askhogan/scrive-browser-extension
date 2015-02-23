@@ -1,11 +1,3 @@
-/// <reference path="chrome.d.ts" />
-/// <reference path="chrome-app.d.ts" />
-/// <reference path="constants.ts" />
-;
-
-;
-
-;
 
 chrome.browserAction.onClicked.addListener( function ( tab ) {
   chrome.tabs.executeScript( tab.id, {

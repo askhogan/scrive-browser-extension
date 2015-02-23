@@ -1,8 +1,3 @@
-/// <reference path="chrome.d.ts" />
-/// <reference path="chrome-app.d.ts" />
-/// <reference path="constants.ts" />
-/// <reference path="content_script.ts" />
-
 Scrive.jsBase = document.URL.substring( 0, document.URL.lastIndexOf( '/' ) ) + "/../"
 
 Scrive.DirectUpload = new function () {
