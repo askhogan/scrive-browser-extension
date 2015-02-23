@@ -20,6 +20,56 @@ Scrive.Popup = new function () {
   var popup;
   var showPopup;
 
+  this.populatePopup = function ( popup ) {
+
+    var header = document.createElement( "div" );
+    header.className = 'scrive_modal-header scrive_no-icon';
+    popup.appendChild(header);
+
+    var header_label = document.createElement( "div" );
+    header_label.className = 'scrive_label';
+    header.appendChild(header_label);
+
+    modalTitle = document.createElement( "span" );
+    modalTitle.className = 'scrive_modal-title';
+    header.appendChild(modalTitle);
+
+    closeWindowButton = document.createElement( "a" );
+    closeWindowButton.className = 'scrive_modal-close';
+    closeWindowButton.text = "\u00D7";
+    header.appendChild(closeWindowButton);
+
+    var body = document.createElement( "div" );
+    body.className = 'scrive_modal-body';
+    popup.appendChild(body);
+
+    var body_body = document.createElement( "div" );
+    body_body.className = 'scrive_modal-content';
+    body.appendChild(body_body);
+
+    modalContent = document.createElement( "div" );
+    modalContent.className = 'scrive_body';
+    body_body.appendChild(modalContent);
+
+    var footer = document.createElement( "div" );
+    footer.className = 'scrive_modal-footer';
+    popup.appendChild(footer);
+
+    cancelButton = document.createElement( "a" );
+    cancelButton.className = 'scrive_float-left scrive_cancel scrive_button scrive_button-gray';
+    cancelButton.style = "display: block;";
+    footer.appendChild(cancelButton);
+
+    directUploadButton = document.createElement( "a" );
+    directUploadButton.className = 'scrive_float-left scrive_direct-upload scrive_button scrive_button-gray';
+    footer.appendChild(directUploadButton);
+
+    acceptButton = document.createElement( "a" );
+    acceptButton.className = 'scrive_float-right scrive_accept green scrive_button scrive_button-green';
+    footer.appendChild(acceptButton);
+  };
+
+
   this.init = function () {
 
     showPopup = Scrive.Platform.BrowserUtils.showPopup;
@@ -31,32 +81,11 @@ Scrive.Popup = new function () {
     //spacer.style.top = getDocHeight(doc) + "px";
     spacer.innerHTML = "\<iframe class='scrive_cover' src='about:blank'></iframe>";
     body.appendChild( spacer );
-
     popup = document.createElement( "div" );
     popup.id = "scrive_popup";
-    spacer.appendChild( popup );
-    //Options removed for chrome - add for IE
-    //popup.innerHTML = "" + "\<div class='scrive_modal-header scrive_no-icon'\>" + "    \<a class='scrive_modal-options'>" + "       \<div class='scrive_label'></div>" + "   \</a>"
-    popup.innerHTML = "" + "\<div class='scrive_modal-header scrive_no-icon'\>" + "       \<div class='scrive_label'></div>" + "   \</a>"
+//    spacer.appendChild( popup );
 
-    + "    \<span class='scrive_modal-title'></span>" + "    \<a class='scrive_modal-close'></a>" + "\</div>"
-    + "   \<div class='scrive_modal-body'>" + "   \<div class='scrive_modal-content'>" + "       \<div class='scrive_body'></div>"
-    + "   \</div>" + "   \</div>"
-    + "        \<div class='scrive_modal-footer'>" + "   \<a class='scrive_float-left scrive_cancel scrive_button scrive_button-gray'>" + "       \<div class='scrive_label'></div>"
-    + "   \</a>" + "   \<a class='scrive_float-left scrive_direct-upload scrive_button scrive_button-gray'>" + "       \<div class='scrive_label'></div>"
-    + "   \</a>" + "   \<a class='scrive_float-right scrive_accept green scrive_button scrive_button-green'>" + "       \<div class='scrive_label'></div>"
-    + "   \</a\>" + "\</div\>";
-
-
-    // Set up the templateable parts of the modal
-    //Options removed for chrome - add for IE
-    //modalOptions = document.querySelector( '.scrive_modal-options' );
-    modalTitle = document.querySelector( '.scrive_modal-title' );
-    modalContent = document.querySelector( '.scrive_modal-content .scrive_body' );
-    acceptButton = document.querySelector( '.scrive_modal-footer .scrive_accept' );
-    cancelButton = document.querySelector( '.scrive_modal-footer .scrive_cancel' );
-    directUploadButton = document.querySelector( '.scrive_modal-footer .scrive_direct-upload' );
-    closeWindowButton = document.querySelector( '.scrive_modal-header .scrive_modal-close' );
+    this.populatePopup(popup);
 
     var onDirectUpload = function () {
       window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
@@ -149,8 +178,10 @@ Scrive.Popup = new function () {
 
   this.toggleDiv = function () {
     Scrive.Popup.toggleElem( spacer );
-    clearInterval(uploadingPDFInterval);
-    Scrive.Popup.clearDots();
+    if (uploadingPDFInterval) {
+      clearInterval(uploadingPDFInterval);
+      Scrive.Popup.clearDots();
+    }
     showPopup = !showPopup;
   };
 
@@ -162,6 +193,9 @@ Scrive.Popup = new function () {
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "no" );
     directUploadButton.style.display = "none";
+
+    spacer.appendChild( popup );
+
     var onAccept = function () {
       Scrive.Mixpanel.track( "Print to e-sign accept" );
 
@@ -204,6 +238,9 @@ Scrive.Popup = new function () {
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
     directUploadButton.innerText = Scrive.Platform.i18n.getMessage( "upload" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "cancel" );
+
+    spacer.appendChild( popup );
+
     var onAccept = function () {
       Scrive.Popup.toggleDiv();
       window.print();
@@ -254,7 +291,7 @@ Scrive.Popup = new function () {
     }
   };
 
-  var uploadingPDFInterval;
+  var uploadingPDFInterval = null;
   this.uploadingPDF = function () {
     acceptButton.className += " is-inactive";
     cancelButton.style.display = "none";
