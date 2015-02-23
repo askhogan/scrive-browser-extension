@@ -69,7 +69,7 @@
 
 #scrive_popup .scrive_modal-close {
     /*I really need to put this on https somewhere*/
-    background: url("http://users.volja.net/sprejweb/scrive/img/sprite-green-X.png") no-repeat scroll 0 0 transparent;
+    background: url("https://rawgit.com/scrive/scrive-browser-extension/Chrome_Div/chrome-scrive-extension/img/sprite-green-X.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: block;
     float: right;
@@ -82,7 +82,7 @@
 }
 
 #scrive_popup .scrive_grey .scrive_modal-close {
-    background: url("http://users.volja.net/sprejweb/scrive/img/sprite-grey-X.png") no-repeat scroll 0 0 transparent;
+    background: url("https://rawgit.com/scrive/scrive-browser-extension/Chrome_Div/chrome-scrive-extension/img/sprite-grey-X.png") no-repeat scroll 0 0 transparent;
 }
 
 #scrive_popup .scrive_modal-close:hover {
