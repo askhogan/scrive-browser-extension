@@ -162,8 +162,14 @@ Scrive.Popup = new function () {
   };
 
   this.toggleElem = function ( div ) {
-    if ( showPopup ) div.style.visibility = 'visible';
-    else div.style.visibility = 'hidden';
+    if ( showPopup ) {
+      div.style.visibility = 'visible';
+      div.style.opacity = 1;
+    }
+    else {
+      div.style.visibility = 'hidden';
+      div.style.opacity = 0;
+    }
   };
 
   this.toggleDivBookmarklet = function () {
