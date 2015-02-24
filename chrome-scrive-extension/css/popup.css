@@ -126,7 +126,6 @@
     position: relative;
     text-align: center;
     text-decoration: none;
-    transition: all 0.15s ease-in-out 0s;
 }
 
 #scrive_popup .scrive_button-green {
