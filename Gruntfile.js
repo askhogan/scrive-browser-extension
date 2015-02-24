@@ -50,8 +50,8 @@ module.exports = function(grunt) {
                 "options": {
                   "privateKey": "chrome-scrive-extension.pem"
                 },
-                "zipDest": "output/<%= pkg.name %>-<%= manifest.version %>-dev.zip",
-                "dest": "output/<%= pkg.name %>-<%= manifest.version %>-dev.crx"
+                "zipDest": "output/<%= pkg.name %>-<%= manifest.version %>.zip",
+                "dest": "output/<%= pkg.name %>-<%= manifest.version %>.crx"
             }
         },
         connect: {
