@@ -1,5 +1,7 @@
 input[type=file] {
+  /*fix this for IE*/
   opacity: 0;
+  /*opacity: 10;*/
   position: absolute;
   top: 0;
   left: 0;

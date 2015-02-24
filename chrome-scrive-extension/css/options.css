@@ -6,8 +6,9 @@ input {
   display: block; 
   padding: 20px 5px;
   border-radius: 1px;
-  margin-bottom: 15px; 
-  height: 26px;
+  margin-bottom: 15px;
+  /*solved <!DOCTYPE html> used to be 26px*/
+  height: 2px;
   width: 300px;
 }
 

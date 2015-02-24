@@ -1,10 +1,17 @@
+<!DOCTYPE html>
+<!--This causes browser to render page in standards mode rather than in quirks mode-->
+<!--http://www.quirksmode.org/css/quirksmode.html-->
+<!--Change your doctype to html5 standards <!DOCTYPE html>-->
+<!--http://stackoverflow.com/questions/14580872/document-queryselectorallclassname-not-working-in-ie9-->
 <html>
 <head>
   <title></title>
+  <!--Add this to prevent IE7 rendering, but it makes HTML INVALID!-->
+  <!--https://hsivonen.fi/doctype/-->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="/css/less-compilation.css"></link>
-  <link rel="stylesheet" type="text/css" href="/css/page.css"></link>
-  <link rel="stylesheet" type="text/css" href="/css/options.css"></link>
+  <link rel="stylesheet" type="text/css" href="../css/less-compilation.css">
+  <link rel="stylesheet" type="text/css" href="../css/page.css">
+  <link rel="stylesheet" type="text/css" href="../css/options.css">
 </head>
 
 <body>
@@ -68,8 +75,7 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="/constants.js"></script>
-  <script type="text/javascript" src="/options.js"></script>
-  <script type="text/javascript" src="/oauth.js"></script>
+  <script type="text/javascript" src="../common/ScriveMain.js"></script>
+  <script type="text/javascript" src="../common/ScriveOptions.js"></script>
 </body>
 </html>

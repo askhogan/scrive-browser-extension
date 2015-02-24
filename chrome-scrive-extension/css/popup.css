@@ -1,15 +1,205 @@
-body, html {
-  width: 450px;
-  height: inherit;
-  overflow: hidden;
+/*body, html {*/
+  /*width: 450px;*/
+  /*height: inherit;*/
+  /*overflow: hidden;*/
+/*}*/
+
+/* Spacer */
+#scrive_spacer { height: auto !important; top: 0 !important;position: fixed !important; right: 0 !important; width: auto !important; z-index: 100000 !important;
+    color: #333333;
+    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 22px;
+    background-color: #f2f2f2;
+    padding: 4px 4px;
+    border: 1px solid #bababa;
+    border-radius: 3px;
+    visibility: hidden;
 }
 
-.modal-footer {
-  height: 20px;
-  width: 380px;
-  text-align: center;
+#scrive_spacer iframe.scrive_cover {
+    position: absolute;
+    border: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+/* Scrive Popup */
+#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: auto; width: 100%;
 }
 
-.direct-upload {
+#scrive_popup .scrive_modal-header.scrive_no-icon {
+    height: auto;
+    text-align: center;
+    background: none repeat scroll 0 0 #53b688;
+    border-bottom: 1px solid #dee4ed;
+    color: #ffffff;
+    padding: 25px 20px;
+}
+
+#scrive_popup .scrive_modal-header.scrive_no-icon .scrive_modal-options {
+    color: #eeeeee;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 12px;
+    left: 15px;
+    position: absolute;
+    /*top: 20px;*/
+    top: 0px;
+    width: 12px;
+    text-decoration: none;
+}
+
+#scrive_popup .scrive_modal-header.scrive_no-icon .scrive_modal-options:hover {
+    color: #ffffff;
+}
+
+
+#scrive_popup .scrive_modal-title {
+    display: block;
+    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-size: 28px;
+    line-height: 25px;
+    padding-top: 0;
+}
+
+#scrive_popup .scrive_modal-close {
+    cursor: pointer;
+    display: block;
+    float: right;
+    height: 12px;
+    position: absolute;
+    right: 15px;
+    top: 14px;
+    width: 12px;
+    text-decoration: none;
+    color: #99cccc;
+    font-size: 28px;
+}
+
+#scrive_popup .scrive_modal-close:hover {
+    background-position: -12px 0;
+    color: #ffffff;
+}
+
+#scrive_popup .scrive_modal-body .scrive_modal-content .scrive_body {
+    padding: 20px 35px;
+}
+
+/*boxises are set on scrive.com to border-box*/
+#scrive_popup .scrive_modal-footer {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
+    height: 20px;
+    width: 380px;
+    text-align: center;
+
+    border-top: 1px solid #dee4ed;
+    margin-left: 35px;
+    margin-right: 35px;
+    padding: 35px 0;
+}
+
+#scrive_popup .scrive_modal-footer .scrive_button {
+    margin-top: -11px;
+}
+
+#scrive_popup .scrive_button {
+    background-clip: padding-box;
+    background-color: #323b45;
+    border-radius: 1px;
+    color: #ffffff !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 16px;
+    margin: 0;
+    max-height: 16px;
+    min-width: 50px;
+    padding: 13px 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+
+#scrive_popup .scrive_button-green {
+    background-color: #53b688;
+}
+
+#scrive_popup .scrive_button-green:hover {
+    background-color: #49a979;
+}
+
+#scrive_popup .scrive_button-green:active {
+    background-color: #53b688;
+}
+
+#scrive_popup .scrive_button-green.is-waiting {
+    background-color: #49a979;
+    cursor: wait;
+}
+#scrive_popup .scrive_button-green.is-waiting:hover {
+    background-color: #49a979;
+}
+
+#scrive_popup .scrive_button-green.is-waiting:active {
+    background-color: #49a979;
+}
+
+#scrive_popup .scrive_button-green.is-inactive {
+    background-color: #eaeaea;
+    border-color: transparent !important;
+    color: #999999 !important;
+    cursor: default;
+}
+
+#scrive_popup .scrive_button-green.is-inactive:hover {
+    background-color: #eaeaea;
+}
+
+#scrive_popup .scrive_button-green.is-inactive:active {
+    background-color: #eaeaea;
+}
+
+#scrive_popup .scrive_button-gray {
+    background-color: #e6e6e6;
+    color: #262626 !important;
+}
+
+#scrive_popup .scrive_button-gray:hover {
+    background-color: #d9d9d9;
+}
+
+#scrive_popup .scrive_button-gray:active {
+    background-color: #e6e6e6;
+}
+
+#scrive_popup .scrive_modal-footer .scrive_left {
+    float: left;
+}
+
+#scrive_popup .scrive_modal-footer .scrive_right {
+    float: right;
+}
+
+#scrive_popup .scrive_modal-footer .scrive_float-left {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
+    float: left;
+}
+
+#scrive_popup .scrive_modal-footer .scrive_float-right {
+    box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
+    float: right;
+}
+
+#scrive_popup .scrive_direct-upload {
   margin-left: 10px;
 }

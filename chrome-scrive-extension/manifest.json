@@ -12,7 +12,8 @@
   "content_scripts": [
     {
       "matches": ["https://*/**", "http://*/**", "file://*"],
-      "js": ["constants.js", "content_script.js"],
+      "css": ["css/popup.css"],
+      "js": ["ScriveChromeContentScriptAll.js"],
       "run_at": "document_start"
     }
   ],
@@ -20,12 +21,11 @@
     "scripts": ["background.js"]
   },
   "web_accessible_resources": [
-    "html/options.html"
+    "html/options.html", "html/direct_upload.html"
   ],
   "browser_action": {
     "default_icon": "img/icon-38x38.png",
-    "default_title": "__MSG_browserAction__",
-    "default_popup": "html/popup.html"
+    "default_title": "__MSG_browserAction__"
   },
   "permissions": [
     "webRequest", "webRequestBlocking",

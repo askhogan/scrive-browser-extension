@@ -1,0 +1,4 @@
+--disable
+1,2,5,110,120,131,220
+--custom_jsdoc_tags
+jsx,note,description
