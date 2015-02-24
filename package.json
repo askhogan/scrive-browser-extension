@@ -7,7 +7,7 @@
     "busboy": "~0.2.8",
     "grunt-contrib-concat": "~0.5.0",
     "node-rsa":"~0.2.13",
-    "grunt-crx": "~0.3.4"    
+    "grunt-crx": "~1.0.3"
   },
   "dependencies": {},
   "engines": {

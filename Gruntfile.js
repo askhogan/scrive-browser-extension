@@ -46,8 +46,10 @@ module.exports = function(grunt) {
         },
         crx: {
             ScriveCrx: {
-                "privateKey": "chrome-scrive-extension.pem",
-                "src": "chrome-scrive-extension/",
+                "src": ["chrome-scrive-extension/**/*"],
+                "options": {
+                  "privateKey": "chrome-scrive-extension.pem"
+                },
                 "zipDest": "output/<%= pkg.name %>-<%= manifest.version %>-dev.zip",
                 "dest": "output/<%= pkg.name %>-<%= manifest.version %>-dev.crx"
             }
