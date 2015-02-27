@@ -1,9 +1,61 @@
 
+chrome.runtime.onInstalled.addListener(function(details){
+  if(details.reason == "update" || details.reason == "install") {
+
+    chrome.manifest = chrome.app.getDetails();
+
+    var injectIntoTab = function (tab) {
+      // You could iterate through the content scripts here
+      var scripts = chrome.manifest.content_scripts[0].js;
+      var i = 0, s = scripts.length;
+      for( ; i < s; i++ ) {
+        chrome.tabs.executeScript(tab.id, {
+          file: "ScriveChromeContentScriptAllUpdate.js"
+        });
+        chrome.tabs.insertCSS(tab.id, {
+          file: "css/popup.css"
+        });
+      }
+    }
+
+    // Get all windows
+    chrome.windows.getAll({
+      populate: true
+    }, function (windows) {
+      var i = 0, w = windows.length, currentWindow;
+      for( ; i < w; i++ ) {
+        currentWindow = windows[i];
+        var j = 0, t = currentWindow.tabs.length, currentTab;
+        for( ; j < t; j++ ) {
+          currentTab = currentWindow.tabs[j];
+          // Skip some urls
+          if( ! currentTab.url.match(/(chrome|chrome-devtools|chrome-extension):\/\//gi) ) {
+            injectIntoTab(currentTab);
+          }
+        }
+      }
+    });
+  }
+});
+
 chrome.browserAction.onClicked.addListener( function ( tab ) {
-  chrome.tabs.executeScript( tab.id, {
-//    code: "Scrive.Popup.toggleDiv()"
-    code: "Scrive.Popup.toggleDivBookmarklet()"
-  } );
+
+  // we redirect to upload
+  if( tab.url.match(/(chrome|chrome-devtools):\/\//gi) ) {
+    chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+  }
+  /*
+   if we need to communicate with chrome-extension:// pages we need to
+   send a chrome.runtime.sendMessage from them and handle that in chrome.runtime.onMessage
+   */
+  else if( tab.url.match(/(chrome-extension):\/\//gi) ) {
+    ; // do nothing..
+  }
+  else {
+    chrome.tabs.executeScript(tab.id, {
+      code: "Scrive.Popup.toggleDivBookmarklet()"
+    });
+  }
 } );
 
 chrome.runtime.onMessage.addListener( function ( request, sender, sendResponse ) {

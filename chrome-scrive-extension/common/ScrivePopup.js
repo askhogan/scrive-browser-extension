@@ -7,13 +7,18 @@ Scrive.Popup = new function () {
   var acceptButton;
   var cancelButton;
   var closeWindowButton;
-  var directUploadLink;
   var directUploadButton;
+
+  var onAccept;
+  var onCancel;
+  var onDirectUpload;
+
   var dotElements;
   var pdfs = [];
   var spacer;
   var popup;
   var showPopup;
+  var uploadingPDFInterval;
 
   this.populatePopup = function ( popup ) {
 
@@ -31,7 +36,8 @@ Scrive.Popup = new function () {
 
     closeWindowButton = document.createElement( "a" );
     closeWindowButton.className = 'scrive_modal-close';
-    closeWindowButton.text = "\u00D7";
+    //Changed to make IE happy
+    closeWindowButton.innerText = "\u00D7";
     header.appendChild(closeWindowButton);
 
     var body = document.createElement( "div" );
@@ -70,20 +76,33 @@ Scrive.Popup = new function () {
     showPopup = Scrive.Platform.BrowserUtils.showPopup;
 
     var body = Scrive.Popup.getBody( document );
+    spacer = document.getElementById('scrive_spacer');
+    popup = document.getElementById('scrive_popup');
+
+    //added tu support for update and install of Extension
+    if (popup) {
+      popup.parentNode.removeChild(popup);
+      popup = null;
+    }
+
+    if (spacer) {
+      spacer.parentNode.removeChild(spacer);
+      spacer = null;
+    }
 
     spacer = document.createElement( "div" );
     spacer.id = "scrive_spacer";
-    //spacer.style.top = getDocHeight(doc) + "px";
     spacer.innerHTML = "\<iframe class='scrive_cover' src='about:blank'></iframe>";
     body.appendChild( spacer );
+
     popup = document.createElement( "div" );
     popup.id = "scrive_popup";
-//    spacer.appendChild( popup );
 
     this.populatePopup(popup);
 
-    var onDirectUpload = function () {
+    onDirectUpload = function () {
       window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
+      //directUploadButton.removeEventListener('click', onDirectUpload);
     };
 
     directUploadButton.addEventListener('click', onDirectUpload);
@@ -163,7 +182,19 @@ Scrive.Popup = new function () {
 
   this.toggleElem = function ( div ) {
     if ( showPopup ) div.style.visibility = 'visible';
-    else div.style.visibility = 'hidden';
+    else {
+      acceptButton.removeEventListener( 'click', onAcceptPrintToEsign );
+      cancelButton.removeEventListener( 'click', onCancelPrintToEsign );
+      closeWindowButton.removeEventListener( 'click', onCancelPrintToEsign );
+
+      acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
+      cancelButton.removeEventListener( 'click', onCancelPrintToPaper );
+      closeWindowButton.removeEventListener( 'click', onCancelPrintToPaper );
+
+      acceptButton.removeEventListener( 'click', onAcceptError );
+
+      div.style.visibility = 'hidden';
+    }
   };
 
   this.toggleDivBookmarklet = function () {
@@ -172,12 +203,42 @@ Scrive.Popup = new function () {
   };
 
   this.toggleDiv = function () {
-    Scrive.Popup.toggleElem( spacer );
     if (uploadingPDFInterval) {
       clearInterval(uploadingPDFInterval);
       Scrive.Popup.clearDots();
     }
+    Scrive.Popup.toggleElem( spacer );
     showPopup = !showPopup;
+  };
+
+  var onAcceptPrintToEsign = function () {
+    acceptButton.removeEventListener( 'click', onAcceptPrintToEsign );
+    /*
+     * Here we would actually like to inspect what was saved in the
+     * request to weed out anything looking like an EMBED element but
+     * not referring to an actual PDF. Candidates are:
+     *
+     * - type attribute on embed element (but it is sometimes missing)
+     * - .pdf as extension of url (but sometimes it is not there)
+     * - Content-type: application.pdf (but sometimes it is not)
+     *
+     * Those should be probably tried only when there is more than one
+     * EMBED tag, otherwise just go with what happens to be there.
+     */
+    var pdfurl = pdfs[ 0 ];
+    Scrive.Popup.uploadingPDF();
+    Scrive.Platform.HttpRequest.PrintToEsign( pdfurl );
+    //Do we need ability to send PDF from the same page multiple times without a refresh of browser window ?
+    //if we remove listener button is not functional
+    Scrive.Mixpanel.track( "Print to e-sign accept" );
+  };
+
+  var onCancelPrintToEsign = function () {
+    cancelButton.removeEventListener( 'click', onCancelPrintToEsign );
+    closeWindowButton.removeEventListener( 'click', onCancelPrintToEsign );
+    Scrive.Popup.toggleDiv();
+    Scrive.Mixpanel.track( "Print to e-sign cancel", {}, function () {;
+    } );
   };
 
   this.askPrintToEsign = function () {
@@ -191,38 +252,23 @@ Scrive.Popup = new function () {
 
     spacer.appendChild( popup );
 
-    var onAccept = function () {
-      Scrive.Mixpanel.track( "Print to e-sign accept" );
+    acceptButton.addEventListener( 'click', onAcceptPrintToEsign );
+    cancelButton.addEventListener( 'click', onCancelPrintToEsign );
+    closeWindowButton.addEventListener( 'click', onCancelPrintToEsign );
+  };
 
-      /*
-       * Here we would actually like to inspect what was saved in the
-       * request to weed out anything looking like an EMBED element but
-       * not referring to an actual PDF. Candidates are:
-       *
-       * - type attribute on embed element (but it is sometimes missing)
-       * - .pdf as extension of url (but sometimes it is not there)
-       * - Content-type: application.pdf (but sometimes it is not)
-       *
-       * Those should be probably tried only when there is more than one
-       * EMBED tag, otherwise just go with what happens to be there.
-       */
-      var pdfurl = pdfs[ 0 ];
-
-      Scrive.Platform.HttpRequest.PrintToEsign( pdfurl );
-      //Do we need ability to send PDF from the same page multiple times without a refresh of browser window ?
-      //if we remove listener button is not functional
-      acceptButton.removeEventListener( 'click', onAccept );
-      Scrive.Popup.uploadingPDF();
-    };
-    var onCancel = function () {
-      Scrive.Popup.toggleDiv();
-      Scrive.Mixpanel.track( "Print to e-sign cancel", {}, function () {;
-      } );
-    };
-
-    acceptButton.addEventListener( 'click', onAccept );
-    cancelButton.addEventListener( 'click', onCancel );
-    closeWindowButton.addEventListener( 'click', this.toggleDiv );
+  var onAcceptPrintToPaper = function () {
+    acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
+    Scrive.Popup.toggleDiv();
+    window.print();
+    Scrive.Mixpanel.track( "Print to paper accept" );
+  };
+  var onCancelPrintToPaper = function () {
+    cancelButton.removeEventListener( 'click', onCancelPrintToPaper );
+    closeWindowButton.removeEventListener( 'click', onCancelPrintToPaper );
+    Scrive.Popup.toggleDiv();
+    Scrive.Mixpanel.track( "Print to paper cancel", {}, function () {;
+    } );
   };
 
   this.askPrintToPaper = function () {
@@ -236,21 +282,10 @@ Scrive.Popup = new function () {
 
     spacer.appendChild( popup );
 
-    var onAccept = function () {
-      Scrive.Popup.toggleDiv();
-      window.print();
-      Scrive.Mixpanel.track( "Print to paper accept" );
-      acceptButton.removeEventListener( 'click', onAccept );
-    };
-    var onCancel = function () {
-      Scrive.Popup.toggleDiv();
-      Scrive.Mixpanel.track( "Print to paper cancel", {}, function () {;
-      } );
-    };
 
-    acceptButton.addEventListener( 'click', onAccept );
-    cancelButton.addEventListener( 'click', onCancel );
-    closeWindowButton.addEventListener( 'click', this.toggleDiv );
+    acceptButton.addEventListener( 'click', onAcceptPrintToPaper );
+    cancelButton.addEventListener( 'click', onCancelPrintToPaper );
+    closeWindowButton.addEventListener( 'click', onCancelPrintToPaper );
   };
 
   var dots = 3;
@@ -286,28 +321,32 @@ Scrive.Popup = new function () {
     }
   };
 
-  var uploadingPDFInterval = null;
   this.uploadingPDF = function () {
     acceptButton.className += " is-inactive";
     cancelButton.style.display = "none";
     directUploadButton.style.display = "none";
 
-    this.updateWaitingButtonText();
+    //this.updateWaitingButtonText();
     uploadingPDFInterval = setInterval( this.updateWaitingButtonText, 1000 );
+  };
+
+  var onAcceptError = function () {
+    acceptButton.removeEventListener( 'click', onAcceptError );
+    Scrive.Popup.toggleDiv();
   };
 
   this.errorCallback = function ( errorData ) {
     showError( modalContent, errorData );
 
-    clearInterval( uploadingPDFInterval );
+    if (uploadingPDFInterval) {
+      clearInterval(uploadingPDFInterval);
+      Scrive.Popup.clearDots();
+    }
+
     cancelButton.style.display = "none";
     directUploadButton.style.display = "none";
     acceptButton.className = "scrive_button scrive_button-green scrive_float-right";
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "ok" );
-    var onAccept = function () {
-      acceptButton.removeEventListener( 'click', onAccept );
-      window.close();
-    };
-    acceptButton.addEventListener( 'click', onAccept );
+    acceptButton.addEventListener( 'click', onAcceptError );
   };
 };

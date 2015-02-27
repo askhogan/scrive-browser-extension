@@ -26,6 +26,23 @@ module.exports = function(grunt) {
                  "chrome-scrive-extension/chrome/ScriveChromeInit.js"],
             dest: 'chrome-scrive-extension/ScriveChromeContentScriptAll.js'
           },
+          ScriveChromeContentScriptAllUpdate: {
+            src:["chrome-scrive-extension/common/ScriveMain.js",
+              "chrome-scrive-extension/common/ScrivePlatform.js",
+              "chrome-scrive-extension/common/ScriveLogUtils.js",
+              "chrome-scrive-extension/chrome/ScriveChromeLogger.js",
+              "chrome-scrive-extension/chrome/ScriveChromei18n.js",
+              "chrome-scrive-extension/chrome/ScriveChromeLocalStore.js",
+              "chrome-scrive-extension/chrome/ScriveChromeBrowserUtils.js",
+              "chrome-scrive-extension/chrome/ScriveChromeHttpRequest.js",
+              "chrome-scrive-extension/common/ScriveContentScript.js",
+              "chrome-scrive-extension/libs/enc-base64.js",
+              "chrome-scrive-extension/libs/mixpanel_init.js",
+              "chrome-scrive-extension/show_error.js",
+              "chrome-scrive-extension/common/ScrivePopup.js",
+              "chrome-scrive-extension/chrome/ScriveChromeInitUpdate.js"],
+            dest: 'chrome-scrive-extension/ScriveChromeContentScriptAllUpdate.js'
+          },
           ScriveIEContentScriptAll: {
             src:["chrome-scrive-extension/common/ScriveMain.js",
               "chrome-scrive-extension/common/ScrivePlatform.js",

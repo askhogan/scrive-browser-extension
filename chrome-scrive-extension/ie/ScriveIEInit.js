@@ -2,3 +2,5 @@
 //Scrive.IE.Logger.fbl=true;  // turns-on FireBug console
 
 Scrive.Main.init();
+//Added to make IE happy
+Scrive.Popup.toggleDivBookmarklet();
