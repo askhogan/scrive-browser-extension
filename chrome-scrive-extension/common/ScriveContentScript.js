@@ -175,6 +175,9 @@ Scrive.ContentScript = new function () {
     Scrive.LogUtils.log( "Sending PDF data to: " + printer_url );
     options.method = "PUT";
 
+    options.headers = new Object();
+    options.headers[ "X-P2ES-Version" ] = Scrive.Platform.BrowserUtils.getExtensionVersion();
+
     if ( clientId + "" != "" && clientSecret + "" != "" && tokenId + "" != "" && tokenSecret + "" != "" ) {
       var oauthComponents = [
         "oauth_signature_method=\"PLAINTEXT\"",
@@ -185,7 +188,6 @@ Scrive.ContentScript = new function () {
 
       var oauthHeader = "OAuth " + oauthComponents.join( "," );
 
-      options.headers = new Object();
       options.headers[ "Authorization" ] = oauthHeader;
     }
     //We need to pass url for IE extension

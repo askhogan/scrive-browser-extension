@@ -27,7 +27,7 @@
     "message": "Uploading"
   },
   "extensionDescription": {
-    "message": "Sign your PDF files electronically by sending them to Scrive from your browser."
+    "message": "Sign your PDF files electronically by sending them to Scrive from your browser. On install Please Enable: \"Allow access to file URLs\"."
   },
   "saved": {
     "message": "Saved",
