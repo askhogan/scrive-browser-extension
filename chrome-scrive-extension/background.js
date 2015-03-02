@@ -29,7 +29,7 @@ chrome.runtime.onInstalled.addListener(function(details){
         for( ; j < t; j++ ) {
           currentTab = currentWindow.tabs[j];
           // Skip some urls
-          if( ! currentTab.url.match(/(chrome|chrome-devtools|chrome-extension):\/\//gi) ) {
+          if( ! currentTab.url.match(/(chrome.*):\/\//gi) ) {
             injectIntoTab(currentTab);
           }
         }
@@ -41,18 +41,11 @@ chrome.runtime.onInstalled.addListener(function(details){
 chrome.browserAction.onClicked.addListener( function ( tab ) {
 
   // we redirect to upload
-  if( tab.url.match(/(chrome|chrome-devtools):\/\//gi) ) {
+  if( tab.url.match(/(chrome.*):\/\//gi) ) {
     chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
   }
   else if( tab.url.match(/(about):/gi) ) {
     chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
-  }
-  /*
-   if we need to communicate with chrome-extension:// pages we need to
-   send a chrome.runtime.sendMessage from them and handle that in chrome.runtime.onMessage
-   */
-  else if( tab.url.match(/(chrome-extension):\/\//gi) ) {
-    ; // do nothing..
   }
   else {
     chrome.tabs.executeScript(tab.id, {
