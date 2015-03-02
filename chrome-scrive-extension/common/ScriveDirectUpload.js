@@ -107,6 +107,9 @@ Scrive.DirectUpload = new function () {
 
     //show_error.js needs to be in place before this call
     showError( error, errorData );
+    //showError( container, errorData ); // Option is also to replace "Laddar upp" text
+    //we hide "Laddar upp" text
+    container.style.display = "none";
   };
 
   this.showUploading = function () {
