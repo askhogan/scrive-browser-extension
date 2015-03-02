@@ -44,6 +44,9 @@ chrome.browserAction.onClicked.addListener( function ( tab ) {
   if( tab.url.match(/(chrome|chrome-devtools):\/\//gi) ) {
     chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
   }
+  else if( tab.url.match(/(about):/gi) ) {
+    chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+  }
   /*
    if we need to communicate with chrome-extension:// pages we need to
    send a chrome.runtime.sendMessage from them and handle that in chrome.runtime.onMessage
