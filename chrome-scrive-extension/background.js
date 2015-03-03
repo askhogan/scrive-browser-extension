@@ -47,6 +47,19 @@ chrome.browserAction.onClicked.addListener( function ( tab ) {
   else if( tab.url.match(/(about):/gi) ) {
     chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
   }
+  else if( tab.url.match(/(file):\/\//gi) ) {
+
+    chrome.extension.isAllowedFileSchemeAccess(function(isAllowedAccess) {
+      if (isAllowedAccess) {
+        chrome.tabs.executeScript(tab.id, {
+          code: "Scrive.Popup.toggleDivBookmarklet()"
+        });
+      }
+      else {
+        chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+      }
+    });
+  }
   else {
     chrome.tabs.executeScript(tab.id, {
       code: "Scrive.Popup.toggleDivBookmarklet()"
