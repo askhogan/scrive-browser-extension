@@ -6,8 +6,7 @@
     "grunt-contrib-connect": "~0.8.0",
     "busboy": "~0.2.8",
     "grunt-contrib-concat": "~0.5.0",
-    "node-rsa":"~0.2.13",
-    "grunt-crx": "~1.0.3"
+    "grunt-contrib-compress": "~0.13.0"
   },
   "dependencies": {},
   "engines": {

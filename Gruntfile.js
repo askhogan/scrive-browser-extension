@@ -61,15 +61,16 @@ module.exports = function(grunt) {
             dest: 'chrome-scrive-extension/ScriveIEContentScriptAll.js'
           }
         },
-        crx: {
-            ScriveCrx: {
-                "src": ["chrome-scrive-extension/**/*"],
-                "options": {
-                  "privateKey": "chrome-scrive-extension.pem"
-                },
-                "zipDest": "output/<%= pkg.name %>-<%= manifest.version %>.zip",
-                "dest": "output/<%= pkg.name %>-<%= manifest.version %>.crx"
-            }
+        // make a zipfile
+        compress: {
+          main: {
+            options: {
+              archive: "output/<%= pkg.name %>-<%= manifest.version %>.zip"
+            },
+            files: [
+              {expand: true, cwd: 'chrome-scrive-extension/', src: ['**'], dest: '.'} // makes all src relative to cwd
+            ]
+          }
         },
         connect: {
             IEServer: {
@@ -137,7 +138,7 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('default', ['concat','crx']);
+    grunt.registerTask('default', ['concat','compress']);
 };
 
 
