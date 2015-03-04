@@ -118,7 +118,7 @@ Scrive.DirectUpload = new function () {
     //        overlay.classList.remove('visible');
     overlay.className = overlay.className.replace( / visible/g, "" );
 
-    container.innerHTML = '<h1 class="uploading">Laddar upp</h1>';
+    container.innerHTML = '<h1 class="uploading">' +Scrive.Platform.i18n.getMessage( "upload" )+ '</h1>';
     var spinner = new Spinner( {
       lines: 9,
       length: 3,
