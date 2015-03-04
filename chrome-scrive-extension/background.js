@@ -56,7 +56,7 @@ chrome.browserAction.onClicked.addListener( function ( tab ) {
         });
       }
       else {
-        alert('Please "Allow access to file URLs" in the following screen.');
+        alert(chrome.i18n.getMessage( "allowFileURLsMessage" ));
         chrome.tabs.create({
           url: 'chrome://extensions/?id=' + chrome.runtime.id
         });
