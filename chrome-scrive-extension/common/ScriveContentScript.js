@@ -158,6 +158,8 @@ Scrive.ContentScript = new function () {
             window.location.href = openBrowser;
           } else {
             window.open( openBrowser, '_blank' );
+            if (Scrive.Popup)
+              Scrive.Popup.toggleDiv();
           }
         } else {
           // Is this still needed?

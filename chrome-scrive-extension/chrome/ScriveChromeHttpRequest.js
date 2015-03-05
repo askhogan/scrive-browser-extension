@@ -96,7 +96,7 @@ Scrive.CH.HttpRequest = new function () {
       if ( getpdfXHR.status == 0 || ( getpdfXHR.status >= 200 && getpdfXHR.status <= 299 ) ) {
         request.data = getpdfXHR.response;
         //Open signing status in the same page!
-        Scrive.ContentScript.uploadPDFData( request, errorCallback, true );
+        Scrive.ContentScript.uploadPDFData( request, errorCallback, false );
       } else {
         Scrive.ContentScript.errorCallbackFromXMLHttpRequest( request.url, errorCallback, this );
       }
