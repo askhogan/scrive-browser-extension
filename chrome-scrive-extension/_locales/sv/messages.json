@@ -27,7 +27,7 @@
     "message": "Laddar upp"
   },
   "extensionDescription": {
-    "message": "Signera dina PDF-filer elektroniskt genom att skicka dem till Scrive direkt från din webbläsare. Å installera Vänligen aktivera: \"Allow tillgång till filen URLs\""
+    "message": "Signera dina PDF-filer elektroniskt genom att skicka dem till Scrive direkt från din webbläsare."
   },
   "allowFileURLsMessage": {
     "message": "Vänligen \"Tillåt åtkomst till webbadresser i filen\" i följande skärm."
