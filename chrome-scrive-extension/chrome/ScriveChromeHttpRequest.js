@@ -107,7 +107,7 @@ Scrive.CH.HttpRequest = new function () {
     getpdfXHR.open( request.method, request.url );
     getpdfXHR.responseType = "blob";
     if ( request.formData ) {
-      getpdfXHR.send( uploadDataToFormData( request.formData ) );
+      getpdfXHR.send( Scrive.ContentScript.uploadDataToFormData( request.formData ) );
     } else {
       getpdfXHR.send();
     }
