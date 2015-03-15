@@ -38,7 +38,7 @@ Scrive.Main = new function () {
       Scrive.LogUtils.profileOn = false;
       Scrive.LogUtils.infoOn = true;
 
-      mainStart = new Date().getTime();
+      var mainStart = new Date().getTime();
 
       //Initialize platform specific stuff
       if ( Scrive.Platform && Scrive.Platform.init )
@@ -51,6 +51,9 @@ Scrive.Main = new function () {
         Scrive.Options.init();
       if ( Scrive.DirectUpload && Scrive.DirectUpload.init )
         Scrive.DirectUpload.init();
+
+      // we add property to the main document to signal that Scrive was loaded and initialized
+      document.documentElement.setAttribute( '_scriveloaded' , true );
 
       Scrive.LogUtils.info( "Scrive.Main.init Total time " + ( new Date().getTime() - mainStart ) + "ms" );
 

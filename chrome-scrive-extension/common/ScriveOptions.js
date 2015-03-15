@@ -1,6 +1,6 @@
 // Used only in options.html to initialize current options and save when pressing the save button.
 
-Scrive.jsBase = document.URL.substring( 0, document.URL.lastIndexOf( '/' ) ) + "/../"
+Scrive.jsBase = document.URL.substring( 0, document.URL.lastIndexOf( '/' ) ) + "/../";
 
 Scrive.Options = new function () {
   var form = document.querySelector( '#form' );
@@ -147,7 +147,7 @@ Scrive.Options = new function () {
   this.loader = new function () {
 
     this.domain = Scrive.jsBase;
-    this.initScript = 'common/ScriveOptionsInit.js';
+    //this.initScript = 'common/ScriveOptionsInit.js';
 
     this.scripts = [
       'common/ScriveLogUtils.js',
@@ -171,7 +171,7 @@ Scrive.Options = new function () {
         'ie/ScriveIEi18n.js',
         'ie/ScriveIELocalStore.js',
         'ie/ScriveIEHttpRequest.js',
-        'ie/ScriveIEBrowserUtils.js',
+        'ie/ScriveIEBrowserUtils.js'
       ] );
     }
 
