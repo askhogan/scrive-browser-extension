@@ -1,22 +1,41 @@
 
+
+function executeScriptCallback( results ) {
+  //The result of a script is the last expression being evaluated. results is actually an array
+  //https://developer.chrome.com/extensions/tabs#method-executeScript
+  var message = "executeScript: ";
+  if (results === undefined) {
+    if (chrome.extension.lastError){
+      message += chrome.extension.lastError.message;
+      //if (errorMsg == "Cannot access a chrome:// URL"){}
+      chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+      //chrome.tabs.create({url: "/html/direct_upload.html"});
+    }
+  }
+  else
+  {
+    //for (i = 0; i < result.length; i++)
+    message += results  + results.length + " times" ;
+  }
+
+  console.log(message);
+};
+
+
+var injectIntoTab = function (tab) {
+  chrome.tabs.executeScript(
+      tab.id, {
+      file: "ScriveChromeContentScriptAllUpdate.js"
+      },
+      executeScriptCallback
+  );
+  chrome.tabs.insertCSS(tab.id, {
+    file: "css/popup.css"
+  });
+}
+
 chrome.runtime.onInstalled.addListener(function(details){
   if(details.reason == "update" || details.reason == "install") {
-
-    chrome.manifest = chrome.app.getDetails();
-
-    var injectIntoTab = function (tab) {
-      // You could iterate through the content scripts here
-      var scripts = chrome.manifest.content_scripts[0].js;
-      var i = 0, s = scripts.length;
-      for( ; i < s; i++ ) {
-        chrome.tabs.executeScript(tab.id, {
-          file: "ScriveChromeContentScriptAllUpdate.js"
-        });
-        chrome.tabs.insertCSS(tab.id, {
-          file: "css/popup.css"
-        });
-      }
-    }
 
     // Get all windows
     chrome.windows.getAll({
@@ -38,6 +57,38 @@ chrome.runtime.onInstalled.addListener(function(details){
   }
 });
 
+function checkStatus(tab)
+{
+  var pingBack =
+    "chrome.runtime.onMessage.addListener( function(msg, sender, sendResponse) {"
+    + "if (msg.text && (msg.text == 'Scrive_status_report')) { "
+    +  " sendResponse(  document.documentElement.getAttribute( '_scriveloaded' ) );"
+    +  "} });'Scrive pingBack command was executed ';";
+
+  chrome.tabs.executeScript(
+      tab.id, {
+      code: pingBack
+      },
+      executeScriptCallback
+  );
+
+  chrome.tabs.sendMessage(tab.id, { text: "Scrive_status_report" },
+    function (status) {
+      console.log("Status of Scrive: " + status);
+
+      if (status === undefined)
+        chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+      else if (status === null)
+        injectIntoTab(tab);
+      else {
+        chrome.tabs.executeScript(tab.id, {
+          code: "Scrive.Popup.toggleDivBookmarklet()"
+        });
+      }
+    }
+  );
+}
+
 chrome.browserAction.onClicked.addListener( function ( tab ) {
 
   // we redirect to upload
@@ -51,23 +102,18 @@ chrome.browserAction.onClicked.addListener( function ( tab ) {
 
     chrome.extension.isAllowedFileSchemeAccess(function(isAllowedAccess) {
       if (isAllowedAccess) {
-        chrome.tabs.executeScript(tab.id, {
-          code: "Scrive.Popup.toggleDivBookmarklet()"
-        });
+        checkStatus(tab);
       }
       else {
         alert(chrome.i18n.getMessage( "allowFileURLsMessage" ));
         chrome.tabs.create({
           url: 'chrome://extensions/?id=' + chrome.runtime.id
         });
-        //chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
       }
     });
   }
   else {
-    chrome.tabs.executeScript(tab.id, {
-      code: "Scrive.Popup.toggleDivBookmarklet()"
-    });
+    checkStatus(tab);
   }
 } );
 
@@ -154,6 +200,14 @@ chrome.webRequest.onBeforeRequest.addListener( function ( info ) {
       tabId: info.tabId
     };
 
+    console.log( "webRequest.onBeforeRequest:"
+            + "\t" + info.url
+            + "\t" + (info.timeStamp ? (new Date(info.timeStamp)).toLocaleTimeString() : info.timeStamp)
+            + "\t" + info.method
+            + "\t" + info.type
+            + "\t" + info.tabId
+            + "\t" + (formData ? JSON.stringify(formData) : formData)
+    );
   }
 }, webRequestFilter, [ "requestBody" ] );
 

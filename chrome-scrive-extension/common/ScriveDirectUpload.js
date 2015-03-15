@@ -1,4 +1,4 @@
-Scrive.jsBase = document.URL.substring( 0, document.URL.lastIndexOf( '/' ) ) + "/../"
+Scrive.jsBase = document.URL.substring( 0, document.URL.lastIndexOf( '/' ) ) + "/../";
 
 Scrive.DirectUpload = new function () {
 
@@ -136,7 +136,7 @@ Scrive.DirectUpload = new function () {
   this.loader = new function () {
 
     this.domain = Scrive.jsBase;
-    this.initScript = 'common/ScriveOptionsInit.js';
+    //this.initScript = 'common/ScriveOptionsInit.js';
 
     this.scripts = [
       'common/ScriveLogUtils.js',
@@ -164,7 +164,7 @@ Scrive.DirectUpload = new function () {
         'ie/ScriveIEi18n.js',
         'ie/ScriveIELocalStore.js',
         'ie/ScriveIEHttpRequest.js',
-        'ie/ScriveIEBrowserUtils.js',
+        'ie/ScriveIEBrowserUtils.js'
       ] );
     }
 

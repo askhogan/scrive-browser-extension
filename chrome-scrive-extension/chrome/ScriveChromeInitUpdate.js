@@ -7,3 +7,5 @@ Scrive.jsBase = chrome.extension.getURL( '' ).substring( 0, chrome.extension.get
 
 Scrive.Main.init();
 
+// Added for executeScriptCallback in background.js
+'ScriveChromeInitUpdate.js was executed ';
