@@ -10,7 +10,8 @@ module.exports = function(grunt) {
         manifest: grunt.file.readJSON('chrome-scrive-extension/manifest.json'),
         concat: {
           ScriveChromeContentScriptAll: {
-            src:["chrome-scrive-extension/common/ScriveMain.js",
+            src:["chrome-scrive-extension/oauth.js",
+                 "chrome-scrive-extension/common/ScriveMain.js",
                  "chrome-scrive-extension/common/ScrivePlatform.js",
                  "chrome-scrive-extension/common/ScriveLogUtils.js",
                  "chrome-scrive-extension/chrome/ScriveChromeLogger.js",
@@ -27,7 +28,8 @@ module.exports = function(grunt) {
             dest: 'chrome-scrive-extension/ScriveChromeContentScriptAll.js'
           },
           ScriveChromeContentScriptAllUpdate: {
-            src:["chrome-scrive-extension/common/ScriveMain.js",
+            src:["chrome-scrive-extension/oauth.js",
+              "chrome-scrive-extension/common/ScriveMain.js",
               "chrome-scrive-extension/common/ScrivePlatform.js",
               "chrome-scrive-extension/common/ScriveLogUtils.js",
               "chrome-scrive-extension/chrome/ScriveChromeLogger.js",
@@ -44,7 +46,8 @@ module.exports = function(grunt) {
             dest: 'chrome-scrive-extension/ScriveChromeContentScriptAllUpdate.js'
           },
           ScriveIEContentScriptAll: {
-            src:["chrome-scrive-extension/common/ScriveMain.js",
+            src:["chrome-scrive-extension/oauth.js",
+              "chrome-scrive-extension/common/ScriveMain.js",
               "chrome-scrive-extension/common/ScrivePlatform.js",
               "chrome-scrive-extension/common/ScriveLogUtils.js",
               "chrome-scrive-extension/ie/ScriveIELogger.js",
