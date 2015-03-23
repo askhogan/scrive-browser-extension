@@ -187,9 +187,29 @@ Scrive.Popup = new function () {
     }
   };
 
+  this.verifySettings = function () {
+
+    var message = "settings_check=1";
+
+    if (!Scrive.Main.dataPrintUrl) message += "&dataPrintUrl=false";
+    if (!Scrive.Main.dataOauth)    message += "&dataOauth=false";
+    if (!Scrive.Main.dataProfile)  message += "&dataProfile=false";
+
+    if ( !Scrive.Main.dataPrintUrl || !Scrive.Main.dataOauth ) {
+      alert("You will be re-directed to Scrive OPTIONS page");
+      window.open(Scrive.jsBase + "/html/options.html?" + message,'_blank');
+    }
+    else
+      return true;
+
+    return false;
+  };
+
   this.toggleDivBookmarklet = function () {
-    this.checkForPDF();
-    this.toggleDiv();
+    if ( this.verifySettings() ) {
+      this.checkForPDF();
+      this.toggleDiv();
+    }
   };
 
   this.toggleDiv = function () {
