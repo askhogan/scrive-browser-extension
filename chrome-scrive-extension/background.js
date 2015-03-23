@@ -124,6 +124,26 @@ chrome.runtime.onMessage.addListener( function ( request, sender, sendResponse )
     savedData: savedDataForRequests[ request.url ]
   } );
 
+  if ( request.type == "savedHTMLPage" ) {
+    chrome.tabs.query(
+        {currentWindow: true, active: true},
+        function(tabArray) {
+          if (tabArray && tabArray[0]) {
+            chrome.pageCapture.saveAsMHTML({tabId: tabArray[0].id}, function (mhtml) {
+
+              console.log(mhtml);
+
+              //remember to free this url resource with - window.webkitURL.revokeObjectURL(url);
+              var url = window.webkitURL.createObjectURL(mhtml);
+              console.log(url);
+
+              chrome.tabs.sendMessage(tabArray[0].id, { type: 'savedHTMLPage', savedData: url });
+
+            });
+          }
+        }
+    );
+  }
 } );
 
 

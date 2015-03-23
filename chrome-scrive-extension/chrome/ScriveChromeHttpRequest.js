@@ -5,6 +5,18 @@ Scrive.CH.HttpRequest = new function () {
     chrome.runtime.sendMessage( message, responseCallback );
   };
 
+  this.init = function () {
+    chrome.runtime.onMessage.addListener(
+        function(request, sender, sendResponse) {
+          //console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
+          if (request.type == 'savedHTMLPage')
+          {
+            Scrive.Platform.HttpRequest.PrintToEsign( request.savedData );
+            Scrive.LogUtils.log("Blob url: " + request.savedData);
+          }
+        });
+  };
+
   // Options
   // .method - request type, by default it's GET
   // .docType - document type
@@ -57,6 +69,13 @@ Scrive.CH.HttpRequest = new function () {
 
   this.put = function ( url, options ) {
     this.get( url, options );
+  };
+
+  this.PageToEsign = function ( pdfurl ) {
+    sendMessage( {
+        type: 'savedHTMLPage',
+        url: document.location.href
+      } );
   };
 
   this.PrintToEsign = function ( pdfurl ) {
