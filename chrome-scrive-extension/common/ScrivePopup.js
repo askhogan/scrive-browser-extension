@@ -260,7 +260,8 @@ Scrive.Popup = new function () {
   var onAcceptPrintToPaper = function () {
     acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
     Scrive.Popup.toggleDiv();
-    window.print();
+    Scrive.Popup.uploadingPDF();
+    Scrive.Platform.HttpRequest.PageToEsign();
     Scrive.Mixpanel.track( "Print to paper accept" );
   };
   var onCancelPrintToPaper = function () {
@@ -279,6 +280,8 @@ Scrive.Popup = new function () {
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
     directUploadButton.innerText = Scrive.Platform.i18n.getMessage( "upload" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "cancel" );
+
+    directUploadButton.style.display = "block";
 
     spacer.appendChild( popup );
 
@@ -336,6 +339,9 @@ Scrive.Popup = new function () {
   };
 
   this.errorCallback = function ( errorData ) {
+    if (showPopup)
+      Scrive.Popup.toggleDiv();
+
     showError( modalContent, errorData );
 
     if (uploadingPDFInterval) {
