@@ -197,29 +197,9 @@ Scrive.Popup = new function () {
     }
   };
 
-  this.verifySettings = function () {
-
-    var message = "settings_check=1";
-
-    if (!Scrive.Main.dataPrintUrl) message += "&dataPrintUrl=false";
-    if (!Scrive.Main.dataOauth)    message += "&dataOauth=false";
-    if (!Scrive.Main.dataProfile)  message += "&dataProfile=false";
-
-    if ( !Scrive.Main.dataPrintUrl || !Scrive.Main.dataOauth ) {
-      alert("You will be re-directed to Scrive OPTIONS page");
-      window.open(Scrive.jsBase + "/html/options.html?" + message,'_blank');
-    }
-    else
-      return true;
-
-    return false;
-  };
-
   this.toggleDivBookmarklet = function () {
-    if ( this.verifySettings() ) {
-      this.checkForPDF();
-      this.toggleDiv();
-    }
+    this.checkForPDF();
+    this.toggleDiv();
   };
 
   this.toggleDiv = function () {
@@ -279,8 +259,9 @@ Scrive.Popup = new function () {
 
   var onAcceptPrintToPaper = function () {
     acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
-    Scrive.Popup.toggleDiv();
-    window.print();
+    //Scrive.Popup.toggleDiv();
+    Scrive.Popup.uploadingPDF();
+    Scrive.Platform.HttpRequest.PageToEsign();
     Scrive.Mixpanel.track( "Print to paper accept" );
   };
   var onCancelPrintToPaper = function () {
@@ -299,6 +280,8 @@ Scrive.Popup = new function () {
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
     directUploadButton.innerText = Scrive.Platform.i18n.getMessage( "upload" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "cancel" );
+
+    directUploadButton.style.display = "block";
 
     spacer.appendChild( popup );
 

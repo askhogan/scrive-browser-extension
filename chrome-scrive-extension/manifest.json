@@ -32,6 +32,7 @@
     "webRequest", "webRequestBlocking",
     "tabs",
     "<all_urls>",
+    "pageCapture",
     "storage"
   ],
   "options_page": "html/options.html"
