@@ -164,40 +164,6 @@ var OAuth = ( ( function () {
   };
 
   /*
-   * This function executes first half of OAuth handshake. First asks
-   * for temporary credentials, then redirects to confirm user
-   * acceptance of privileges. This functionreturns but in the
-   * background eventually it should redirect to authorize_endpoint.
-   */
-  function getprofile( params ) {
-    var options = new Object();
-
-    var endpoint = params.endpoint;
-
-    if ( params.privileges ) {
-      endpoint = endpoint + "?privileges=" + encodeURIComponent( params.privileges );
-    }
-
-    options.responseType = 'x-www-form-urlencoded';
-    options.onerror = params.onerror || oauthOnError;
-    options.onload = function ( rq ) {
-      if ( ( rq.status >= 200 && rq.status <= 299 ) || rq.status < 100 ) {
-        Scrive.LogUtils.debug( "responseText: " + rq.responseText );
-        params.onload( rq.responseText );
-      } else {
-        ( params.onerror || oauthOnError )( rq );
-      }
-    };
-
-    options.headers = new Object();
-    options.headers[ "Authorization" ] = authorizationHeader( params );
-
-    Scrive.LogUtils.log( authorizationHeader( params ) );
-
-    Scrive.Platform.HttpRequest.get( endpoint, options );
-  };
-
-  /*
    * All in one magic. Naviating to this page triggers an OAuth
    * handshake.  This page serves also the double purpose of receving
    * incoming handshake confirmation.  Then it puts data in local
@@ -228,7 +194,6 @@ var OAuth = ( ( function () {
 
   return {
     "authorize": authorize,
-    "getprofile": getprofile,
     "handleCallback": handleCallback,
     "authorizationHeader": authorizationHeader
   };
