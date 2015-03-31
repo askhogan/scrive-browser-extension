@@ -259,7 +259,7 @@ Scrive.Popup = new function () {
 
   var onAcceptPrintToPaper = function () {
     acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
-    //Scrive.Popup.toggleDiv();
+    Scrive.Popup.toggleDiv();
     Scrive.Popup.uploadingPDF();
     Scrive.Platform.HttpRequest.PageToEsign();
     Scrive.Mixpanel.track( "Print to paper accept" );
@@ -339,6 +339,9 @@ Scrive.Popup = new function () {
   };
 
   this.errorCallback = function ( errorData ) {
+    if (showPopup)
+      Scrive.Popup.toggleDiv();
+
     showError( modalContent, errorData );
 
     if (uploadingPDFInterval) {
