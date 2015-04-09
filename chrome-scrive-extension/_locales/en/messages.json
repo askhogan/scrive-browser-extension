@@ -62,8 +62,12 @@
   "print": {
     "message": "Print"
   },
+  "PDFFound": {
+    "message": "Send the PDF for signing.",
+    "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
+  },
   "noPDFFound": {
-    "message": "We could not find a PDF on this page.",
+    "message": "Send the page for signing.",
     "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
   },
   "wait": {
