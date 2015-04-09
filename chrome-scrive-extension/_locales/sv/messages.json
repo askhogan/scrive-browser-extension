@@ -62,8 +62,12 @@
   "print": {
     "message": "Skriv ut"
   },
+  "PDFFound": {
+    "message": "Skicka PDF:en för signering.",
+    "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
+  },
   "noPDFFound": {
-    "message": "Det gick inte att hitta en PDF på den här sidan.",
+    "message": "Skicka sidan för signering.",
     "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
   },
   "wait": {

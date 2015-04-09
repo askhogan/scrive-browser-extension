@@ -7,7 +7,7 @@ Scrive.Popup = new function () {
   var acceptButton;
   var cancelButton;
   var closeWindowButton;
-  var directUploadButton;
+//  var directUploadButton;
 
   var onAccept;
   var onCancel;
@@ -61,9 +61,9 @@ Scrive.Popup = new function () {
     cancelButton.style = "display: block;";
     footer.appendChild(cancelButton);
 
-    directUploadButton = document.createElement( "a" );
-    directUploadButton.className = 'scrive_float-left scrive_direct-upload scrive_button scrive_button-gray';
-    footer.appendChild(directUploadButton);
+//    directUploadButton = document.createElement( "a" );
+//    directUploadButton.className = 'scrive_float-left scrive_direct-upload scrive_button scrive_button-gray';
+//    footer.appendChild(directUploadButton);
 
     acceptButton = document.createElement( "a" );
     acceptButton.className = 'scrive_float-right scrive_accept green scrive_button scrive_button-green';
@@ -100,12 +100,12 @@ Scrive.Popup = new function () {
 
     this.populatePopup(popup);
 
-    onDirectUpload = function () {
-      window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
-      //directUploadButton.removeEventListener('click', onDirectUpload);
-    };
+//    onDirectUpload = function () {
+//      window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
+//      //directUploadButton.removeEventListener('click', onDirectUpload);
+//    };
 
-    directUploadButton.addEventListener('click', onDirectUpload);
+//    directUploadButton.addEventListener('click', onDirectUpload);
 
     var onOptions = function () {
       window.location.href = Scrive.jsBase + "/html/options.html";
@@ -243,12 +243,13 @@ Scrive.Popup = new function () {
 
   this.askPrintToEsign = function () {
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
-    modalContent.style.display = "none";
+//    modalContent.style.display = "none";
+    modalContent.innerHTML = Scrive.Platform.i18n.getMessage( "PDFFound" );
     //Options removed for chrome - add for IE
     //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "no" );
-    directUploadButton.style.display = "none";
+//    directUploadButton.style.display = "none";
 
     spacer.appendChild( popup );
 
@@ -275,13 +276,16 @@ Scrive.Popup = new function () {
   this.askPrintToPaper = function () {
     //Options removed for chrome - add for IE
     //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
-    modalTitle.innerText = Scrive.Platform.i18n.getMessage( "printToPaperQuestion" );
+//    modalTitle.innerText = Scrive.Platform.i18n.getMessage( "printToPaperQuestion" );
+    modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
     modalContent.innerHTML = Scrive.Platform.i18n.getMessage( "noPDFFound" );
-    acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
-    directUploadButton.innerText = Scrive.Platform.i18n.getMessage( "upload" );
-    cancelButton.innerText = Scrive.Platform.i18n.getMessage( "cancel" );
+//    acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
+    acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
+//    directUploadButton.innerText = Scrive.Platform.i18n.getMessage( "upload" );
+//    cancelButton.innerText = Scrive.Platform.i18n.getMessage( "cancel" );
+    cancelButton.innerText = Scrive.Platform.i18n.getMessage( "no" );
 
-    directUploadButton.style.display = "block";
+//    directUploadButton.style.display = "block";
 
     spacer.appendChild( popup );
 
@@ -327,7 +331,7 @@ Scrive.Popup = new function () {
   this.uploadingPDF = function () {
     acceptButton.className += " is-inactive";
     cancelButton.style.display = "none";
-    directUploadButton.style.display = "none";
+//    directUploadButton.style.display = "none";
 
     //this.updateWaitingButtonText();
     uploadingPDFInterval = setInterval( this.updateWaitingButtonText, 1000 );
@@ -350,7 +354,7 @@ Scrive.Popup = new function () {
     }
 
     cancelButton.style.display = "none";
-    directUploadButton.style.display = "none";
+//    directUploadButton.style.display = "none";
     acceptButton.className = "scrive_button scrive_button-green scrive_float-right";
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "ok" );
     acceptButton.addEventListener( 'click', onAcceptError );
