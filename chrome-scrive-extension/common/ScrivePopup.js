@@ -7,7 +7,6 @@ Scrive.Popup = new function () {
   var acceptButton;
   var cancelButton;
   var closeWindowButton;
-//  var directUploadButton;
 
   var onAccept;
   var onCancel;
@@ -61,10 +60,6 @@ Scrive.Popup = new function () {
     cancelButton.style = "display: block;";
     footer.appendChild(cancelButton);
 
-//    directUploadButton = document.createElement( "a" );
-//    directUploadButton.className = 'scrive_float-left scrive_direct-upload scrive_button scrive_button-gray';
-//    footer.appendChild(directUploadButton);
-
     acceptButton = document.createElement( "a" );
     acceptButton.className = 'scrive_float-right scrive_accept green scrive_button scrive_button-green';
     footer.appendChild(acceptButton);
@@ -99,13 +94,6 @@ Scrive.Popup = new function () {
     popup.id = "scrive_popup";
 
     this.populatePopup(popup);
-
-//    onDirectUpload = function () {
-//      window.open(Scrive.jsBase + "/html/direct_upload.html", '_blank');
-//      //directUploadButton.removeEventListener('click', onDirectUpload);
-//    };
-
-//    directUploadButton.addEventListener('click', onDirectUpload);
 
     var onOptions = function () {
       window.location.href = Scrive.jsBase + "/html/options.html";
@@ -213,18 +201,6 @@ Scrive.Popup = new function () {
 
   var onAcceptPrintToEsign = function () {
     acceptButton.removeEventListener( 'click', onAcceptPrintToEsign );
-    /*
-     * Here we would actually like to inspect what was saved in the
-     * request to weed out anything looking like an EMBED element but
-     * not referring to an actual PDF. Candidates are:
-     *
-     * - type attribute on embed element (but it is sometimes missing)
-     * - .pdf as extension of url (but sometimes it is not there)
-     * - Content-type: application.pdf (but sometimes it is not)
-     *
-     * Those should be probably tried only when there is more than one
-     * EMBED tag, otherwise just go with what happens to be there.
-     */
     var pdfurl = pdfs[ 0 ];
     Scrive.Popup.uploadingPDF();
     Scrive.Platform.HttpRequest.PrintToEsign( pdfurl );
@@ -243,13 +219,12 @@ Scrive.Popup = new function () {
 
   this.askPrintToEsign = function () {
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
-//    modalContent.style.display = "none";
+    modalContent.style.display = "none";
     modalContent.innerHTML = Scrive.Platform.i18n.getMessage( "PDFFound" );
     //Options removed for chrome - add for IE
     //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "no" );
-//    directUploadButton.style.display = "none";
 
     spacer.appendChild( popup );
 
@@ -260,7 +235,6 @@ Scrive.Popup = new function () {
 
   var onAcceptPrintToPaper = function () {
     acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
-    Scrive.Popup.toggleDiv();
     Scrive.Popup.uploadingPDF();
     Scrive.Platform.HttpRequest.PageToEsign();
     Scrive.Mixpanel.track( "Print to paper accept" );
@@ -274,18 +248,10 @@ Scrive.Popup = new function () {
   };
 
   this.askPrintToPaper = function () {
-    //Options removed for chrome - add for IE
-    //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
-//    modalTitle.innerText = Scrive.Platform.i18n.getMessage( "printToPaperQuestion" );
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
     modalContent.innerHTML = Scrive.Platform.i18n.getMessage( "noPDFFound" );
-//    acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
-//    directUploadButton.innerText = Scrive.Platform.i18n.getMessage( "upload" );
-//    cancelButton.innerText = Scrive.Platform.i18n.getMessage( "cancel" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "no" );
-
-//    directUploadButton.style.display = "block";
 
     spacer.appendChild( popup );
 
@@ -331,7 +297,6 @@ Scrive.Popup = new function () {
   this.uploadingPDF = function () {
     acceptButton.className += " is-inactive";
     cancelButton.style.display = "none";
-//    directUploadButton.style.display = "none";
 
     //this.updateWaitingButtonText();
     uploadingPDFInterval = setInterval( this.updateWaitingButtonText, 1000 );
@@ -343,9 +308,6 @@ Scrive.Popup = new function () {
   };
 
   this.errorCallback = function ( errorData ) {
-    if (showPopup)
-      Scrive.Popup.toggleDiv();
-
     showError( modalContent, errorData );
 
     if (uploadingPDFInterval) {
@@ -354,7 +316,6 @@ Scrive.Popup = new function () {
     }
 
     cancelButton.style.display = "none";
-//    directUploadButton.style.display = "none";
     acceptButton.className = "scrive_button scrive_button-green scrive_float-right";
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "ok" );
     acceptButton.addEventListener( 'click', onAcceptError );
