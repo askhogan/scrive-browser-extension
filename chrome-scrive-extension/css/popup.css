@@ -64,6 +64,7 @@
     font-family: Source Sans Pro,Helvetica Neue,sans-serif;
     font-size: 28px;
     line-height: 25px;
+    color:#ffffff;
     padding-top: 0;
 }
 
@@ -88,6 +89,7 @@
 
 #scrive_popup .scrive_modal-body .scrive_modal-content .scrive_body {
     padding: 20px 35px;
+    font-size: 15px;
 }
 
 /*boxises are set on scrive.com to border-box*/
