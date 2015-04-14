@@ -8,8 +8,6 @@ function executeScriptCallback( results ) {
     if (chrome.extension.lastError){
       message += chrome.extension.lastError.message;
       //if (errorMsg == "Cannot access a chrome:// URL"){}
-      chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
-      //chrome.tabs.create({url: "/html/direct_upload.html"});
     }
   }
   else
@@ -77,7 +75,7 @@ function checkStatus(tab)
       console.log("Status of Scrive: " + status);
 
       if (status === undefined)
-        chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+        ;//chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
       else if (status === null)
         injectIntoTab(tab);
       else {
@@ -91,12 +89,12 @@ function checkStatus(tab)
 
 chrome.browserAction.onClicked.addListener( function ( tab ) {
 
-  // we redirect to upload
+  // we notify user
   if( tab.url.match(/(chrome.*):\/\//gi) ) {
-    chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+    alert(chrome.i18n.getMessage( "noSigning" ));
   }
   else if( tab.url.match(/(about):/gi) ) {
-    chrome.tabs.update(tab.id, {url: "/html/direct_upload.html"});
+    alert(chrome.i18n.getMessage( "noSigning" ));
   }
   else if( tab.url.match(/(file):\/\//gi) ) {
 

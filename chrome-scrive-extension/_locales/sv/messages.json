@@ -64,10 +64,14 @@
   },
   "PDFFound": {
     "message": "Skicka PDF:en för signering.",
-    "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
+    "description": "Shown as to inform the user to start e-sign this page/document."
   },
   "noPDFFound": {
     "message": "Skicka sidan för signering.",
+    "description": "Shown as to inform the user to start e-sign this page/document."
+  },
+  "noSigning": {
+    "message": "Vi kan inte skicka denna sida för signering.",
     "description": "Shown as to inform the user why it is not possible to print to e-sign this page/document."
   },
   "wait": {
