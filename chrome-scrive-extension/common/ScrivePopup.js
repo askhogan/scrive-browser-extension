@@ -176,8 +176,6 @@ Scrive.Popup = new function () {
       closeWindowButton.removeEventListener( 'click', onCancelPrintToEsign );
 
       acceptButton.removeEventListener( 'click', onAcceptPrintToPaper );
-      cancelButton.removeEventListener( 'click', onCancelPrintToPaper );
-      closeWindowButton.removeEventListener( 'click', onCancelPrintToPaper );
 
       acceptButton.removeEventListener( 'click', onAcceptError );
 
@@ -213,13 +211,11 @@ Scrive.Popup = new function () {
     cancelButton.removeEventListener( 'click', onCancelPrintToEsign );
     closeWindowButton.removeEventListener( 'click', onCancelPrintToEsign );
     Scrive.Popup.toggleDiv();
-    Scrive.Mixpanel.track( "Print to e-sign cancel", {}, function () {;
-    } );
+    Scrive.Mixpanel.track( "Print canceled" );
   };
 
   this.askPrintToEsign = function () {
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
-    modalContent.style.display = "none";
     modalContent.innerHTML = Scrive.Platform.i18n.getMessage( "PDFFound" );
     //Options removed for chrome - add for IE
     //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
@@ -239,13 +235,6 @@ Scrive.Popup = new function () {
     Scrive.Platform.HttpRequest.PageToEsign();
     Scrive.Mixpanel.track( "Print to paper accept" );
   };
-  var onCancelPrintToPaper = function () {
-    cancelButton.removeEventListener( 'click', onCancelPrintToPaper );
-    closeWindowButton.removeEventListener( 'click', onCancelPrintToPaper );
-    Scrive.Popup.toggleDiv();
-    Scrive.Mixpanel.track( "Print to paper cancel", {}, function () {;
-    } );
-  };
 
   this.askPrintToPaper = function () {
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
@@ -257,8 +246,8 @@ Scrive.Popup = new function () {
 
 
     acceptButton.addEventListener( 'click', onAcceptPrintToPaper );
-    cancelButton.addEventListener( 'click', onCancelPrintToPaper );
-    closeWindowButton.addEventListener( 'click', onCancelPrintToPaper );
+    cancelButton.addEventListener( 'click', onCancelPrintToEsign );
+    closeWindowButton.addEventListener( 'click', onCancelPrintToEsign );
   };
 
   var dots = 3;
