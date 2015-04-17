@@ -93,7 +93,12 @@ Scrive.Popup = new function () {
     popup = document.createElement( "div" );
     popup.id = "scrive_popup";
 
-    this.populatePopup(popup);
+    var popupBorder = document.createElement( "div" );
+    popupBorder.className = 'scrive_modal-border';
+    popup.appendChild(popupBorder);
+
+    //this.populatePopup(popup);
+    this.populatePopup(popupBorder);
 
     var onOptions = function () {
       window.location.href = Scrive.jsBase + "/html/options.html";

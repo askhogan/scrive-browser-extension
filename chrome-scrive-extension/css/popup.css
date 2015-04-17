@@ -1,21 +1,21 @@
-/*body, html {*/
-  /*width: 450px;*/
-  /*height: inherit;*/
-  /*overflow: hidden;*/
-/*}*/
+
+@font-face {
+    font-family: 'Scrive Source Sans Pro';
+    font-style: normal;
+    font-weight: 200;
+    src: local('Source Sans Pro ExtraLight'), local('SourceSansPro-ExtraLight'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/toadOcfmlt9b38dHJxOBGMa9awK0IKUjIWABZIchFI8.woff) format('woff');
+}
 
 /* Spacer */
-#scrive_spacer { height: auto !important; top: 0 !important;position: fixed !important; right: 0 !important; width: auto !important; z-index: 100000 !important;
+#scrive_spacer { top: 0 !important;position: fixed !important; right: 0 !important; z-index: 1999999999 !important;
     color: #333333;
-    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-family: Scrive Source Sans Pro,Helvetica Neue,sans-serif;
     font-size: 15px;
-    font-weight: 300;
     line-height: 22px;
-    background-color: #f2f2f2;
-    padding: 4px 4px;
-    border: 1px solid #bababa;
-    border-radius: 3px;
+    padding: 19px 22px;
     visibility: hidden;
+
+    height: auto;
 }
 
 #scrive_spacer iframe.scrive_cover {
@@ -23,12 +23,19 @@
     border: none;
     top: 0;
     left: 0;
-    height: 100%;
-    width: 100%;
     z-index: -1;
 }
+
 /* Scrive Popup */
-#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 100000 !important; height: auto; width: 100%;
+#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 1999999999 !important; height: auto; width: 100%;
+    padding: 4px 4px;
+    background-color: #ffffff;
+    box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.35);
+    box-sizing: border-box;
+}
+
+#scrive_popup .scrive_modal-border {
+    background-color: #efefef;
 }
 
 #scrive_popup .scrive_modal-header.scrive_no-icon {
@@ -61,11 +68,13 @@
 
 #scrive_popup .scrive_modal-title {
     display: block;
-    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
-    font-size: 28px;
+    font-family: Scrive Source Sans Pro,Helvetica Neue,sans-serif;
     line-height: 25px;
     color:#ffffff;
     padding-top: 0;
+
+    font-size: 35.961px;
+    transform: scaleX(1.0015);
 }
 
 #scrive_popup .scrive_modal-close {
@@ -89,7 +98,13 @@
 
 #scrive_popup .scrive_modal-body .scrive_modal-content .scrive_body {
     padding: 20px 35px;
-    font-size: 15px;
+
+    font-family: 'Scrive Source Sans Pro';
+    font-size: 15.603px;
+    font-weight: 400;
+    letter-spacing: -0.234px;
+    text-align: left;
+    transform: scaleX(1.0015);
 }
 
 /*boxises are set on scrive.com to border-box*/
@@ -97,13 +112,14 @@
     box-sizing: content-box !important;
     -webkit-box-sizing: content-box !important;
     height: 20px;
-    width: 380px;
     text-align: center;
 
     border-top: 1px solid #dee4ed;
     margin-left: 35px;
     margin-right: 35px;
     padding: 35px 0;
+
+    width: 430px;
 }
 
 #scrive_popup .scrive_modal-footer .scrive_button {
@@ -117,7 +133,7 @@
     color: #ffffff !important;
     cursor: pointer;
     display: inline-block;
-    font-family: Source Sans Pro,Helvetica Neue,sans-serif;
+    font-family: Scrive Source Sans Pro,Helvetica Neue,sans-serif;
     font-size: 15px;
     font-weight: 400;
     line-height: 16px;
@@ -170,8 +186,11 @@
 }
 
 #scrive_popup .scrive_button-gray {
-    background-color: #e6e6e6;
-    color: #262626 !important;
+    /*background-color: #e6e6e6;*/
+    /*color: #262626 !important;*/
+
+    background-color: #d1d1d1;
+    color: #ffffff !important;
 }
 
 #scrive_popup .scrive_button-gray:hover {
@@ -194,12 +213,26 @@
     box-sizing: content-box !important;
     -webkit-box-sizing: content-box !important;
     float: left;
+
+    height: 44px;
+    font-family: 'Scrive Source Sans Pro';
+    font-size: 15.603px;
+    font-weight: 400;
+    letter-spacing: -0.234px;
+    transform: scaleX(1.0015);
 }
 
 #scrive_popup .scrive_modal-footer .scrive_float-right {
     box-sizing: content-box !important;
     -webkit-box-sizing: content-box !important;
     float: right;
+
+    height: 44px;
+    font-family: 'Scrive Source Sans Pro';
+    font-size: 15.603px;
+    font-weight: 400;
+    letter-spacing: -0.234px;
+    transform: scaleX(1.0015);
 }
 
 #scrive_popup .scrive_direct-upload {
