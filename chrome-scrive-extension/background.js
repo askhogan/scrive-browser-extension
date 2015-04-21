@@ -125,14 +125,36 @@ var webRequestFilter = {
   types: [ "main_frame", "object", "sub_frame", "image", "other" ]
 };
 
+var timeTolerance = 2*1000; // 2sec
+
 chrome.webRequest.onBeforeRequest.addListener( function ( info ) {
-  savedDataForRequests[ info.url ] = {
-    formData: ( info.requestBody && info.requestBody.formData ) ? info.requestBody.formData : undefined,
-    timeStamp: info.timeStamp,
-    method: info.method,
-    type: info.type,
-    tabId: info.tabId
-  };
+
+  var storeData = false;
+  var savedData = savedDataForRequests[ info.url ];
+  var formData = ( info.requestBody && info.requestBody.formData ) ? info.requestBody.formData : undefined;
+
+  if ( savedData )
+  {
+    var deltaTime = info.timeStamp - savedData.timeStamp;
+
+    // Always update on formData and never override it
+    if ( formData || ( deltaTime > timeTolerance && !savedData.formData) ) {
+      storeData = true;
+    }
+  }
+  else
+    storeData = true;
+
+  if (storeData) {
+    savedDataForRequests[ info.url ] = {
+      formData: formData,
+      timeStamp: info.timeStamp,
+      method: info.method,
+      type: info.type,
+      tabId: info.tabId
+    };
+
+  }
 }, webRequestFilter, [ "requestBody" ] );
 
 chrome.webRequest.onHeadersReceived.addListener( function ( info ) {
