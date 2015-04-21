@@ -3,7 +3,7 @@
   "name": "Scrive Print to E-sign",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "icons": {
     "16": "img/icon-16x16.png",
     "48": "img/icon-48x48.png",
