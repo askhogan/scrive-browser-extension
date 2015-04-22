@@ -8,9 +8,10 @@ if ( Scrive == null || typeof ( Scrive ) != "object" ) {
 //     Scrive.IE = new Object();
 
 //Scrive.jsBase = "http://users.volja.net/sprejweb/scrive/";
-Scrive.jsBase = "http://localhost:8383/";
+//Scrive.jsBase = "http://localhost:8383/";
 //Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platform/scrive-platform/"
 //Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Chrome_Div/chrome-scrive-extension/"
+Scrive.jsBase = "https://cdn.rawgit.com/scrive/scrive-browser-extension/dev-ernes-ie/chrome-scrive-extension/"
 
 var ScriveIELoader = new function () {
 
