@@ -1,7 +1,7 @@
 
 Scrive.Popup = new function () {
 
-//  var modalOptions;
+  var modalOptions;
   var modalTitle;
   var modalContent;
   var acceptButton;
@@ -29,6 +29,10 @@ Scrive.Popup = new function () {
     var header_label = document.createElement( "div" );
     header_label.className = 'scrive_label';
     header.appendChild(header_label);
+
+    modalOptions = document.createElement( "a" );
+    modalOptions.className = 'scrive_modal-options';
+    header.appendChild(modalOptions);
 
     modalTitle = document.createElement( "span" );
     modalTitle.className = 'scrive_modal-title';
@@ -112,7 +116,7 @@ Scrive.Popup = new function () {
     };
 
     //Options removed for chrome - add for IE
-    //modalOptions.addEventListener( 'click', onOptions );
+    modalOptions.addEventListener( 'click', onOptions );
 
     Scrive.Popup.toggleDiv();
   };
@@ -245,7 +249,7 @@ Scrive.Popup = new function () {
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "startEsigningQuestion" );
     modalContent.style.display = "none";
     //Options removed for chrome - add for IE
-    //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
+    modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
     cancelButton.innerText = Scrive.Platform.i18n.getMessage( "no" );
     directUploadButton.style.display = "none";
@@ -273,7 +277,7 @@ Scrive.Popup = new function () {
 
   this.askPrintToPaper = function () {
     //Options removed for chrome - add for IE
-    //modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
+    modalOptions.innerText = Scrive.Platform.i18n.getMessage( "options" );
     modalTitle.innerText = Scrive.Platform.i18n.getMessage( "printToPaperQuestion" );
     modalContent.innerHTML = Scrive.Platform.i18n.getMessage( "noPDFFound" );
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "print" );
