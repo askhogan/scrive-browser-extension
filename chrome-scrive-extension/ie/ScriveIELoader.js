@@ -11,7 +11,9 @@ if ( Scrive == null || typeof ( Scrive ) != "object" ) {
 //Scrive.jsBase = "http://localhost:8383/";
 //Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Common_platform/scrive-platform/"
 //Scrive.jsBase = "https://rawgit.com/scrive/scrive-browser-extension/Chrome_Div/chrome-scrive-extension/"
-Scrive.jsBase = "https://cdn.rawgit.com/scrive/scrive-browser-extension/dev-ernes-ie/chrome-scrive-extension/"
+//Scrive.jsBase = "https://cdn.rawgit.com/scrive/scrive-browser-extension/dev-ernes-ie/chrome-scrive-extension/"
+//Scrive.jsBase = "https://cdn.rawgit.com/scrive/scrive-browser-extension/8a3080c6efef7de5c67b5f5e5877c5dd33b52a63/chrome-scrive-extension/";
+Scrive.jsBase = "https://cdn.rawgit.com/scrive/scrive-browser-extension/858f33ded960d17d60e4a02223c6a3bd6b5d7782/chrome-scrive-extension/";
 
 var ScriveIELoader = new function () {
 
