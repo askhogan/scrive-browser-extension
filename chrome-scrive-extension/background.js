@@ -317,7 +317,8 @@ chrome.windows.getCurrent( {}, function ( w ) {
      * later.
      */
     chrome.windows.onFocusChanged.addListener( function ( w ) {
-      if ( w ) {
+      //avoiding window id -1
+      if ( w && w >= 0) {
         chrome.windows.get( w, {}, function ( w ) {
           if ( w && w.type == "normal" ) {
             mainwindow = w.id;
