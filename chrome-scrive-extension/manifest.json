@@ -19,7 +19,16 @@
     }
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "oauth.js",
+      "common/ScriveMain.js",
+      "common/ScriveSettings.js",
+      "common/ScrivePlatform.js",
+      "common/ScriveLogUtils.js",
+      "chrome/ScriveChromeLogger.js",
+      "chrome/ScriveChromeLocalStore.js",
+      "chrome/ScriveChromeHttpRequest.js",
+      "background.js"]
   },
   "web_accessible_resources": [
     "html/options.html", "html/direct_upload.html"

@@ -103,6 +103,7 @@ Scrive.Options = new function () {
       saveButton.innerText = Scrive.Platform.i18n.getMessage( "saved" );
       setTimeout( function () {
         saveButton.innerText = oldButtonText;
+        Scrive.Settings.initData();
       }, 2500 );
     } );
 
@@ -152,6 +153,7 @@ Scrive.Options = new function () {
     this.scripts = [
       'common/ScriveLogUtils.js',
       'common/ScrivePlatform.js',
+      'common/ScriveSettings.js',
 
       'oauth.js'
     ];

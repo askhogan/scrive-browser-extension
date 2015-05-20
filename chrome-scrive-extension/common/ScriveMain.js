@@ -11,10 +11,17 @@ if ( !Scrive.IE )
 
 var KEYS = {
   PRINTER_URL: 'printer_url',
+  //oauthdata
   OAUTH_CLIENT_ID: 'oauth_client_id',
   OAUTH_CLIENT_SECRET: 'oauth_client_secret',
   OAUTH_TOKEN_ID: 'oauth_token_id',
-  OAUTH_TOKEN_SECRET: 'oauth_token_secret'
+  OAUTH_TOKEN_SECRET: 'oauth_token_secret',
+  //userprofiledata
+  USER_PROFILE: 'user_profile',
+  //userprofiledata FLAGS
+  DATA_OAUTH: 'data_oauth',
+  DATA_PRINTURL: 'data_printurl',
+  DATA_PROFILE: 'data_profile'
 };
 
 var DEFAULTS = {
@@ -29,6 +36,13 @@ var MESSAGES = {
 };
 
 Scrive.Main = new function () {
+
+  this.data = {};
+  this.profile= {};
+
+  this.dataOauth= false;
+  this.dataPrintUrl= false;
+  this.dataProfile= false;
 
   this.chrome = isChrome();
 
@@ -55,11 +69,39 @@ Scrive.Main = new function () {
       // we add property to the main document to signal that Scrive was loaded and initialized
       document.documentElement.setAttribute( '_scriveloaded' , true );
 
+      Scrive.Main.initData();
+
       Scrive.LogUtils.info( "Scrive.Main.init Total time " + ( new Date().getTime() - mainStart ) + "ms" );
 
     } catch ( e ) {
       alert( "While initializing Scrive: " + e.message );
     }
+  };
+
+  this.initData = function (callback) {
+    Scrive.Platform.LocalStore.get( [
+      KEYS.DATA_OAUTH, KEYS.DATA_PRINTURL, KEYS.DATA_PROFILE , KEYS.USER_PROFILE
+    ], function ( items ) {
+      Scrive.Main.dataOauth= items[KEYS.DATA_OAUTH];
+      Scrive.Main.dataPrintUrl= items[KEYS.DATA_PRINTURL];
+      Scrive.Main.dataProfile= items[KEYS.DATA_PROFILE];
+      Scrive.Main.data= items[KEYS.USER_PROFILE];
+
+      if (Scrive.Main.data)
+        Scrive.Main.profile = JSON.parse(Scrive.Main.data);
+
+      Scrive.LogUtils.info(
+      "\nScrive.Main.dataOauth=" + items[KEYS.DATA_OAUTH] +
+      "\nScrive.Main.dataPrintUrl=" + items[KEYS.DATA_PRINTURL] +
+      "\nScrive.Main.dataProfile=" + items[KEYS.DATA_PROFILE] +
+      "\nScrive.Main.data=" + items[KEYS.USER_PROFILE]
+      )
+
+      if ( callback )
+        callback.call( null );
+
+    } );
+    return false;
   };
 
   function isChrome() {

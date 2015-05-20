@@ -196,8 +196,11 @@ Scrive.Popup = new function () {
     if (!Scrive.Main.dataProfile)  message += "&dataProfile=false";
 
     if ( !Scrive.Main.dataPrintUrl || !Scrive.Main.dataOauth ) {
-      alert("You will be re-directed to Scrive OPTIONS page");
-      window.open(Scrive.jsBase + "/html/options.html?" + message,'_blank');
+      Scrive.Platform.BrowserUtils.alert( "You will be re-directed to Scrive OPTIONS page" ,
+          function () {
+            window.open(Scrive.jsBase + "/html/options.html?" + message,'_blank');
+          }
+      );
     }
     else
       return true;
@@ -206,10 +209,12 @@ Scrive.Popup = new function () {
   };
 
   this.toggleDivBookmarklet = function () {
-    if ( this.verifySettings() ) {
-      this.checkForPDF();
-      this.toggleDiv();
-    }
+    Scrive.Main.initData( function() {
+      if ( Scrive.Popup.verifySettings() ) {
+        Scrive.Popup.checkForPDF();
+        Scrive.Popup.toggleDiv();
+      }
+    });
   };
 
   this.toggleDiv = function () {
@@ -297,7 +302,6 @@ Scrive.Popup = new function () {
   this.clearDots = function () {
     acceptButton.className = 'scrive_float-right scrive_accept green scrive_button scrive_button-green';
     cancelButton.style.display = "block";
-//    directUploadButton.style.display = "block";
 
     acceptButton.innerText = Scrive.Platform.i18n.getMessage( "yes" );
 

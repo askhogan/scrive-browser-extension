@@ -43,6 +43,17 @@ module.exports = function(grunt) {
               "chrome-scrive-extension/chrome/ScriveChromeInitUpdate.js"],
             dest: 'chrome-scrive-extension/ScriveChromeContentScriptAllUpdate.js'
           },
+          ScriveChromeBackgroundScriptAll: {
+            src:["chrome-scrive-extension/oauth.js",
+              "chrome-scrive-extension/common/ScriveMain.js",
+              "chrome-scrive-extension/common/ScriveSettings.js",
+              "chrome-scrive-extension/common/ScrivePlatform.js",
+              "chrome-scrive-extension/common/ScriveLogUtils.js",
+              "chrome-scrive-extension/chrome/ScriveChromeLogger.js",
+              "chrome-scrive-extension/chrome/ScriveChromeLocalStore.js",
+              "chrome-scrive-extension/chrome/ScriveChromeHttpRequest.js"],
+            dest: 'chrome-scrive-extension/ScriveChromeBackgroundScriptAll.js'
+          },
           ScriveIEContentScriptAll: {
             src:["chrome-scrive-extension/common/ScriveMain.js",
               "chrome-scrive-extension/common/ScrivePlatform.js",

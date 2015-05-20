@@ -54,6 +54,11 @@ Scrive.CH.HttpRequest = new function () {
           options.onerror( xmlHttpReq );
       };
 
+      xmlHttpReq.onreadystatechange = function () {
+        if ( options.onreadystatechange )
+          options.onreadystatechange( xmlHttpReq );
+      };
+
       xmlHttpReq.onload = function () {
         if ( options.onload )
           options.onload( xmlHttpReq );

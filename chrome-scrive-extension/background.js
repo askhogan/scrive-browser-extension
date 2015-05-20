@@ -1,4 +1,6 @@
 
+if (Scrive && Scrive.Settings)
+  document.addEventListener( "DOMContentLoaded", Scrive.Settings.init );
 
 function executeScriptCallback( results ) {
   //The result of a script is the last expression being evaluated. results is actually an array
@@ -122,6 +124,11 @@ chrome.runtime.onMessage.addListener( function ( request, sender, sendResponse )
     savedData: savedDataForRequests[ request.url ]
   } );
 
+  if ( request.type == "alertPage" ) {
+    alert(request.message);
+    sendResponse();
+  }
+
   if ( request.type == "savedHTMLPage" ) {
     chrome.tabs.query(
         {currentWindow: true, active: true},
@@ -215,15 +222,6 @@ chrome.webRequest.onBeforeRequest.addListener( function ( info ) {
       type: info.type,
       tabId: info.tabId
     };
-
-    console.log( "webRequest.onBeforeRequest:"
-            + "\t" + info.url
-            + "\t" + (info.timeStamp ? (new Date(info.timeStamp)).toLocaleTimeString() : info.timeStamp)
-            + "\t" + info.method
-            + "\t" + info.type
-            + "\t" + info.tabId
-            + "\t" + (formData ? JSON.stringify(formData) : formData)
-    );
   }
 }, webRequestFilter, [ "requestBody" ] );
 
