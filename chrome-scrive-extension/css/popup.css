@@ -7,7 +7,11 @@
 }
 
 /* Spacer */
-#scrive_spacer { top: 0 !important;position: fixed !important; right: 0 !important; z-index: 1999999999 !important;
+#scrive_spacer {
+    top: 0 !important;
+    position: fixed !important;
+    right: 0 !important;
+    z-index: 1999999999 !important;
     color: #333333;
     font-family: Scrive Source Sans Pro,Helvetica Neue,sans-serif;
     font-size: 15px;
@@ -27,7 +31,14 @@
 }
 
 /* Scrive Popup */
-#scrive_popup { min-width: auto; position: relative; bottom: 0; right: 0 !important; z-index: 1999999999 !important; height: auto; width: 100%;
+#scrive_popup {
+    min-width: auto;
+    position: relative;
+    bottom: 0;
+    right: 0 !important;
+    z-index: 1999999999 !important;
+    height: auto;
+    width: 100%;
     padding: 4px 4px;
     background-color: #ffffff;
     box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.35);
