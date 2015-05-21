@@ -24,7 +24,8 @@ module.exports = function(grunt) {
                  "chrome-scrive-extension/show_error.js",
                  "chrome-scrive-extension/common/ScrivePopup.js",
                  "chrome-scrive-extension/chrome/ScriveChromeInit.js"],
-            dest: 'chrome-scrive-extension/ScriveChromeContentScriptAll.js'
+            dest: 'chrome-scrive-extension/ScriveChromeContentScriptAll.js',
+            nonull: true
           },
           ScriveChromeContentScriptAllUpdate: {
             src:["chrome-scrive-extension/common/ScriveMain.js",
@@ -41,7 +42,8 @@ module.exports = function(grunt) {
               "chrome-scrive-extension/show_error.js",
               "chrome-scrive-extension/common/ScrivePopup.js",
               "chrome-scrive-extension/chrome/ScriveChromeInitUpdate.js"],
-            dest: 'chrome-scrive-extension/ScriveChromeContentScriptAllUpdate.js'
+            dest: 'chrome-scrive-extension/ScriveChromeContentScriptAllUpdate.js',
+            nonull: true
           },
           ScriveChromeBackgroundScriptAll: {
             src:["chrome-scrive-extension/oauth.js",
@@ -52,7 +54,8 @@ module.exports = function(grunt) {
               "chrome-scrive-extension/chrome/ScriveChromeLogger.js",
               "chrome-scrive-extension/chrome/ScriveChromeLocalStore.js",
               "chrome-scrive-extension/chrome/ScriveChromeHttpRequest.js"],
-            dest: 'chrome-scrive-extension/ScriveChromeBackgroundScriptAll.js'
+            dest: 'chrome-scrive-extension/ScriveChromeBackgroundScriptAll.js',
+            nonull: true
           },
           ScriveIEContentScriptAll: {
             src:["chrome-scrive-extension/common/ScriveMain.js",
@@ -69,7 +72,8 @@ module.exports = function(grunt) {
               "chrome-scrive-extension/show_error.js",
               "chrome-scrive-extension/common/ScrivePopup.js",
               "chrome-scrive-extension/ie/ScriveIEInit.js"],
-            dest: 'chrome-scrive-extension/ScriveIEContentScriptAll.js'
+            dest: 'chrome-scrive-extension/ScriveIEContentScriptAll.js',
+            nonull: true
           }
         },
         // make a zipfile
