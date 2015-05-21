@@ -97,7 +97,6 @@ Scrive.Popup = new function () {
     popupBorder.className = 'scrive_modal-border';
     popup.appendChild(popupBorder);
 
-    //this.populatePopup(popup);
     this.populatePopup(popupBorder);
 
     var onOptions = function () {
