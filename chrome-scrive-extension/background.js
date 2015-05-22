@@ -315,7 +315,21 @@ chrome.windows.getCurrent( {}, function ( w ) {
      * later.
      */
     chrome.windows.onFocusChanged.addListener( function ( w ) {
-      //avoiding window id -1
+     /*
+      * chrome.windows.WINDOW_ID_NONE(-1) is the windowId value that represents the absence of a chrome browser window.
+      * This happens if all chrome windows have lost focus.      *
+      * On some Linux window managers, WINDOW_ID_NONE will always be sent immediately preceding a switch from one chrome window to another.
+      * In this case chrome.windows.get will fail
+      * https://developer.chrome.com/extensions/windows#property-WINDOW_ID_NONE
+      * https://developer.chrome.com/extensions/windows#event-onFocusChanged
+      *
+      * Also we are not interested in WINDOW_ID_CURRENT(-2) which is the windowId value that represents the current(background page!) window.
+      * The current window is the window that contains the code that is currently executing and can be different from the topmost or focused window.
+      * Example: extension creates a few tabs or windows from a single HTML file, and that the HTML file contains a call to tabs.query.
+      * The current window is the window that contains the page that made the call, no matter what the topmost window is.
+      * https://developer.chrome.com/extensions/windows#property-WINDOW_ID_CURRENT
+      * https://developer.chrome.com/extensions/windows#current-window
+      */
       if ( w && w >= 0) {
         chrome.windows.get( w, {}, function ( w ) {
           if ( w && w.type == "normal" ) {
